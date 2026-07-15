@@ -330,7 +330,7 @@
 
     /* ===================== S5: SAMPLE MEALS ===================== */
     .meals-section { padding: 96px 0; background: var(--off-white); }
-    .meals-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+    .meals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .meal-card {
       background: var(--white); border-radius: var(--radius);
       overflow: hidden; box-shadow: var(--shadow-sm);
@@ -338,16 +338,33 @@
     }
     .meal-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
     .meal-img {
-      height: 120px; display: flex; align-items: center;
-      justify-content: center; font-size: 44px;
+      height: 160px; display: flex; align-items: center;
+      justify-content: center; font-size: 56px; position: relative;
     }
     .meal-img.c1 { background: linear-gradient(135deg, #FEF3C7, #FDE68A); }
     .meal-img.c2 { background: linear-gradient(135deg, #DCFCE7, #BBF7D0); }
     .meal-img.c3 { background: linear-gradient(135deg, #FCE7F3, #FBCFE8); }
     .meal-img.c4 { background: linear-gradient(135deg, #E0F2FE, #BAE6FD); }
     .meal-img.c5 { background: linear-gradient(135deg, #ECFDF5, #A7F3D0); }
-    .meal-body { padding: 14px 16px; }
-    .meal-body h3 { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; }
+    .meal-img.c6 { background: linear-gradient(135deg, #FEF9C3, #FEF08A); }
+    .meal-meal-tag {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--white); color: var(--green-dark);
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; padding: 3px 9px; border-radius: 100px;
+      box-shadow: var(--shadow-sm);
+    }
+    .meal-body { padding: 18px 20px 0; }
+    .meal-body h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 6px; line-height: 1.35; }
+    .meal-body p { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin-bottom: 14px; }
+    .meal-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px 16px; border-top: 1px solid var(--border); margin-top: 4px;
+    }
+    .meal-macros { display: flex; gap: 12px; }
+    .meal-macro { font-size: 12px; color: var(--text-muted); }
+    .meal-macro strong { color: var(--text); font-weight: 700; }
+    .meal-kcal { font-size: 13px; font-weight: 800; color: var(--green-dark); }
 
     /* ===================== S6: PERFECT FOR ===================== */
     .for-section { padding: 96px 0; background: var(--white); }
@@ -362,30 +379,92 @@
     .for-icon { font-size: 36px; margin-bottom: 12px; display: block; }
     .for-card h3 { font-size: 14px; font-weight: 700; color: var(--green-dark); }
 
-    /* ===================== S7: FOUNDING MEMBER BENEFITS ===================== */
-    .founding-section {
+    /* ===================== S7: EARLY ACCESS + WAITLIST ===================== */
+    .early-access-section {
       padding: 96px 0;
       background: linear-gradient(135deg, #1A2E0A 0%, #2D4A12 100%);
       position: relative; overflow: hidden;
     }
-    .founding-section::before {
+    .early-access-section::before {
       content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 60% 50%, rgba(164,197,56,0.10) 0%, transparent 65%);
+      background: radial-gradient(ellipse at 65% 50%, rgba(164,197,56,0.12) 0%, transparent 65%);
       pointer-events: none;
     }
-    .founding-section .container { position: relative; z-index: 1; }
-    .founding-section .section-header h2 { color: var(--white); }
-    .founding-section .section-header p { color: rgba(255,255,255,0.65); }
-    .founding-section .section-label { color: var(--green); }
-    .benefits-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
-    .benefit-card {
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-      border-radius: var(--radius); padding: 28px 18px; text-align: center;
-      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    .early-access-section .container { position: relative; z-index: 1; }
+    .early-access-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
     }
-    .benefit-card:hover { background: rgba(164,197,56,0.12); border-color: rgba(164,197,56,0.4); transform: translateY(-3px); }
-    .benefit-icon { font-size: 32px; margin-bottom: 12px; display: block; }
-    .benefit-card h3 { font-size: 14px; font-weight: 700; color: var(--white); line-height: 1.45; }
+    /* Left: benefits copy */
+    .ea-copy .section-label { color: var(--green); text-align: left; }
+    .ea-copy h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 3.5vw, 40px); font-weight: 700;
+      color: var(--white); line-height: 1.2; margin-bottom: 14px;
+    }
+    .ea-copy h2 span { color: var(--green); }
+    .ea-copy > p {
+      font-size: 16px; color: rgba(255,255,255,0.65); margin-bottom: 36px; line-height: 1.7;
+    }
+    .ea-benefits { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .ea-benefits li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 15px; color: rgba(255,255,255,0.88); font-weight: 500;
+    }
+    .ea-benefits li .ea-check {
+      width: 22px; height: 22px; min-width: 22px; border-radius: 50%;
+      background: var(--green); display: flex; align-items: center;
+      justify-content: center; margin-top: 1px;
+    }
+    .ea-benefits li .ea-check svg { width: 12px; height: 12px; stroke: #fff; }
+    /* Right: form card (dark variant) */
+    .ea-form-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+      border-radius: var(--radius-lg); padding: 36px 32px;
+      backdrop-filter: blur(8px);
+    }
+    .ea-form-card .form-card-header h2 { color: var(--white); }
+    .ea-form-card .form-card-header p { color: rgba(255,255,255,0.6); }
+    .ea-form-card .form-group label { color: rgba(255,255,255,0.85); }
+    .ea-form-card .form-group input {
+      background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.2);
+      color: var(--white);
+    }
+    .ea-form-card .form-group input::placeholder { color: rgba(255,255,255,0.35); }
+    .ea-form-card .form-group input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(164,197,56,0.25);
+      background: rgba(255,255,255,0.13);
+    }
+    .ea-form-card .instagram-wrap .at-sign { color: rgba(255,255,255,0.45); }
+    .ea-form-card .form-count {
+      background: rgba(164,197,56,0.12); border: 1px solid rgba(164,197,56,0.25);
+    }
+    .ea-form-card .form-count p { color: var(--green); }
+    .ea-form-card .form-note { color: rgba(255,255,255,0.4); }
+    .ea-form-card .form-note a { color: var(--green); }
+    /* Privacy checkbox */
+    .privacy-check-wrap {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-top: 14px; margin-bottom: 4px;
+    }
+    .privacy-check-wrap input[type="checkbox"] {
+      width: 16px; height: 16px; min-width: 16px; margin-top: 2px;
+      accent-color: var(--green); cursor: pointer;
+    }
+    .privacy-check-label {
+      font-size: 12px; line-height: 1.55; color: var(--text-muted);
+    }
+    .privacy-check-label a {
+      color: var(--green-dark); font-weight: 600; text-decoration: none;
+      cursor: pointer;
+    }
+    .privacy-check-label a:hover { text-decoration: underline; }
+    /* dark form variant */
+    .ea-form-card .privacy-check-label { color: rgba(255,255,255,0.5); }
+    .ea-form-card .privacy-check-label a { color: var(--green); }
+    /* success state for ea form */
+    .ea-form-card .form-success h3 { color: var(--white); }
+    .ea-form-card .form-success p { color: rgba(255,255,255,0.65); }
 
     /* ===================== S8: FAQ ===================== */
     .faq-section { padding: 96px 0; background: var(--off-white); }
@@ -509,18 +588,20 @@
 
     /* ===================== RESPONSIVE ===================== */
     @media (max-width: 1024px) {
-      .pain-grid, .diff-grid, .meals-grid, .for-grid, .benefits-grid { grid-template-columns: repeat(3, 1fr); }
+      .pain-grid, .diff-grid, .for-grid { grid-template-columns: repeat(3, 1fr); }
+      .meals-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 900px) {
-      .waitlist-grid { grid-template-columns: 1fr; gap: 40px; }
+      .waitlist-grid, .early-access-grid { grid-template-columns: 1fr; gap: 40px; }
       .how-steps { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
     }
     @media (max-width: 640px) {
-      .pain-grid, .diff-grid, .for-grid, .benefits-grid { grid-template-columns: repeat(2, 1fr); }
-      .meals-grid { grid-template-columns: repeat(2, 1fr); }
+      .pain-grid, .diff-grid, .for-grid { grid-template-columns: repeat(2, 1fr); }
+      .meals-grid { grid-template-columns: 1fr; }
       .trust-bar .container { gap: 20px; }
       .form-card { padding: 28px 22px; }
+      .ea-form-card { padding: 28px 22px; }
       .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
   </style>
@@ -634,9 +715,19 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               Reserve My Spot
             </button>
-            <p class="form-note">
-              No spam, ever. We'll only contact you about your spot.<br />
-              <a href="#privacy">Privacy Policy</a>
+
+            <!-- Privacy checkbox -->
+            <div class="privacy-check-wrap" style="margin-top:14px;">
+              <input type="checkbox" id="privacyConsent1" name="privacyConsent1"
+                required aria-required="true" aria-describedby="privacy-err1" />
+              <label class="privacy-check-label" for="privacyConsent1">
+                I agree to the <a href="#" class="open-privacy-modal" aria-haspopup="dialog">Privacy Policy</a> and consent to being contacted via Instagram about my waitlist spot. <span class="req" aria-hidden="true">*</span>
+              </label>
+            </div>
+            <span id="privacy-err1" style="display:none;font-size:12px;color:#EF4444;margin-top:4px;">Please accept the Privacy Policy to continue.</span>
+
+            <p class="form-note" style="margin-top:10px;">
+              No spam, ever. We'll only contact you about your spot.
             </p>
           </form>
 
@@ -826,26 +917,121 @@
         <p>Bold authentic flavors — prepared with clean ingredients and full nutrition transparency.</p>
       </div>
       <div class="meals-grid">
+
         <article class="meal-card reveal">
-          <div class="meal-img c1" role="img" aria-label="Ayam Betutu illustration">🍗</div>
-          <div class="meal-body"><h3>Healthy Ayam Betutu</h3></div>
+          <div class="meal-img c1" role="img" aria-label="Ayam Betutu illustration">
+            🍗
+            <span class="meal-meal-tag">Lunch / Dinner</span>
+          </div>
+          <div class="meal-body">
+            <h3>Healthy Ayam Betutu</h3>
+            <p>Slow-cooked Balinese spiced chicken, steamed in banana leaf with turmeric and galangal — no frying, full flavor.</p>
+          </div>
+          <div class="meal-footer">
+            <div class="meal-macros" aria-label="Nutrition info">
+              <span class="meal-macro"><strong>38g</strong> Protein</span>
+              <span class="meal-macro"><strong>9g</strong> Fat</span>
+              <span class="meal-macro"><strong>32g</strong> Carbs</span>
+            </div>
+            <span class="meal-kcal">440 kcal</span>
+          </div>
         </article>
+
         <article class="meal-card reveal">
-          <div class="meal-img c2" role="img" aria-label="Rendang Bowl illustration">🥩</div>
-          <div class="meal-body"><h3>Protein Rendang Bowl</h3></div>
+          <div class="meal-img c2" role="img" aria-label="Rendang Bowl illustration">
+            🥩
+            <span class="meal-meal-tag">Lunch / Dinner</span>
+          </div>
+          <div class="meal-body">
+            <h3>Protein Rendang Bowl</h3>
+            <p>Lean slow-braised beef rendang over brown rice with fresh cucumber and steamed greens. High-protein, lower fat.</p>
+          </div>
+          <div class="meal-footer">
+            <div class="meal-macros" aria-label="Nutrition info">
+              <span class="meal-macro"><strong>42g</strong> Protein</span>
+              <span class="meal-macro"><strong>11g</strong> Fat</span>
+              <span class="meal-macro"><strong>38g</strong> Carbs</span>
+            </div>
+            <span class="meal-kcal">490 kcal</span>
+          </div>
         </article>
+
         <article class="meal-card reveal">
-          <div class="meal-img c3" role="img" aria-label="Nasi Campur illustration">🍛</div>
-          <div class="meal-body"><h3>Healthy Nasi Campur</h3></div>
+          <div class="meal-img c3" role="img" aria-label="Nasi Campur illustration">
+            🍛
+            <span class="meal-meal-tag">Lunch</span>
+          </div>
+          <div class="meal-body">
+            <h3>Healthy Nasi Campur</h3>
+            <p>Mixed rice bowl with grilled tempeh, sautéed spinach, shredded chicken, and sambal matah on the side.</p>
+          </div>
+          <div class="meal-footer">
+            <div class="meal-macros" aria-label="Nutrition info">
+              <span class="meal-macro"><strong>30g</strong> Protein</span>
+              <span class="meal-macro"><strong>7g</strong> Fat</span>
+              <span class="meal-macro"><strong>45g</strong> Carbs</span>
+            </div>
+            <span class="meal-kcal">420 kcal</span>
+          </div>
         </article>
+
         <article class="meal-card reveal">
-          <div class="meal-img c4" role="img" aria-label="Grilled Fish Sambal illustration">🐟</div>
-          <div class="meal-body"><h3>Grilled Fish Sambal Matah</h3></div>
+          <div class="meal-img c4" role="img" aria-label="Grilled Fish Sambal illustration">
+            🐟
+            <span class="meal-meal-tag">Dinner</span>
+          </div>
+          <div class="meal-body">
+            <h3>Grilled Fish Sambal Matah</h3>
+            <p>Fresh local fish grilled over charcoal, served with raw Balinese sambal matah, lime, and steamed vegetables.</p>
+          </div>
+          <div class="meal-footer">
+            <div class="meal-macros" aria-label="Nutrition info">
+              <span class="meal-macro"><strong>44g</strong> Protein</span>
+              <span class="meal-macro"><strong>8g</strong> Fat</span>
+              <span class="meal-macro"><strong>18g</strong> Carbs</span>
+            </div>
+            <span class="meal-kcal">360 kcal</span>
+          </div>
         </article>
+
         <article class="meal-card reveal">
-          <div class="meal-img c5" role="img" aria-label="Tempe Bowl illustration">🫘</div>
-          <div class="meal-body"><h3>Tempe Power Bowl</h3></div>
+          <div class="meal-img c5" role="img" aria-label="Tempe Power Bowl illustration">
+            🫘
+            <span class="meal-meal-tag">Lunch / Snack</span>
+          </div>
+          <div class="meal-body">
+            <h3>Tempe Power Bowl</h3>
+            <p>Crispy baked tempeh over quinoa with roasted sweet potato, edamame, and peanut-tamari dressing.</p>
+          </div>
+          <div class="meal-footer">
+            <div class="meal-macros" aria-label="Nutrition info">
+              <span class="meal-macro"><strong>28g</strong> Protein</span>
+              <span class="meal-macro"><strong>12g</strong> Fat</span>
+              <span class="meal-macro"><strong>40g</strong> Carbs</span>
+            </div>
+            <span class="meal-kcal">390 kcal</span>
+          </div>
         </article>
+
+        <article class="meal-card reveal">
+          <div class="meal-img c6" role="img" aria-label="Soto Ayam illustration">
+            🍜
+            <span class="meal-meal-tag">Breakfast / Lunch</span>
+          </div>
+          <div class="meal-body">
+            <h3>Clear Soto Ayam Sehat</h3>
+            <p>Light turmeric chicken broth with free-range shredded chicken, rice vermicelli, boiled egg, and fresh herbs.</p>
+          </div>
+          <div class="meal-footer">
+            <div class="meal-macros" aria-label="Nutrition info">
+              <span class="meal-macro"><strong>34g</strong> Protein</span>
+              <span class="meal-macro"><strong>6g</strong> Fat</span>
+              <span class="meal-macro"><strong>28g</strong> Carbs</span>
+            </div>
+            <span class="meal-kcal">340 kcal</span>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -883,35 +1069,105 @@
     </div>
   </section>
 
-  <!-- ===================== S7: FOUNDING MEMBER BENEFITS ===================== -->
-  <section class="founding-section" id="founding" aria-labelledby="founding-heading">
+  <!-- ===================== S7: EARLY ACCESS + WAITLIST FORM ===================== -->
+  <section class="early-access-section" id="early-access" aria-labelledby="ea-heading">
     <div class="container">
-      <div class="section-header reveal">
-        <p class="section-label">Join Before Launch</p>
-        <h2 id="founding-heading">Founding Member Benefits</h2>
-        <p>Reserve your spot now and unlock perks that will never be available again after we launch.</p>
-      </div>
-      <div class="benefits-grid">
-        <div class="benefit-card reveal">
-          <span class="benefit-icon" aria-hidden="true">⚡</span>
-          <h3>Early Access</h3>
+      <div class="early-access-grid">
+
+        <!-- Left: benefits copy -->
+        <div class="ea-copy reveal">
+          <p class="section-label">Join Before Launch</p>
+          <h2 id="ea-heading">Get <span>Early Access</span> as a Founding Member</h2>
+          <p>Reserve your spot now and lock in perks that won't be available after launch day. We're only accepting a limited number of founding members.</p>
+          <ul class="ea-benefits" aria-label="Founding member benefits">
+            <li>
+              <span class="ea-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Early Access — be first in line when we go live
+            </li>
+            <li>
+              <span class="ea-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Special Launch Pricing — locked-in rates exclusive to waitlist members
+            </li>
+            <li>
+              <span class="ea-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Priority Delivery Slots — choose your preferred schedule before the public
+            </li>
+            <li>
+              <span class="ea-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Exclusive Menu Previews — sneak peek at upcoming dishes before anyone else
+            </li>
+            <li>
+              <span class="ea-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Future Loyalty Rewards — founding members earn double reward points forever
+            </li>
+          </ul>
         </div>
-        <div class="benefit-card reveal">
-          <span class="benefit-icon" aria-hidden="true">🏷️</span>
-          <h3>Special Launch Pricing</h3>
+
+        <!-- Right: waitlist form card -->
+        <div class="ea-form-card reveal" role="complementary" aria-label="Secondary waitlist form">
+          <div class="form-count" aria-live="polite">
+            <div class="avatars" aria-hidden="true">
+              <span>A</span><span>K</span><span>S</span><span>+</span>
+            </div>
+            <p><strong>240+ people</strong> already on the list</p>
+          </div>
+          <div class="form-card-header">
+            <h2>Secure Your Founding Spot</h2>
+            <p>Takes 30 seconds. No credit card required.</p>
+          </div>
+
+          <form id="waitlistForm2" novalidate aria-label="Early access waitlist form">
+            <div class="form-group">
+              <label for="fullName2">Your Name <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="fullName2" name="fullName2"
+                placeholder="e.g. Sarah Mitchell" autocomplete="name"
+                required aria-required="true" />
+            </div>
+            <div class="form-group">
+              <label for="instagram2">Instagram Username <span class="req" aria-hidden="true">*</span></label>
+              <div class="instagram-wrap">
+                <span class="at-sign" aria-hidden="true">@</span>
+                <input type="text" id="instagram2" name="instagram2"
+                  placeholder="yourusername" autocomplete="username"
+                  required aria-required="true" aria-describedby="ig-hint2" />
+              </div>
+              <span id="ig-hint2" style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;display:block;">We'll reach out here when we launch</span>
+            </div>
+
+            <!-- Privacy checkbox -->
+            <div class="privacy-check-wrap">
+              <input type="checkbox" id="privacyConsent2" name="privacyConsent2"
+                required aria-required="true" aria-describedby="privacy-err2" />
+              <label class="privacy-check-label" for="privacyConsent2">
+                I agree to the <a href="#" class="open-privacy-modal" aria-haspopup="dialog">Privacy Policy</a> and consent to Nusa Meals contacting me via Instagram about my waitlist spot. <span class="req" aria-hidden="true">*</span>
+              </label>
+            </div>
+            <span id="privacy-err2" style="display:none;font-size:12px;color:#F87171;margin-top:4px;">Please accept the Privacy Policy to continue.</span>
+
+            <button type="submit" class="btn-primary form-submit" style="margin-top:16px;" aria-label="Reserve founding spot">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Reserve My Spot
+            </button>
+          </form>
+
+          <!-- Success state -->
+          <div class="form-success" id="formSuccess2" role="alert" aria-live="assertive">
+            <div class="success-icon" aria-hidden="true">🎉</div>
+            <h3>You're on the list!</h3>
+            <p>We'll DM you on Instagram the moment we launch. Follow <strong>@nusameals.bali</strong> for updates.</p>
+          </div>
         </div>
-        <div class="benefit-card reveal">
-          <span class="benefit-icon" aria-hidden="true">🚀</span>
-          <h3>Priority Delivery Slots</h3>
-        </div>
-        <div class="benefit-card reveal">
-          <span class="benefit-icon" aria-hidden="true">👀</span>
-          <h3>Exclusive Menu Previews</h3>
-        </div>
-        <div class="benefit-card reveal">
-          <span class="benefit-icon" aria-hidden="true">🎁</span>
-          <h3>Future Loyalty Rewards</h3>
-        </div>
+
       </div>
     </div>
   </section>
@@ -1046,43 +1302,81 @@
 
   <!-- ===================== JAVASCRIPT ===================== -->
   <script>
-    /* ---------- Waitlist Form ---------- */
-    const form = document.getElementById('waitlistForm');
-    const successEl = document.getElementById('formSuccess');
+    /* ---------- Helper: field error ---------- */
+    function showFieldError(el) {
+      el.focus();
+      el.style.borderColor = '#EF4444';
+      el.style.boxShadow   = '0 0 0 3px rgba(239,68,68,0.15)';
+      setTimeout(function () { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
+    }
 
-    form.addEventListener('submit', function (e) {
+    /* ---------- Form 1: Hero Waitlist ---------- */
+    var form1    = document.getElementById('waitlistForm');
+    var success1 = document.getElementById('formSuccess');
+
+    form1.addEventListener('submit', function (e) {
       e.preventDefault();
-      const name = document.getElementById('fullName').value.trim();
-      const ig   = document.getElementById('instagram').value.trim();
+      var name    = document.getElementById('fullName').value.trim();
+      var ig      = document.getElementById('instagram').value.trim();
+      var consent = document.getElementById('privacyConsent1').checked;
 
-      if (!name || !ig) {
-        const firstEmpty = !name
-          ? document.getElementById('fullName')
-          : document.getElementById('instagram');
-        firstEmpty.focus();
-        firstEmpty.style.borderColor = '#EF4444';
-        firstEmpty.style.boxShadow   = '0 0 0 3px rgba(239,68,68,0.15)';
-        setTimeout(function () {
-          firstEmpty.style.borderColor = '';
-          firstEmpty.style.boxShadow   = '';
-        }, 2500);
+      if (!name) { showFieldError(document.getElementById('fullName')); return; }
+      if (!ig)   { showFieldError(document.getElementById('instagram')); return; }
+      if (!consent) {
+        var err = document.getElementById('privacy-err1');
+        err.style.display = 'block';
+        document.getElementById('privacyConsent1').focus();
+        setTimeout(function () { err.style.display = 'none'; }, 3000);
         return;
       }
 
-      const entry    = { name: name, instagram: ig, joinedAt: new Date().toISOString() };
-      const existing = JSON.parse(localStorage.getItem('nm_waitlist') || '[]');
-      existing.push(entry);
+      var existing = JSON.parse(localStorage.getItem('nm_waitlist') || '[]');
+      existing.push({ name: name, instagram: ig, joinedAt: new Date().toISOString() });
       localStorage.setItem('nm_waitlist', JSON.stringify(existing));
 
-      form.style.display      = 'none';
-      successEl.style.display = 'block';
-      successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      form1.style.display      = 'none';
+      success1.style.display   = 'block';
+      success1.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
 
     ['fullName', 'instagram'].forEach(function (id) {
       document.getElementById(id).addEventListener('input', function () {
-        this.style.borderColor = '';
-        this.style.boxShadow   = '';
+        this.style.borderColor = ''; this.style.boxShadow = '';
+      });
+    });
+
+    /* ---------- Form 2: Early Access Waitlist ---------- */
+    var form2    = document.getElementById('waitlistForm2');
+    var success2 = document.getElementById('formSuccess2');
+
+    form2.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name    = document.getElementById('fullName2').value.trim();
+      var ig      = document.getElementById('instagram2').value.trim();
+      var consent = document.getElementById('privacyConsent2').checked;
+
+      if (!name) { showFieldError(document.getElementById('fullName2')); return; }
+      if (!ig)   { showFieldError(document.getElementById('instagram2')); return; }
+      if (!consent) {
+        var err = document.getElementById('privacy-err2');
+        err.style.display = 'block';
+        document.getElementById('privacyConsent2').focus();
+        setTimeout(function () { err.style.display = 'none'; }, 3000);
+        return;
+      }
+
+      var existing = JSON.parse(localStorage.getItem('nm_waitlist') || '[]');
+      existing.push({ name: name, instagram: ig, joinedAt: new Date().toISOString() });
+      localStorage.setItem('nm_waitlist', JSON.stringify(existing));
+
+      form2.style.display      = 'none';
+      success2.style.display   = 'block';
+      success2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    ['fullName2', 'instagram2'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', function () {
+        this.style.borderColor = ''; this.style.boxShadow = '';
       });
     });
 
@@ -1091,37 +1385,30 @@
       anchor.addEventListener('click', function (e) {
         var href   = this.getAttribute('href');
         var target = href && href.length > 1 ? document.querySelector(href) : null;
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
 
     /* ---------- FAQ Accordion ---------- */
     document.querySelectorAll('.faq-q').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var item     = this.closest('.faq-item');
-        var isOpen   = item.classList.contains('open');
-        // close all
+        var item   = this.closest('.faq-item');
+        var isOpen = item.classList.contains('open');
         document.querySelectorAll('.faq-item.open').forEach(function (el) {
           el.classList.remove('open');
           el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
         });
-        // open clicked if it was closed
-        if (!isOpen) {
-          item.classList.add('open');
-          this.setAttribute('aria-expanded', 'true');
-        }
+        if (!isOpen) { item.classList.add('open'); this.setAttribute('aria-expanded', 'true'); }
       });
     });
 
     /* ---------- Privacy Modal ---------- */
-    var modal      = document.getElementById('privacyModal');
-    var openBtn    = document.getElementById('privacy-link');
-    var closeBtn   = document.getElementById('modalClose');
+    var modal    = document.getElementById('privacyModal');
+    var closeBtn = document.getElementById('modalClose');
+    var lastFocus;
 
-    function openModal() {
+    function openModal(trigger) {
+      lastFocus = trigger || document.getElementById('privacy-link');
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
       closeBtn.focus();
@@ -1129,10 +1416,18 @@
     function closeModal() {
       modal.classList.remove('open');
       document.body.style.overflow = '';
-      openBtn.focus();
+      if (lastFocus) lastFocus.focus();
     }
 
-    openBtn.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+    // Footer link
+    document.getElementById('privacy-link').addEventListener('click', function (e) {
+      e.preventDefault(); openModal(this);
+    });
+    // All inline "Privacy Policy" links in forms
+    document.querySelectorAll('.open-privacy-modal').forEach(function (link) {
+      link.addEventListener('click', function (e) { e.preventDefault(); openModal(this); });
+    });
+
     closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', function (e) {
