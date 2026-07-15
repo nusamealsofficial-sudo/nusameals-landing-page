@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nusa Meals – Healthy Indonesian Food Delivery in Bali</title>
+  <meta name="description" content="Authentic, healthy Indonesian meals delivered to your door in Bali. Join the waiting list now." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===================== RESET & BASE ===================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #FAFAF8;
+      color: #1C1C1C;
+      line-height: 1.6;
+    }
+
+    /* ===================== VARIABLES ===================== */
+    :root {
+      --green: #A4C538;
+      --green-dark: #7FA020;
+      --green-light: #EAF2C8;
+      --green-xlight: #F5F9E8;
+      --white: #FFFFFF;
+      --off-white: #FAFAF8;
+      --text: #1C1C1C;
+      --text-muted: #6B7280;
+      --text-light: #9CA3AF;
+      --border: #E5E7EB;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+      --radius: 14px;
+      --radius-sm: 8px;
+      --radius-lg: 24px;
+    }
+
+    /* ===================== UTILITY ===================== */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--green-light); color: var(--green-dark);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 5px 12px; border-radius: 100px;
+    }
+    .tag svg { width: 13px; height: 13px; }
+    .section-label {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--green-dark); margin-bottom: 10px;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--green); color: var(--white);
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700;
+      padding: 14px 32px; border-radius: 100px; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(164,197,56,0.35);
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(164,197,56,0.4);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* ===================== NAVBAR ===================== */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    .navbar .container {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .navbar-logo img { height: 44px; width: auto; display: block; }
+    .navbar-cta {
+      font-size: 13px; font-weight: 600; color: var(--green-dark);
+      text-decoration: none; padding: 8px 20px;
+      border: 2px solid var(--green); border-radius: 100px;
+      transition: all 0.2s;
+    }
+    .navbar-cta:hover { background: var(--green); color: var(--white); }
+
+    /* ===================== WAITLIST HERO ===================== */
+    .waitlist-section {
+      background: linear-gradient(135deg, #1A2E0A 0%, #2D4A12 50%, #1A2E0A 100%);
+      position: relative; overflow: hidden;
+      padding: 80px 0 72px;
+    }
+    .waitlist-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23A4C538' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .waitlist-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
+      align-items: center; position: relative; z-index: 1;
+    }
+    .waitlist-copy { color: var(--white); }
+    .waitlist-copy .tag {
+      background: rgba(164,197,56,0.18); color: var(--green);
+      margin-bottom: 20px;
+    }
+    .waitlist-copy h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4vw, 48px); font-weight: 700;
+      line-height: 1.15; margin-bottom: 18px;
+      color: var(--white);
+    }
+    .waitlist-copy h1 span { color: var(--green); }
+    .waitlist-copy p {
+      font-size: 17px; color: rgba(255,255,255,0.75);
+      margin-bottom: 28px; max-width: 420px; line-height: 1.7;
+    }
+    .waitlist-badges {
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .badge {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 100px; padding: 6px 14px;
+      font-size: 13px; color: rgba(255,255,255,0.85); font-weight: 500;
+    }
+    .badge span { font-size: 15px; }
+
+    /* ===================== LEAD FORM CARD ===================== */
+    .form-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      padding: 40px 36px; box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    .form-card::before {
+      content: ''; position: absolute;
+      top: -3px; left: 24px; right: 24px; height: 3px;
+      background: var(--green); border-radius: 100px;
+    }
+    .form-card-header { margin-bottom: 28px; }
+    .form-card-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 6px;
+    }
+    .form-card-header p { font-size: 14px; color: var(--text-muted); }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .form-group label .req { color: var(--green); margin-left: 2px; }
+    .form-group input {
+      width: 100%; padding: 13px 16px;
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text);
+      background: var(--off-white); outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(164,197,56,0.15);
+      background: var(--white);
+    }
+    .form-group input::placeholder { color: var(--text-light); }
+    .instagram-wrap { position: relative; }
+    .instagram-wrap .at-sign {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 15px; font-weight: 600; color: var(--text-muted);
+      pointer-events: none;
+    }
+    .instagram-wrap input { padding-left: 30px; }
+    .form-submit { width: 100%; padding: 15px; font-size: 16px; border-radius: var(--radius-sm); margin-top: 8px; }
+    .form-note {
+      text-align: center; font-size: 12px; color: var(--text-light);
+      margin-top: 12px; line-height: 1.5;
+    }
+    .form-note a { color: var(--green-dark); text-decoration: none; }
+    .form-count {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--green-xlight); border-radius: var(--radius-sm);
+      padding: 10px 14px; margin-bottom: 20px;
+    }
+    .form-count .avatars { display: flex; }
+    .form-count .avatars span {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 2px solid var(--white); display: flex; align-items: center;
+      justify-content: center; font-size: 11px; background: var(--green);
+      color: var(--white); font-weight: 700; margin-left: -8px;
+    }
+    .form-count .avatars span:first-child { margin-left: 0; }
+    .form-count p { font-size: 13px; color: var(--green-dark); font-weight: 500; }
+    .form-count p strong { font-weight: 700; }
+
+    /* ===================== TRUST BAR ===================== */
+    .trust-bar {
+      background: var(--green); padding: 18px 0;
+    }
+    .trust-bar .container {
+      display: flex; align-items: center; justify-content: center;
+      gap: 40px; flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--white); font-size: 14px; font-weight: 500;
+    }
+    .trust-item svg { width: 18px; height: 18px; opacity: 0.9; }
+
+    /* ===================== HOW IT WORKS ===================== */
+    .how-section { padding: 96px 0; background: var(--white); }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 3.5vw, 40px); font-weight: 700;
+      color: var(--text); margin-bottom: 14px; line-height: 1.2;
+    }
+    .section-header p {
+      font-size: 17px; color: var(--text-muted); max-width: 520px; margin: 0 auto;
+    }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    }
+    .step-card {
+      text-align: center; padding: 36px 24px;
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .step-card:hover { border-color: var(--green); box-shadow: var(--shadow-md); }
+    .step-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--green-xlight); display: flex; align-items: center;
+      justify-content: center; margin: 0 auto 20px; font-size: 28px;
+    }
+    .step-number {
+      font-size: 11px; font-weight: 700; color: var(--green);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .step-card h3 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .step-card p { font-size: 15px; color: var(--text-muted); line-height: 1.65; }
+
+    /* ===================== MENU PREVIEW ===================== */
+    .menu-section { padding: 96px 0; background: var(--off-white); }
+    .menu-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .menu-card {
+      background: var(--white); border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .menu-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .menu-img {
+      height: 180px; display: flex; align-items: center; justify-content: center;
+      font-size: 56px;
+    }
+    .menu-img.bg1 { background: linear-gradient(135deg, #FEF3C7, #FDE68A); }
+    .menu-img.bg2 { background: linear-gradient(135deg, #DCFCE7, #BBF7D0); }
+    .menu-img.bg3 { background: linear-gradient(135deg, #FCE7F3, #FBCFE8); }
+    .menu-img.bg4 { background: linear-gradient(135deg, #E0F2FE, #BAE6FD); }
+    .menu-img.bg5 { background: linear-gradient(135deg, #FEF9C3, #FEF08A); }
+    .menu-img.bg6 { background: linear-gradient(135deg, #ECFDF5, #A7F3D0); }
+    .menu-body { padding: 20px; }
+    .menu-tag {
+      display: inline-block; background: var(--green-light); color: var(--green-dark);
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; padding: 3px 10px; border-radius: 100px; margin-bottom: 8px;
+    }
+    .menu-body h3 { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+    .menu-body p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+    .menu-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px 16px; border-top: 1px solid var(--border);
+    }
+    .menu-macros { display: flex; gap: 12px; }
+    .macro { font-size: 12px; color: var(--text-muted); }
+    .macro strong { color: var(--text); }
+    .menu-kcal { font-size: 13px; font-weight: 700; color: var(--green-dark); }
+
+    /* ===================== WHY NUSA MEALS ===================== */
+    .why-section { padding: 96px 0; background: var(--white); }
+    .why-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+    }
+    .why-visual {
+      background: linear-gradient(135deg, var(--green-xlight) 0%, var(--green-light) 100%);
+      border-radius: var(--radius-lg); padding: 40px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .why-stat {
+      background: var(--white); border-radius: var(--radius);
+      padding: 20px 24px; box-shadow: var(--shadow-sm);
+      display: flex; align-items: center; gap: 16px;
+    }
+    .why-stat-icon { font-size: 32px; }
+    .why-stat-text h4 { font-size: 22px; font-weight: 800; color: var(--green-dark); }
+    .why-stat-text p { font-size: 14px; color: var(--text-muted); }
+    .why-content .section-label { text-align: left; }
+    .why-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 3vw, 38px); font-weight: 700;
+      color: var(--text); line-height: 1.25; margin-bottom: 18px;
+    }
+    .why-content h2 span { color: var(--green-dark); }
+    .why-content > p {
+      font-size: 16px; color: var(--text-muted); margin-bottom: 28px; line-height: 1.7;
+    }
+    .feature-list { display: flex; flex-direction: column; gap: 16px; }
+    .feature-item { display: flex; gap: 14px; align-items: flex-start; }
+    .feature-check {
+      width: 24px; height: 24px; min-width: 24px; border-radius: 50%;
+      background: var(--green); display: flex; align-items: center;
+      justify-content: center; margin-top: 2px;
+    }
+    .feature-check svg { width: 13px; height: 13px; color: var(--white); stroke: var(--white); }
+    .feature-item h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .feature-item p { font-size: 14px; color: var(--text-muted); line-height: 1.55; }
+
+    /* ===================== TESTIMONIALS ===================== */
+    .testimonials-section { padding: 96px 0; background: var(--off-white); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testimonial-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 28px; box-shadow: var(--shadow-sm);
+    }
+    .testi-stars { color: #F59E0B; font-size: 14px; margin-bottom: 14px; letter-spacing: 2px; }
+    .testi-text {
+      font-size: 15px; color: var(--text); line-height: 1.65;
+      margin-bottom: 20px; font-style: italic;
+    }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--green); display: flex; align-items: center;
+      justify-content: center; font-size: 16px; font-weight: 700; color: var(--white);
+      flex-shrink: 0;
+    }
+    .testi-name { font-size: 14px; font-weight: 700; color: var(--text); }
+    .testi-handle { font-size: 13px; color: var(--text-muted); }
+
+    /* ===================== CTA BANNER ===================== */
+    .cta-section {
+      padding: 80px 0;
+      background: linear-gradient(135deg, #1A2E0A 0%, #2D4A12 100%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(164,197,56,0.12) 0%, transparent 70%);
+    }
+    .cta-section .container { position: relative; z-index: 1; }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 44px); font-weight: 700;
+      color: var(--white); margin-bottom: 16px; line-height: 1.2;
+    }
+    .cta-section h2 span { color: var(--green); }
+    .cta-section p {
+      font-size: 17px; color: rgba(255,255,255,0.7); margin-bottom: 36px; max-width: 500px;
+      margin-left: auto; margin-right: auto;
+    }
+
+    /* ===================== FOOTER ===================== */
+    footer {
+      background: #111; padding: 48px 0 28px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-brand img { height: 40px; width: auto; margin-bottom: 14px; filter: brightness(0) invert(1); }
+    .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.65; max-width: 260px; }
+    .footer-col h4 {
+      font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.8);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 9px; }
+    .footer-col ul li a {
+      font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--green); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.35); }
+    .social-links { display: flex; gap: 12px; }
+    .social-links a {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); display: flex; align-items: center;
+      justify-content: center; color: rgba(255,255,255,0.5); font-size: 14px;
+      text-decoration: none; transition: background 0.2s, color 0.2s;
+    }
+    .social-links a:hover { background: var(--green); color: var(--white); }
+
+    /* ===================== SUCCESS STATE ===================== */
+    .form-success {
+      display: none; text-align: center; padding: 20px 0;
+    }
+    .form-success .success-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--green-light); display: flex; align-items: center;
+      justify-content: center; margin: 0 auto 16px; font-size: 28px;
+    }
+    .form-success h3 { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .form-success p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===================== RESPONSIVE ===================== */
+    @media (max-width: 900px) {
+      .waitlist-grid, .why-grid { grid-template-columns: 1fr; gap: 40px; }
+      .steps-grid, .menu-grid, .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 600px) {
+      .steps-grid, .menu-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .trust-bar .container { gap: 20px; }
+      .form-card { padding: 28px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="#" class="navbar-logo" aria-label="Nusa Meals home">
+        <img src="assets/logo.png" alt="Nusa Meals" />
+      </a>
+      <a href="#waitlist" class="navbar-cta">Join the Waitlist</a>
+    </div>
+  </nav>
+
+  <!-- ===================== WAITLIST HERO (TOP) ===================== -->
+  <section class="waitlist-section" id="waitlist" aria-labelledby="waitlist-heading">
+    <div class="container">
+      <div class="waitlist-grid">
+
+        <!-- Left: copy -->
+        <div class="waitlist-copy">
+          <span class="tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+            Pre-Launch — Bali
+          </span>
+          <h1 id="waitlist-heading">
+            Healthy Indonesian Food,<br /><span>Delivered to You</span> in Bali
+          </h1>
+          <p>
+            We're bringing authentic, nutritionist-approved Indonesian meals to expats, digital nomads, and health-conscious travelers — clean ingredients, bold flavors, zero compromise.
+          </p>
+          <div class="waitlist-badges">
+            <div class="badge"><span>🥗</span> Locally Sourced</div>
+            <div class="badge"><span>🏝️</span> Bali-Wide Delivery</div>
+            <div class="badge"><span>✅</span> No Nasty Additives</div>
+          </div>
+        </div>
+
+        <!-- Right: lead form -->
+        <div class="form-card" role="main">
+          <div class="form-count" aria-live="polite">
+            <div class="avatars" aria-hidden="true">
+              <span>A</span><span>K</span><span>S</span><span>+</span>
+            </div>
+            <p><strong>240+ people</strong> already on the list</p>
+          </div>
+          <div class="form-card-header">
+            <h2>Get Early Access</h2>
+            <p>Be the first to know when we launch — and unlock a special founding member offer.</p>
+          </div>
+
+          <form id="waitlistForm" novalidate aria-label="Waitlist sign-up form">
+            <div class="form-group">
+              <label for="fullName">Your Name <span class="req" aria-hidden="true">*</span></label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="e.g. Sarah Mitchell"
+                autocomplete="name"
+                required
+                aria-required="true"
+              />
+            </div>
+            <div class="form-group">
+              <label for="instagram">Instagram Username <span class="req" aria-hidden="true">*</span></label>
+              <div class="instagram-wrap">
+                <span class="at-sign" aria-hidden="true">@</span>
+                <input
+                  type="text"
+                  id="instagram"
+                  name="instagram"
+                  placeholder="yourusername"
+                  autocomplete="username"
+                  required
+                  aria-required="true"
+                  aria-describedby="ig-hint"
+                />
+              </div>
+              <span id="ig-hint" style="font-size:12px;color:var(--text-light);margin-top:4px;display:block;">We'll reach out here when we launch</span>
+            </div>
+            <button type="submit" class="btn-primary form-submit" aria-label="Join the waitlist">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Reserve My Spot
+            </button>
+            <p class="form-note">
+              No spam, ever. We'll only contact you about your spot.<br />
+              <a href="#privacy">Privacy Policy</a>
+            </p>
+          </form>
+
+          <!-- Success state -->
+          <div class="form-success" id="formSuccess" role="alert" aria-live="assertive">
+            <div class="success-icon" aria-hidden="true">🎉</div>
+            <h3>You're on the list!</h3>
+            <p>We'll DM you on Instagram the moment we launch. Keep an eye on <strong>@nusameals.bali</strong> for behind-the-scenes updates.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TRUST BAR ===================== -->
+  <div class="trust-bar" role="complementary" aria-label="Trust indicators">
+    <div class="container">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Fresh Daily Prep
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V10"/></svg>
+        Local Balinese Farms
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+        Nutritionist Designed
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Bali-Wide Delivery
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section class="how-section" aria-labelledby="how-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">How It Works</p>
+        <h2 id="how-heading">Healthy Eating Made Effortless</h2>
+        <p>From our kitchen to your door — no planning, no grocery runs, no compromise on taste.</p>
+      </div>
+      <div class="steps-grid" role="list">
+        <div class="step-card" role="listitem">
+          <div class="step-icon" aria-hidden="true">📋</div>
+          <p class="step-number">Step 01</p>
+          <h3>Choose Your Plan</h3>
+          <p>Pick from daily, weekly, or custom meal plans built around your dietary goals and taste preferences.</p>
+        </div>
+        <div class="step-card" role="listitem">
+          <div class="step-icon" aria-hidden="true">👨‍🍳</div>
+          <p class="step-number">Step 02</p>
+          <h3>We Prep & Cook</h3>
+          <p>Our chefs prepare everything fresh each morning using locally sourced ingredients and authentic recipes.</p>
+        </div>
+        <div class="step-card" role="listitem">
+          <div class="step-icon" aria-hidden="true">🛵</div>
+          <p class="step-number">Step 03</p>
+          <h3>Delivered to You</h3>
+          <p>Your meals arrive on time, eco-packaged and ready to eat — wherever you are in Bali.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MENU PREVIEW ===================== -->
+  <section class="menu-section" aria-labelledby="menu-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Menu Preview</p>
+        <h2 id="menu-heading">Indonesian Classics, Reimagined Healthy</h2>
+        <p>Traditional flavors you love, made with clean, whole ingredients your body will thank you for.</p>
+      </div>
+      <div class="menu-grid">
+
+        <article class="menu-card">
+          <div class="menu-img bg1" role="img" aria-label="Nasi Gudeg dish illustration">🍛</div>
+          <div class="menu-body">
+            <span class="menu-tag">Lunch</span>
+            <h3>Nasi Gudeg Sehat</h3>
+            <p>Young jackfruit curry over brown rice with steamed tempeh and sautéed greens.</p>
+          </div>
+          <div class="menu-footer">
+            <div class="menu-macros" aria-label="Nutrition info">
+              <span class="macro"><strong>32g</strong> Protein</span>
+              <span class="macro"><strong>8g</strong> Fat</span>
+            </div>
+            <span class="menu-kcal">480 kcal</span>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-img bg2" role="img" aria-label="Gado-Gado dish illustration">🥗</div>
+          <div class="menu-body">
+            <span class="menu-tag">Lunch / Dinner</span>
+            <h3>Gado-Gado Bowl</h3>
+            <p>Mixed steamed veggies, boiled egg, and tempeh in a light peanut sauce — no frying.</p>
+          </div>
+          <div class="menu-footer">
+            <div class="menu-macros" aria-label="Nutrition info">
+              <span class="macro"><strong>28g</strong> Protein</span>
+              <span class="macro"><strong>12g</strong> Fat</span>
+            </div>
+            <span class="menu-kcal">420 kcal</span>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-img bg3" role="img" aria-label="Soto Ayam dish illustration">🍜</div>
+          <div class="menu-body">
+            <span class="menu-tag">Breakfast / Lunch</span>
+            <h3>Soto Ayam Kuning</h3>
+            <p>Clear turmeric chicken broth with free-range chicken, rice vermicelli, and herbs.</p>
+          </div>
+          <div class="menu-footer">
+            <div class="menu-macros" aria-label="Nutrition info">
+              <span class="macro"><strong>36g</strong> Protein</span>
+              <span class="macro"><strong>6g</strong> Fat</span>
+            </div>
+            <span class="menu-kcal">390 kcal</span>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-img bg4" role="img" aria-label="Pepes Ikan dish illustration">🐟</div>
+          <div class="menu-body">
+            <span class="menu-tag">Dinner</span>
+            <h3>Pepes Ikan Bumbu Bali</h3>
+            <p>Steam-grilled local fish in banana leaf with Balinese spices and lemongrass.</p>
+          </div>
+          <div class="menu-footer">
+            <div class="menu-macros" aria-label="Nutrition info">
+              <span class="macro"><strong>40g</strong> Protein</span>
+              <span class="macro"><strong>9g</strong> Fat</span>
+            </div>
+            <span class="menu-kcal">360 kcal</span>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-img bg5" role="img" aria-label="Bubur Sumsum dish illustration">🥣</div>
+          <div class="menu-body">
+            <span class="menu-tag">Breakfast</span>
+            <h3>Bubur Sumsum Sehat</h3>
+            <p>Coconut rice porridge with palm sugar, topped with mung beans and fresh fruit.</p>
+          </div>
+          <div class="menu-footer">
+            <div class="menu-macros" aria-label="Nutrition info">
+              <span class="macro"><strong>12g</strong> Protein</span>
+              <span class="macro"><strong>7g</strong> Fat</span>
+            </div>
+            <span class="menu-kcal">310 kcal</span>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-img bg6" role="img" aria-label="Tempeh Orek dish illustration">🫘</div>
+          <div class="menu-body">
+            <span class="menu-tag">Snack / Side</span>
+            <h3>Tempeh Orek Manis</h3>
+            <p>Crispy tempeh stir-fried with coconut sugar, chili, and Javanese soy sauce.</p>
+          </div>
+          <div class="menu-footer">
+            <div class="menu-macros" aria-label="Nutrition info">
+              <span class="macro"><strong>22g</strong> Protein</span>
+              <span class="macro"><strong>10g</strong> Fat</span>
+            </div>
+            <span class="menu-kcal">280 kcal</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHY NUSA MEALS ===================== -->
+  <section class="why-section" aria-labelledby="why-heading">
+    <div class="container">
+      <div class="why-grid">
+
+        <div class="why-visual" aria-hidden="true">
+          <div class="why-stat">
+            <span class="why-stat-icon">🌿</span>
+            <div class="why-stat-text">
+              <h4>100%</h4>
+              <p>Natural ingredients, no MSG or artificial preservatives</p>
+            </div>
+          </div>
+          <div class="why-stat">
+            <span class="why-stat-icon">⏱️</span>
+            <div class="why-stat-text">
+              <h4>&lt; 3 hrs</h4>
+              <p>From kitchen to your door — always fresh, never reheated</p>
+            </div>
+          </div>
+          <div class="why-stat">
+            <span class="why-stat-icon">🌾</span>
+            <div class="why-stat-text">
+              <h4>80%+</h4>
+              <p>Ingredients sourced from local Balinese farms and markets</p>
+            </div>
+          </div>
+          <div class="why-stat">
+            <span class="why-stat-icon">🧑‍⚕️</span>
+            <div class="why-stat-text">
+              <h4>Certified</h4>
+              <p>Every menu designed with a registered Indonesian nutritionist</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="why-content">
+          <p class="section-label">Why Choose Us</p>
+          <h2 id="why-heading">Food That's Good For You <span>and Tastes Like Home</span></h2>
+          <p>We believe healthy food shouldn't mean boring food. Nusa Meals bridges the gap between authentic Indonesian cuisine and the clean eating lifestyle — so you never have to choose between the two.</p>
+          <div class="feature-list" role="list">
+            <div class="feature-item" role="listitem">
+              <div class="feature-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h4>Macro-Balanced Meals</h4>
+                <p>Every dish is tracked for calories, protein, carbs, and fats — so you always know what you're eating.</p>
+              </div>
+            </div>
+            <div class="feature-item" role="listitem">
+              <div class="feature-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h4>Flexible Dietary Options</h4>
+                <p>Vegan, gluten-free, high-protein, and low-carb options available — just tell us your needs.</p>
+              </div>
+            </div>
+            <div class="feature-item" role="listitem">
+              <div class="feature-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h4>Eco-Friendly Packaging</h4>
+                <p>All packaging is biodegradable or reusable — because Bali's beauty deserves to be protected.</p>
+              </div>
+            </div>
+            <div class="feature-item" role="listitem">
+              <div class="feature-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h4>English-Friendly Service</h4>
+                <p>Ordering, customizing, and support all happen in English — no language barrier, ever.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section class="testimonials-section" aria-labelledby="testi-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Early Feedback</p>
+        <h2 id="testi-heading">People Are Already Excited</h2>
+        <p>Here's what early supporters and taste-testers are saying about Nusa Meals.</p>
+      </div>
+      <div class="testimonials-grid">
+
+        <article class="testimonial-card">
+          <div class="testi-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="testi-text">"Finally, healthy Indonesian food that actually tastes authentic. As a digital nomad who's been in Bali for 6 months, this is exactly what I've been missing."</p>
+          <div class="testi-author">
+            <div class="testi-avatar" aria-hidden="true">J</div>
+            <div>
+              <p class="testi-name">James R.</p>
+              <p class="testi-handle">@jamesroams · 🇦🇺 Australian, based in Canggu</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card">
+          <div class="testi-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="testi-text">"I've tried every meal delivery in Bali and nothing comes close. The macros are on point and the flavors are incredible. Can't wait for the official launch!"</p>
+          <div class="testi-author">
+            <div class="testi-avatar" aria-hidden="true">S</div>
+            <div>
+              <p class="testi-name">Sophie L.</p>
+              <p class="testi-handle">@sophieinbali · 🇫🇷 French, based in Seminyak</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card">
+          <div class="testi-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="testi-text">"The Gado-Gado bowl blew my mind. Real local ingredients, proper portion size, and it arrived in 40 minutes. I'm already telling every expat I know about this."</p>
+          <div class="testi-author">
+            <div class="testi-avatar" aria-hidden="true">M</div>
+            <div>
+              <p class="testi-name">Marcus T.</p>
+              <p class="testi-handle">@marcusnomad · 🇩🇪 German, based in Ubud</p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BANNER ===================== -->
+  <section class="cta-section" aria-labelledby="cta-heading">
+    <div class="container">
+      <p class="section-label" style="color: var(--green); text-align: center; margin-bottom: 12px;">Limited Spots Available</p>
+      <h2 id="cta-heading">Don't Miss Your<br /><span>Founding Member Offer</span></h2>
+      <p>Be among the first 500 to join and get exclusive launch pricing, priority delivery, and a free taster box on your first order.</p>
+      <a href="#waitlist" class="btn-primary" style="font-size: 16px; padding: 16px 40px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Secure My Spot Now
+      </a>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="Nusa Meals" />
+          <p>Healthy Indonesian meal delivery for expats, digital nomads, and health-conscious travelers in Bali. Launching soon.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#waitlist">Join Waitlist</a></li>
+            <li><a href="#menu-heading">Menu Preview</a></li>
+            <li><a href="#how-heading">How It Works</a></li>
+            <li><a href="#why-heading">Why Nusa Meals</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#privacy" id="privacy">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nusa Meals. All rights reserved. Made with love in Bali 🌿</p>
+        <div class="social-links" aria-label="Social media links">
+          <a href="https://instagram.com/nusameals.bali" target="_blank" rel="noopener noreferrer" aria-label="Nusa Meals on Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" aria-label="Nusa Meals on TikTok">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.25 8.25 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    const form = document.getElementById('waitlistForm');
+    const successEl = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('fullName').value.trim();
+      const ig = document.getElementById('instagram').value.trim();
+
+      if (!name || !ig) {
+        const firstEmpty = !name
+          ? document.getElementById('fullName')
+          : document.getElementById('instagram');
+        firstEmpty.focus();
+        firstEmpty.style.borderColor = '#EF4444';
+        firstEmpty.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
+        setTimeout(() => {
+          firstEmpty.style.borderColor = '';
+          firstEmpty.style.boxShadow = '';
+        }, 2500);
+        return;
+      }
+
+      // Store to localStorage as a lightweight demo capture
+      const entry = { name, instagram: ig, joinedAt: new Date().toISOString() };
+      const existing = JSON.parse(localStorage.getItem('nm_waitlist') || '[]');
+      existing.push(entry);
+      localStorage.setItem('nm_waitlist', JSON.stringify(existing));
+
+      // Show success
+      form.style.display = 'none';
+      successEl.style.display = 'block';
+
+      // Smooth scroll to success message
+      successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    // Remove error state on input
+    ['fullName', 'instagram'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', function () {
+        this.style.borderColor = '';
+        this.style.boxShadow = '';
+      });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
