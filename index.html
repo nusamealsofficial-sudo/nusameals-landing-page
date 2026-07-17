@@ -127,15 +127,15 @@
 
     /* ===================== WAITLIST HERO ===================== */
     .waitlist-section {
-      background: linear-gradient(135deg, #1A2E0A 0%, #2D4A12 50%, #1A2E0A 100%);
+      background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('assets/hero-bali-bg.png.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       position: relative; overflow: hidden;
       padding: 80px 0 72px;
     }
     .waitlist-section::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23A4C538' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      pointer-events: none;
+      content: none;
     }
     .waitlist-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
@@ -293,18 +293,95 @@
 
     /* ===================== S2: WHY WE'RE BUILDING ===================== */
     .why-build-section { padding: 96px 0; background: var(--white); }
+    .why-build-section { background: #faf8f3; }
     .pain-grid {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 2rem;
     }
     .pain-card {
-      background: var(--off-white); border: 1.5px solid var(--border);
-      border-radius: var(--radius); padding: 28px 20px; text-align: center;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      background: #ffffff;
+      border: 1px solid #dfd5c0;
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(223, 213, 192, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      transition: box-shadow 0.2s, transform 0.2s;
     }
-    .pain-card:hover { border-color: var(--green); box-shadow: var(--shadow-md); transform: translateY(-3px); }
-    .pain-icon { font-size: 36px; margin-bottom: 14px; display: block; }
-    .pain-card h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-    .pain-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+    .pain-card:hover { box-shadow: 0 8px 28px rgba(223, 213, 192, 0.35); transform: translateY(-3px); }
+    .pain-card { cursor: pointer; }
+
+    /* ===================== PAIN POINT MODAL ===================== */
+    #painpoint-modal {
+      display: none; position: fixed; inset: 0; z-index: 600;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    #painpoint-modal.open { display: flex; }
+    #painpoint-modal .pm-box {
+      background: #fbf9f5;
+      border-radius: 24px;
+      padding: 2.5rem;
+      max-width: 650px; width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      position: relative;
+      max-height: 90vh; overflow-y: auto;
+    }
+    #painpoint-modal .pm-close {
+      position: absolute; top: 18px; right: 20px;
+      background: none; border: none;
+      font-size: 13px; font-weight: 700; color: var(--text);
+      cursor: pointer; letter-spacing: 0.04em;
+      padding: 4px 8px; border-radius: 6px;
+      transition: background 0.15s;
+    }
+    #painpoint-modal .pm-close:hover { background: var(--border); }
+    #modal-img {
+      width: 100%; max-height: 380px;
+      object-fit: cover; border-radius: 16px;
+      display: block; margin-bottom: 1.5rem;
+    }
+    #modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; font-weight: 700;
+      color: var(--text); margin-bottom: 12px; line-height: 1.25;
+    }
+    #modal-desc {
+      font-size: 15px; color: var(--text-muted); line-height: 1.75;
+    }
+    .pain-card.reverse { flex-direction: row-reverse; }
+    .pain-card.center-wide {
+      grid-column: span 2;
+      margin: 0 auto;
+      max-width: 750px;
+      width: 100%;
+    }
+    .pain-card-img {
+      flex-shrink: 0;
+      width: 220px;
+      height: 165px;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 14px;
+      display: block;
+    }
+    .pain-card-body { flex: 1; }
+    .pain-card h3 { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.35; }
+    .pain-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+    @media (max-width: 768px) {
+      .pain-grid { grid-template-columns: 1fr; padding: 0 1rem 2rem; }
+      .pain-card, .pain-card.reverse { flex-direction: column; align-items: flex-start; }
+      .pain-card.center-wide { grid-column: span 1; max-width: 100%; }
+      .pain-card-img { width: 100%; height: 200px; }
+    }
 
     /* ===================== S3: HOW IT WORKS ===================== */
     .how-section { padding: 96px 0; background: var(--off-white); }
@@ -368,7 +445,7 @@
     .pricing-grid {
       display: grid;
       grid-template-columns: 1fr 1.08fr 1fr;
-      gap: 24px;
+      gap: 36px;
       align-items: start;
     }
 
@@ -377,10 +454,11 @@
       background: var(--white);
       border: 1.5px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 32px 28px;
+      padding: 36px 32px;
       position: relative;
       display: flex;
       flex-direction: column;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
       transition: box-shadow 0.25s, transform 0.25s;
     }
     .pricing-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
@@ -389,7 +467,7 @@
     .pricing-card.popular {
       border-color: var(--green);
       box-shadow: 0 8px 32px rgba(164,197,56,0.22);
-      padding-top: 44px;
+      padding-top: 52px;
     }
     .pricing-card.popular:hover { transform: translateY(-6px); }
     .popular-ribbon {
@@ -410,17 +488,15 @@
       background: var(--green-xlight); color: var(--green-dark);
       font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
       text-transform: uppercase; padding: 4px 11px;
-      border-radius: 100px; margin-bottom: 14px;
+      border-radius: 100px; margin-bottom: 16px;
       width: fit-content;
     }
-    .pricing-card.popular .pricing-badge {
-      background: var(--green-light);
-    }
+    .pricing-card.popular .pricing-badge { background: var(--green-light); }
 
     /* Name & desc */
     .pricing-name {
       font-family: 'Playfair Display', serif;
-      font-size: 22px; font-weight: 700; color: var(--text);
+      font-size: 24px; font-weight: 700; color: var(--text);
       margin-bottom: 8px;
     }
     .pricing-desc {
@@ -429,10 +505,10 @@
     }
 
     /* Prices */
-    .pricing-prices { margin-bottom: 20px; }
+    .pricing-prices { margin-bottom: 24px; }
     .pricing-original {
       font-size: 14px; color: var(--text-light);
-      text-decoration: line-through; margin-bottom: 4px;
+      text-decoration: line-through; margin-bottom: 6px;
     }
     .pricing-founding-row {
       display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap;
@@ -443,7 +519,7 @@
       text-transform: uppercase; letter-spacing: 0.06em;
     }
     .pricing-amount {
-      font-size: 28px; font-weight: 800; color: var(--text);
+      font-size: 32px; font-weight: 800; color: var(--text);
       letter-spacing: -0.5px; line-height: 1;
     }
     .pricing-card.popular .pricing-amount { color: var(--green-dark); }
@@ -453,7 +529,7 @@
     .pricing-per-meal {
       font-size: 13px; color: var(--text-muted);
       background: var(--off-white); border-radius: 6px;
-      padding: 4px 10px; display: inline-block;
+      padding: 4px 10px; display: inline-block; margin-top: 6px;
     }
     .pricing-card.popular .pricing-per-meal {
       background: var(--green-xlight); color: var(--green-dark); font-weight: 600;
@@ -462,13 +538,13 @@
     /* Divider */
     .pricing-divider {
       border: none; border-top: 1px solid var(--border);
-      margin: 20px 0;
+      margin: 24px 0;
     }
 
     /* Features list */
     .pricing-features {
       list-style: none; display: flex; flex-direction: column;
-      gap: 10px; margin-bottom: 20px; flex: 1;
+      gap: 12px; margin-bottom: 24px; flex: 1;
     }
     .pricing-features li {
       display: flex; align-items: flex-start; gap: 10px;
@@ -482,11 +558,16 @@
     }
     .feat-check svg { width: 10px; height: 10px; stroke: #fff; }
 
+    /* Meal count highlight */
+    .pricing-features li:first-child {
+      font-size: 15px; font-weight: 700; color: var(--text);
+    }
+
     /* Suitable for */
     .pricing-suitable {
       font-size: 12px; color: var(--text-muted);
       border-top: 1px dashed var(--border);
-      padding-top: 14px; margin-bottom: 20px; line-height: 1.55;
+      padding-top: 16px; margin-bottom: 20px; line-height: 1.6;
     }
     .pricing-suitable strong { color: var(--text); }
 
@@ -494,16 +575,13 @@
     .pricing-cta {
       display: flex; align-items: center; justify-content: center;
       gap: 8px; width: 100%;
-      padding: 14px; border-radius: var(--radius-sm);
+      padding: 15px; border-radius: var(--radius-sm);
       font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700;
       cursor: pointer; transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
       text-decoration: none; border: 2px solid var(--green); color: var(--green-dark);
       background: var(--white);
     }
-    .pricing-cta:hover {
-      background: var(--green-xlight);
-      transform: translateY(-1px);
-    }
+    .pricing-cta:hover { background: var(--green-xlight); transform: translateY(-1px); }
     .pricing-card.popular .pricing-cta {
       background: var(--green); color: var(--white); border-color: var(--green);
       box-shadow: 0 4px 16px rgba(164,197,56,0.35);
@@ -513,14 +591,14 @@
     }
     .pricing-note {
       text-align: center; font-size: 12px; color: var(--text-light);
-      margin-top: 32px;
+      margin-top: 40px;
     }
     .pricing-note strong { color: var(--green-dark); }
 
     /* Responsive */
     @media (max-width: 900px) {
-      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
-      .pricing-card.popular { padding-top: 44px; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; gap: 28px; }
+      .pricing-card.popular { padding-top: 52px; }
     }
 
     /* ===================== S5: SAMPLE MEALS ===================== */
@@ -533,15 +611,17 @@
     }
     .meal-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
     .meal-img {
-      height: 160px; display: flex; align-items: center;
-      justify-content: center; font-size: 56px; position: relative;
+      aspect-ratio: 4 / 3;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
     }
-    .meal-img.c1 { background: linear-gradient(135deg, #FEF3C7, #FDE68A); }
-    .meal-img.c2 { background: linear-gradient(135deg, #DCFCE7, #BBF7D0); }
-    .meal-img.c3 { background: linear-gradient(135deg, #FCE7F3, #FBCFE8); }
-    .meal-img.c4 { background: linear-gradient(135deg, #E0F2FE, #BAE6FD); }
-    .meal-img.c5 { background: linear-gradient(135deg, #ECFDF5, #A7F3D0); }
-    .meal-img.c6 { background: linear-gradient(135deg, #FEF9C3, #FEF08A); }
+    .meal-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
     .meal-meal-tag {
       position: absolute; top: 12px; left: 12px;
       background: var(--white); color: var(--green-dark);
@@ -821,6 +901,74 @@
       .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
 
+    /* ===================== SUCCESS THANK YOU MODAL ===================== */
+    #success-modal {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(5px);
+      align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    #success-modal.open { display: flex; }
+    #success-modal .sm-box {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 2.5rem;
+      max-width: 550px; width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      position: relative;
+      max-height: 90vh; overflow-y: auto;
+    }
+    #success-modal .sm-close {
+      position: absolute; top: 16px; right: 18px;
+      background: #f3f4f6; border: none; border-radius: 50%;
+      width: 30px; height: 30px; font-size: 16px; line-height: 1;
+      cursor: pointer; color: #6B7280;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    #success-modal .sm-close:hover { background: #e5e7eb; }
+    #success-modal .sm-emoji { font-size: 40px; margin-bottom: 8px; display: block; }
+    #success-modal .sm-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; font-weight: 700; color: #1C1C1C;
+      margin-bottom: 16px;
+    }
+    #success-modal .sm-check {
+      width: 64px; height: 64px; margin: 0 auto 20px;
+      background: #EAF2C8; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #success-modal .sm-check svg { width: 32px; height: 32px; stroke: #7FA020; }
+    #success-modal .sm-welcome {
+      font-size: 18px; font-weight: 700; color: #1C1C1C;
+      margin-bottom: 12px;
+    }
+    #success-modal .sm-para {
+      font-size: 14px; color: #6B7280; line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    #success-modal .sm-benefit {
+      background: #F5F9E8; border: 1px solid #A4C538;
+      border-radius: 12px; padding: 14px 18px;
+      font-size: 14px; font-weight: 700; color: #7FA020;
+      margin-bottom: 16px; line-height: 1.55;
+    }
+    #success-modal .sm-social {
+      font-size: 13px; color: #9CA3AF; margin-bottom: 24px;
+    }
+    #success-modal .sm-social strong { color: #A4C538; }
+    #success-modal .sm-done {
+      width: 100%; padding: 14px;
+      background: #A4C538; color: #ffffff;
+      font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 700;
+      border: none; border-radius: 12px; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 16px rgba(164,197,56,0.35);
+    }
+    #success-modal .sm-done:hover { background: #7FA020; transform: translateY(-1px); }
+
     /* ===================== PRIVACY MODAL ===================== */
     .modal-overlay {
       display: none; position: fixed; inset: 0; z-index: 500;
@@ -920,25 +1068,25 @@
             Launching Soon — Bali
           </span>
           <h1 id="waitlist-heading">
-            Healthy Indonesian<br /><span>Meal Subscription</span> in Bali
+            Healthy Indonesian Meals,<br /><span>Delivered Fresh</span> Across Bali.
           </h1>
           <p>
-            Launching Soon. Enjoy authentic Indonesian flavors through a healthier, more convenient subscription experience.
+            Discover authentic Indonesian meals made healthier, prepared with transparent ingredients and delivered fresh every week.
           </p>
 
           <!-- Benefits list -->
           <ul class="hero-benefits" aria-label="What you get">
             <li>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Bali Belly Friendly
+              Designed to Help Reduce Bali Belly Risks
             </li>
             <li>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Transparent Ingredients
+              Know Every Ingredient You Eat
             </li>
             <li>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Nutrition Information
+              Calories &amp; Macros on Every Meal
             </li>
             <li>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -964,11 +1112,11 @@
             <div class="avatars" aria-hidden="true">
               <span>A</span><span>K</span><span>S</span><span>+</span>
             </div>
-            <p><strong>240+ people</strong> already on the list</p>
+            <p><strong>Join 240+ people</strong> already waiting for healthier Indonesian meals in Bali.</p>
           </div>
           <div class="form-card-header">
-            <h2>Get Early Access</h2>
-            <p>Be the first to know when we launch — and unlock a special founding member offer.</p>
+            <h2>🎉 First 100 Founding Members Get Rp100,000 Off</h2>
+            <p>Join the waitlist today and be one of the first 100 people to receive Rp100,000 off your first Nusa Meals subscription when we launch.</p>
           </div>
 
           <form id="waitlistForm" novalidate aria-label="Waitlist sign-up form">
@@ -1012,8 +1160,7 @@
             <span id="privacy-err1" style="display:none;font-size:12px;color:#EF4444;margin-top:4px;display:block;">Please accept the Privacy Policy to continue.</span>
 
             <button type="submit" class="btn-primary form-submit" style="margin-top:14px;" aria-label="Join the waitlist">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              Reserve My Spot
+              Reserve My Spot ✅
             </button>
 
             <p class="form-note" style="margin-top:10px;">
@@ -1064,34 +1211,54 @@
         <p>Living in Bali is incredible — but eating healthy and safely shouldn't be this hard.</p>
       </div>
       <div class="pain-grid">
-        <div class="pain-card reveal">
-          <span class="pain-icon" aria-hidden="true">🤢</span>
-          <h3>Bali Belly Concerns</h3>
-          <p>Unfamiliar water and hygiene standards can make every meal feel like a gamble.</p>
+        <div class="pain-card reveal" onclick="openPainModal('assets/Section 2_Decision Fatigue.png','Decision Fatigue','Spending your precious island time staring at endless warung menus, struggling to decide what is safe and healthy to eat.')">
+          <img class="pain-card-img" src="assets/Section 2_Decision Fatigue.png" alt="Decision Fatigue" />
+          <div class="pain-card-body">
+            <h3>Decision Fatigue</h3>
+            <p>Spending your precious island time staring at endless warung menus, struggling to decide what is safe and healthy to eat.</p>
+          </div>
         </div>
-        <div class="pain-card reveal">
-          <span class="pain-icon" aria-hidden="true">🔍</span>
-          <h3>Unknown Ingredients</h3>
-          <p>Hard to know what's actually in your food when menus lack detail.</p>
+        <div class="pain-card reveal" onclick="openPainModal('assets/Section 2_Unknown Ingredients.png','Mystery Ingredients','Hidden allergens, MSG, and low-quality seed oils. Eating out makes it nearly impossible to track what actually goes into your body.')">
+          <img class="pain-card-img" src="assets/Section 2_Unknown Ingredients.png" alt="Mystery Ingredients" />
+          <div class="pain-card-body">
+            <h3>Mystery Ingredients</h3>
+            <p>Hidden allergens, MSG, and low-quality seed oils. Eating out makes it nearly impossible to track what actually goes into your body.</p>
+          </div>
         </div>
-        <div class="pain-card reveal">
-          <span class="pain-icon" aria-hidden="true">🧼</span>
-          <h3>Hygiene Concerns</h3>
-          <p>Not all kitchens maintain the standards expats and travelers expect.</p>
+        <div class="pain-card reveal" onclick="openPainModal('assets/Section 2_no time to cook.png','No Time to Prep &amp; Clean','Caught between surfing sessions, temple exploring, and remote work? No one wants to spend their Bali getaway grocery shopping and cooking.')">
+          <img class="pain-card-img" src="assets/Section 2_no time to cook.png" alt="No Time to Prep & Clean" />
+          <div class="pain-card-body">
+            <h3>No Time to Prep &amp; Clean</h3>
+            <p>Caught between surfing sessions, temple exploring, and remote work? No one wants to spend their Bali getaway grocery shopping and cooking.</p>
+          </div>
         </div>
-        <div class="pain-card reveal">
-          <span class="pain-icon" aria-hidden="true">⏰</span>
-          <h3>No Time to Cook</h3>
-          <p>Between work, surf, and exploration — who has time to grocery shop and cook?</p>
+        <div class="pain-card reverse reveal" onclick="openPainModal('assets/Section 2_Hygine concern.jpeg','Hygiene Standards','Worrying about the cleanliness of food preparation areas, raw ingredient handling, and the safety of the water used in daily cooking.')">
+          <img class="pain-card-img" src="assets/Section 2_Hygine concern.jpeg" alt="Hygiene Standards" />
+          <div class="pain-card-body">
+            <h3>Hygiene Standards</h3>
+            <p>Worrying about the cleanliness of food preparation areas, raw ingredient handling, and the safety of the water used in daily cooking.</p>
+          </div>
         </div>
-        <div class="pain-card reveal">
-          <span class="pain-icon" aria-hidden="true">😵</span>
-          <h3>Decision Fatigue</h3>
-          <p>Spending too much energy every day deciding what to eat when you should be creating.</p>
+        <div class="pain-card center-wide reveal" onclick="openPainModal('assets/Section 2_Bali Belly Concerns.png','The Dreaded &quot;Bali Belly&quot;','The constant underlying fear of food poisoning ruining your dream vacation or putting your active, healthy lifestyle on an abrupt halt.')">
+          <img class="pain-card-img" src="assets/Section 2_Bali Belly Concerns.png" alt="The Dreaded Bali Belly" />
+          <div class="pain-card-body">
+            <h3>The Dreaded "Bali Belly"</h3>
+            <p>The constant underlying fear of food poisoning ruining your dream vacation or putting your active, healthy lifestyle on an abrupt halt.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ===================== PAIN POINT MODAL ===================== -->
+  <div id="painpoint-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closePainModal(event)">
+    <div class="pm-box">
+      <button class="pm-close" onclick="closePainModal()" aria-label="Close modal">Close ✕</button>
+      <img id="modal-img" src="" alt="" />
+      <h2 id="modal-title"></h2>
+      <p id="modal-desc"></p>
+    </div>
+  </div>
 
   <!-- ===================== S3: HOW IT WORKS ===================== -->
   <section class="how-section" id="how" aria-labelledby="how-heading">
@@ -1169,8 +1336,8 @@
   <section class="diff-section" id="different" aria-labelledby="diff-heading">
     <div class="container">
       <div class="section-header reveal">
-        <p class="section-label">What Makes Nusa Meals Different</p>
-        <h2 id="diff-heading">Built Around Your Health and Peace of Mind</h2>
+        <p class="section-label">Why Choose Nusa Meals?</p>
+        <h2 id="diff-heading">Every Meal Is Designed Around Your Health, Convenience, and Peace of Mind</h2>
         <p>Every decision we make starts with one question: is this better for our customers?</p>
       </div>
       <div class="diff-grid">
@@ -1347,116 +1514,116 @@
       <div class="meals-grid">
 
         <article class="meal-card reveal">
-          <div class="meal-img c1" role="img" aria-label="Ayam Betutu illustration">
-            🍗
+          <div class="meal-img" role="img" aria-label="Organic Chicken Sate Lilit">
+            <img src="assets/Section 6_Sate Lilit Ayam Organik.png" alt="Organic Chicken Sate Lilit" />
             <span class="meal-meal-tag">Lunch / Dinner</span>
           </div>
           <div class="meal-body">
-            <h3>Healthy Ayam Betutu</h3>
-            <p>Slow-cooked Balinese spiced chicken, steamed in banana leaf with turmeric and galangal — no frying, full flavor.</p>
-          </div>
-          <div class="meal-footer">
-            <div class="meal-macros" aria-label="Nutrition info">
-              <span class="meal-macro"><strong>38g</strong> Protein</span>
-              <span class="meal-macro"><strong>9g</strong> Fat</span>
-              <span class="meal-macro"><strong>32g</strong> Carbs</span>
-            </div>
-            <span class="meal-kcal">440 kcal</span>
-          </div>
-        </article>
-
-        <article class="meal-card reveal">
-          <div class="meal-img c2" role="img" aria-label="Rendang Bowl illustration">
-            🥩
-            <span class="meal-meal-tag">Lunch / Dinner</span>
-          </div>
-          <div class="meal-body">
-            <h3>Protein Rendang Bowl</h3>
-            <p>Lean slow-braised beef rendang over brown rice with fresh cucumber and steamed greens. High-protein, lower fat.</p>
-          </div>
-          <div class="meal-footer">
-            <div class="meal-macros" aria-label="Nutrition info">
-              <span class="meal-macro"><strong>42g</strong> Protein</span>
-              <span class="meal-macro"><strong>11g</strong> Fat</span>
-              <span class="meal-macro"><strong>38g</strong> Carbs</span>
-            </div>
-            <span class="meal-kcal">490 kcal</span>
-          </div>
-        </article>
-
-        <article class="meal-card reveal">
-          <div class="meal-img c3" role="img" aria-label="Nasi Campur illustration">
-            🍛
-            <span class="meal-meal-tag">Lunch</span>
-          </div>
-          <div class="meal-body">
-            <h3>Healthy Nasi Campur</h3>
-            <p>Mixed rice bowl with grilled tempeh, sautéed spinach, shredded chicken, and sambal matah on the side.</p>
+            <h3>Organic Chicken Sate Lilit</h3>
+            <p>Traditional Balinese minced organic chicken skewers infused with aromatic lemongrass, grated coconut, and local herbs, grilled to smoky perfection.</p>
           </div>
           <div class="meal-footer">
             <div class="meal-macros" aria-label="Nutrition info">
               <span class="meal-macro"><strong>30g</strong> Protein</span>
-              <span class="meal-macro"><strong>7g</strong> Fat</span>
-              <span class="meal-macro"><strong>45g</strong> Carbs</span>
+              <span class="meal-macro"><strong>9g</strong> Fat</span>
+              <span class="meal-macro"><strong>12g</strong> Carbs</span>
             </div>
-            <span class="meal-kcal">420 kcal</span>
+            <span class="meal-kcal">250 kcal</span>
           </div>
         </article>
 
         <article class="meal-card reveal">
-          <div class="meal-img c4" role="img" aria-label="Grilled Fish Sambal illustration">
-            🐟
+          <div class="meal-img" role="img" aria-label="Singkarak Grilled Fish">
+            <img src="assets/Section 6_Singkarak Grilled.png" alt="Singkarak Grilled Fish" />
             <span class="meal-meal-tag">Dinner</span>
           </div>
           <div class="meal-body">
-            <h3>Grilled Fish Sambal Matah</h3>
-            <p>Fresh local fish grilled over charcoal, served with raw Balinese sambal matah, lime, and steamed vegetables.</p>
+            <h3>Singkarak Grilled Fish</h3>
+            <p>Fresh lake-caught fish grilled with a rich Sumatran spiced chili glaze, served with a side of crisp cucumbers and authentic green sambal.</p>
           </div>
           <div class="meal-footer">
             <div class="meal-macros" aria-label="Nutrition info">
-              <span class="meal-macro"><strong>44g</strong> Protein</span>
-              <span class="meal-macro"><strong>8g</strong> Fat</span>
-              <span class="meal-macro"><strong>18g</strong> Carbs</span>
+              <span class="meal-macro"><strong>38g</strong> Protein</span>
+              <span class="meal-macro"><strong>7g</strong> Fat</span>
+              <span class="meal-macro"><strong>22g</strong> Carbs</span>
             </div>
-            <span class="meal-kcal">360 kcal</span>
+            <span class="meal-kcal">300 kcal</span>
           </div>
         </article>
 
         <article class="meal-card reveal">
-          <div class="meal-img c5" role="img" aria-label="Tempe Power Bowl illustration">
-            🫘
-            <span class="meal-meal-tag">Lunch / Snack</span>
+          <div class="meal-img" role="img" aria-label="Ubud Red Rice Mixed Bowl">
+            <img src="assets/Section 6_Nasi Campur Ubud.png" alt="Ubud Red Rice Mixed Bowl" />
+            <span class="meal-meal-tag">Lunch</span>
           </div>
           <div class="meal-body">
-            <h3>Tempe Power Bowl</h3>
-            <p>Crispy baked tempeh over quinoa with roasted sweet potato, edamame, and peanut-tamari dressing.</p>
+            <h3>Ubud Red Rice Mixed Bowl</h3>
+            <p>A nutrient-dense Balinese platter featuring organic red rice, chicken sate, fresh vegetable "urab", and our signature spicy sambal matah.</p>
           </div>
           <div class="meal-footer">
             <div class="meal-macros" aria-label="Nutrition info">
-              <span class="meal-macro"><strong>28g</strong> Protein</span>
-              <span class="meal-macro"><strong>12g</strong> Fat</span>
-              <span class="meal-macro"><strong>40g</strong> Carbs</span>
+              <span class="meal-macro"><strong>32g</strong> Protein</span>
+              <span class="meal-macro"><strong>10g</strong> Fat</span>
+              <span class="meal-macro"><strong>45g</strong> Carbs</span>
             </div>
-            <span class="meal-kcal">390 kcal</span>
+            <span class="meal-kcal">400 kcal</span>
           </div>
         </article>
 
         <article class="meal-card reveal">
-          <div class="meal-img c6" role="img" aria-label="Soto Ayam illustration">
-            🍜
+          <div class="meal-img" role="img" aria-label="Traditional Soto Kudus">
+            <img src="assets/Section 6_Soto Kudus.png" alt="Traditional Soto Kudus" />
             <span class="meal-meal-tag">Breakfast / Lunch</span>
           </div>
           <div class="meal-body">
-            <h3>Clear Soto Ayam Sehat</h3>
-            <p>Light turmeric chicken broth with free-range shredded chicken, rice vermicelli, boiled egg, and fresh herbs.</p>
+            <h3>Traditional Soto Kudus</h3>
+            <p>A comforting, aromatic chicken broth infused with turmeric and local spices, filled with shredded chicken and bean sprouts, served with a side of quail egg skewers.</p>
           </div>
           <div class="meal-footer">
             <div class="meal-macros" aria-label="Nutrition info">
-              <span class="meal-macro"><strong>34g</strong> Protein</span>
-              <span class="meal-macro"><strong>6g</strong> Fat</span>
+              <span class="meal-macro"><strong>26g</strong> Protein</span>
+              <span class="meal-macro"><strong>8g</strong> Fat</span>
               <span class="meal-macro"><strong>28g</strong> Carbs</span>
             </div>
+            <span class="meal-kcal">290 kcal</span>
+          </div>
+        </article>
+
+        <article class="meal-card reveal">
+          <div class="meal-img" role="img" aria-label="Madiun Pecel Quinoa Bowl">
+            <img src="assets/Section 6_Pecel Madiun.png" alt="Madiun Pecel Quinoa Bowl" />
+            <span class="meal-meal-tag">Lunch / Snack</span>
+          </div>
+          <div class="meal-body">
+            <h3>Madiun Pecel Quinoa Bowl</h3>
+            <p>A vibrant plant-based bowl of steamed local greens over high-fiber quinoa, drizzled with savory peanut-chili sauce and topped with baked tempeh.</p>
+          </div>
+          <div class="meal-footer">
+            <div class="meal-macros" aria-label="Nutrition info">
+              <span class="meal-macro"><strong>16g</strong> Protein</span>
+              <span class="meal-macro"><strong>14g</strong> Fat</span>
+              <span class="meal-macro"><strong>38g</strong> Carbs</span>
+            </div>
             <span class="meal-kcal">340 kcal</span>
+          </div>
+        </article>
+
+        <article class="meal-card reveal">
+          <div class="meal-img" role="img" aria-label="Mushroom & Tempeh Rendang">
+            <img src="assets/Section 6_Rendang Jamur.png" alt="Mushroom & Tempeh Rendang" />
+            <span class="meal-meal-tag">Dinner</span>
+          </div>
+          <div class="meal-body">
+            <h3>Mushroom &amp; Tempeh Rendang</h3>
+            <p>A rich, plant-based twist on the classic Rendang, featuring tender mushrooms and local organic tempeh slow-simmered in caramelized coconut milk.</p>
+          </div>
+          <div class="meal-footer">
+            <div class="meal-macros" aria-label="Nutrition info">
+              <span class="meal-macro"><strong>14g</strong> Protein</span>
+              <span class="meal-macro"><strong>12g</strong> Fat</span>
+              <span class="meal-macro"><strong>26g</strong> Carbs</span>
+            </div>
+            <span class="meal-kcal">270 kcal</span>
           </div>
         </article>
 
@@ -1505,8 +1672,8 @@
         <!-- Left: benefits copy -->
         <div class="ea-copy reveal">
           <p class="section-label">Join Before Launch</p>
-          <h2 id="ea-heading">Get <span>Early Access</span> as a Founding Member</h2>
-          <p>Reserve your spot now and lock in perks that won't be available after launch day. We're only accepting a limited number of founding members.</p>
+          <h2 id="ea-heading">Become a <span>Founding Member</span> Before We Launch.</h2>
+          <p>Join today to lock in lifetime founding pricing and priority delivery before we officially launch.</p>
           <ul class="ea-benefits" aria-label="Founding member benefits">
             <li>
               <span class="ea-check" aria-hidden="true">
@@ -1670,7 +1837,7 @@
       <div class="cta-inner reveal">
 
         <p class="section-label">Limited Founding Member Spots</p>
-        <h2 id="cta-heading">Ready to Eat <span>Healthy &amp; Delicious</span><br />Every Day in Bali?</h2>
+        <h2 id="cta-heading">Ready to Enjoy <span>Healthy Indonesian Meals</span><br />Every Day?</h2>
         <p>Join the waitlist now and secure your founding member rate — exclusive pricing, priority delivery, and early access, locked in for life.</p>
 
         <div class="cta-stats" aria-label="Key numbers">
@@ -1776,6 +1943,26 @@
     </div>
   </footer>
 
+  <!-- ===================== SUCCESS THANK YOU MODAL ===================== -->
+  <div id="success-modal" role="dialog" aria-modal="true" aria-labelledby="sm-title-text" onclick="closeSuccessModal(event)">
+    <div class="sm-box">
+      <button class="sm-close" onclick="closeSuccessModal()" aria-label="Close">&#x2715;</button>
+      <span class="sm-emoji">🎉</span>
+      <h2 class="sm-title" id="sm-title-text">Waitlist Confirmed!</h2>
+      <div class="sm-check" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <p class="sm-welcome" id="sm-welcome-text">Welcome! Your reservation is secured.</p>
+      <p class="sm-para">Thank you for joining the future of healthier Indonesian nourishment in Bali. We are thrilled to have you as part of our waitlist.</p>
+      <div class="sm-benefit">🎉 Founding Member Offer Confirmed!<br/>You are on track to receive <strong>Rp100,000 OFF</strong> your first Nusa Meals subscription.</div>
+      <p class="sm-para">We will reach out to you via Instagram DM as we prepare for our launch with next steps and sneak peeks.</p>
+      <p class="sm-social">For updates and an early look, follow us: <strong>@nusameals.bali</strong></p>
+      <button class="sm-done" onclick="closeSuccessModal()">Done</button>
+    </div>
+  </div>
+
   <!-- ===================== PRIVACY POLICY MODAL ===================== -->
   <div class="modal-overlay" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-box">
@@ -1801,6 +1988,44 @@
 
   <!-- ===================== JAVASCRIPT ===================== -->
   <script>
+    /* ---------- Thank You / Success Modal ---------- */
+    function openSuccessModal(fullName) {
+      var firstName = fullName.trim().split(/\s+/)[0];
+      firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+      document.getElementById('sm-welcome-text').textContent = 'Welcome, ' + firstName + '! Your reservation is secured.';
+      var modal = document.getElementById('success-modal');
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSuccessModal(e) {
+      var modal = document.getElementById('success-modal');
+      if (!e || e.target === modal || e.currentTarget.tagName === 'BUTTON') {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    /* ---------- Pain Point Modal ---------- */
+    function openPainModal(imgSrc, title, desc) {
+      var modal = document.getElementById('painpoint-modal');
+      document.getElementById('modal-img').src = imgSrc;
+      document.getElementById('modal-img').alt = title;
+      document.getElementById('modal-title').innerHTML = title;
+      document.getElementById('modal-desc').textContent = desc;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePainModal(e) {
+      var modal = document.getElementById('painpoint-modal');
+      if (!e || e.target === modal || e.currentTarget.classList.contains('pm-close')) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closePainModal();
+    });
+
     /* ---------- Helper: field error ---------- */
     function showFieldError(el) {
       el.focus();
@@ -1843,6 +2068,7 @@
         form.style.display    = 'none';
         success.style.display = 'block';
         success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        openSuccessModal(name);
 
         /* Send to Google Sheets in background */
         if (SHEETS_URL && SHEETS_URL !== 'PASTE_YOUR_WEB_APP_URL_HERE') {
