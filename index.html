@@ -180,7 +180,6 @@
   .mobile-backdrop.active { display: block; }
 
   .mobile-menu {
-    display: none;
     position: fixed;
     top: 0;
     right: -280px;
@@ -191,6 +190,7 @@
     padding: 80px 32px 32px;
     transition: right var(--transition);
     box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+    overflow-y: auto;
   }
 
   .mobile-menu.active { right: 0; }
@@ -209,6 +209,35 @@
     display: block;
     text-align: center;
     margin-top: 24px;
+  }
+
+  .mobile-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--text-dark);
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+  }
+
+  .mobile-lang {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 4px;
+    background: var(--bg-alt);
+  }
+
+  .mobile-lang .lang-btn {
+    padding: 10px;
+    font-size: 13px;
+    border-radius: 8px;
+    text-align: center;
+    justify-content: center;
   }
 
   /* HERO */
@@ -1111,38 +1140,61 @@
   @media (max-width: 768px) {
     .nav-links, .nav-cta-desktop { display: none; }
     .nav-hamburger { display: flex; }
+    .lang-switcher { display: none; }
 
     .hero-grid {
       grid-template-columns: 1fr;
       gap: 32px;
     }
 
-    .hero-left h1 { font-size: 32px; }
+    .hero-left h1 { font-size: 28px; }
+    .hero-subtitle { font-size: 14px; }
+    .hero-price { font-size: 13px; }
 
-    .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-card { padding: 24px 20px; }
+    .form-card h3 { font-size: 16px; }
+
+    .section-header h2 { font-size: 24px; }
+    .section-header p { font-size: 14px; }
+    .section-header h2::before { font-size: 20px; }
+
+    .why-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .why-card { padding: 20px 12px; }
+    .why-card .icon { font-size: 28px; }
+    .why-card h4 { font-size: 12px; }
+    .why-card p { font-size: 11px; }
+
     .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+    .pricing-card.recommended { transform: none; }
+
     .meals-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
 
-    .footer-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-    }
+    .trust-badges { gap: 8px; }
+    .trust-badge { font-size: 11px; padding: 8px 12px; }
 
-    .footer-bottom {
-      flex-direction: column;
-      gap: 8px;
-      text-align: center;
-    }
+    .section-why, .section-pricing, .section-meals, .section-faq, .section-how-subscribe { padding: 60px 0; }
 
-    .trust-badges { gap: 10px; }
-    .trust-badge { font-size: 12px; padding: 8px 14px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .footer-brand { grid-column: 1 / -1; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    .footer-bottom-links { justify-content: center; }
+
+    .section-cta h2 { font-size: 22px; }
+    .btn-cta-final { font-size: 13px; padding: 14px 24px; }
+
+    .container { padding: 0 16px; }
+    .nav-logo img { height: 48px; }
   }
 
   @media (max-width: 480px) {
     .why-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
-    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
-    .footer-bottom { flex-direction: column; align-items: flex-start; }
-    .footer-bottom-links { flex-direction: column; gap: 8px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+    .footer-bottom { flex-direction: column; align-items: center; }
+    .footer-bottom-links { flex-direction: column; gap: 8px; align-items: center; }
+    .hero-left h1 { font-size: 24px; }
+    .nav-logo img { height: 40px; }
+    .pricing-card { padding: 24px 18px; }
+    .section-cta { padding: 48px 0; }
   }
 </style>
 <body>
@@ -1175,12 +1227,17 @@
   <!-- MOBILE MENU -->
   <div class="mobile-backdrop" id="mobileBackdrop"></div>
   <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
     <a href="#waitlist" data-lang-en="Home" data-lang-id="Beranda">Home</a>
     <a href="#how-it-works" data-lang-en="Why Us" data-lang-id="Mengapa Kami">Why Us</a>
     <a href="#pricing" data-lang-en="Pricing" data-lang-id="Harga">Pricing</a>
     <a href="#how-to-subscribe" data-lang-en="How It Works" data-lang-id="Cara Kerja">How It Works</a>
     <a href="#menu" data-lang-en="Menu" data-lang-id="Menu">Menu</a>
     <a href="#faq" data-lang-en="FAQ" data-lang-id="FAQ">FAQ</a>
+    <div class="mobile-lang" style="display:flex;gap:8px;margin-top:16px;margin-bottom:16px;">
+      <button class="lang-btn active" data-lang="en" style="flex:1;">🇬🇧 EN</button>
+      <button class="lang-btn" data-lang="id" style="flex:1;">🇮🇩 ID</button>
+    </div>
     <a href="#waitlist" class="nav-cta" data-lang-en="Join Now — Get $6 Off" data-lang-id="Gabung Sekarang — Diskon Rp100K">Join Now — Get $6 Off</a>
   </div>
 
@@ -1616,6 +1673,7 @@
 
     hamburger.addEventListener('click', openMobile);
     mobileBackdrop.addEventListener('click', closeMobile);
+    document.getElementById('mobileClose').addEventListener('click', closeMobile);
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', closeMobile);
     });
