@@ -1,2646 +1,1998 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nusa Meals – Healthy Indonesian Meal Subscription in Bali</title>
-  <meta name="description" content="Launching soon. Enjoy authentic Indonesian flavors through a healthier, more convenient subscription experience. Join the waitlist now." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    /* ===================== RESET & BASE ===================== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #FAFAF8;
-      color: #1C1C1C;
-      line-height: 1.6;
-    }
-
-    /* ===================== VARIABLES ===================== */
-    :root {
-      --green: #A4C538;
-      --green-dark: #7FA020;
-      --green-light: #EAF2C8;
-      --green-xlight: #F5F9E8;
-      --white: #FFFFFF;
-      --off-white: #FAFAF8;
-      --text: #1C1C1C;
-      --text-muted: #6B7280;
-      --text-light: #9CA3AF;
-      --border: #E5E7EB;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
-      --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
-      --radius: 14px;
-      --radius-sm: 8px;
-      --radius-lg: 24px;
-    }
-
-    /* ===================== UTILITY ===================== */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    .tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--green-light); color: var(--green-dark);
-      font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; padding: 5px 12px; border-radius: 100px;
-    }
-    .tag svg { width: 13px; height: 13px; }
-    .section-label {
-      font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--green-dark); margin-bottom: 10px;
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      background: var(--green); color: var(--white);
-      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700;
-      padding: 14px 32px; border-radius: 100px; border: none; cursor: pointer;
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 4px 16px rgba(164,197,56,0.35);
-      text-decoration: none;
-    }
-    .btn-primary:hover {
-      background: var(--green-dark);
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(164,197,56,0.4);
-    }
-    .btn-primary:active { transform: translateY(0); }
-
-    /* ===================== NAVBAR ===================== */
-    .navbar {
-      position: sticky; top: 0; z-index: 200;
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-    .navbar .container {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
-    }
-
-    /* Logo */
-    .navbar-logo img { height: 48px; width: auto; display: block; }
-
-    /* Desktop menu */
-    .navbar-menu {
-      display: flex; align-items: center; gap: 2px; list-style: none;
-      margin: 0; padding: 0;
-    }
-    .navbar-menu a {
-      font-size: 13px; font-weight: 600; color: var(--text-muted);
-      text-decoration: none; padding: 7px 14px; border-radius: 8px;
-      transition: color 0.15s, background 0.15s; white-space: nowrap;
-      position: relative; display: block;
-    }
-    .navbar-menu a:hover,
-    .navbar-menu a.active {
-      color: var(--green-dark);
-      background: var(--green-xlight);
-    }
-    /* active underline dot */
-    .navbar-menu a.active::after {
-      content: '';
-      position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
-      width: 4px; height: 4px; border-radius: 50%;
-      background: var(--green);
-    }
-
-    /* Right side */
-    .navbar-right { display: flex; align-items: center; gap: 10px; }
-    .navbar-cta {
-      font-size: 13px; font-weight: 700; color: var(--white);
-      text-decoration: none; padding: 9px 20px;
-      background: var(--green); border-radius: 100px;
-      transition: background 0.2s, transform 0.15s;
-      box-shadow: 0 3px 10px rgba(164,197,56,0.3);
-      white-space: nowrap;
-    }
-    .navbar-cta:hover { background: var(--green-dark); transform: translateY(-1px); }
-
-    /* Hamburger button */
-    .navbar-toggle {
-      display: none; flex-direction: column; justify-content: center;
-      gap: 5px; background: none; border: none; cursor: pointer;
-      padding: 8px; border-radius: 8px; transition: background 0.15s;
-      width: 40px; height: 40px;
-    }
-    .navbar-toggle:hover { background: var(--green-xlight); }
-    .navbar-toggle span {
-      display: block; width: 22px; height: 2px;
-      background: var(--text); border-radius: 2px;
-      transition: transform 0.28s ease, opacity 0.2s ease, width 0.2s ease;
-      transform-origin: center;
-    }
-    /* Animated X state */
-    .navbar-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .navbar-toggle.open span:nth-child(2) { opacity: 0; width: 0; }
-    .navbar-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* Mobile backdrop */
-    .nav-backdrop {
-      display: none; position: fixed; inset: 0; z-index: 199;
-      background: rgba(0,0,0,0.3); backdrop-filter: blur(2px);
-    }
-    .nav-backdrop.open { display: block; }
-
-    /* Mobile drawer */
-    @media (max-width: 860px) {
-      .navbar-logo img { height: 42px; }
-      .navbar-toggle { display: flex; }
-
-      .navbar-menu {
-        display: flex;
-        position: fixed; top: 64px; left: 0; right: 0;
-        background: var(--white);
-        border-bottom: 1px solid var(--border);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.10);
-        flex-direction: column; align-items: stretch; gap: 0;
-        padding: 8px 16px 20px;
-        /* hidden by default */
-        transform: translateY(-110%);
-        opacity: 0;
-        pointer-events: none;
-        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease;
-        z-index: 200;
-      }
-      .navbar-menu.open {
-        transform: translateY(0);
-        opacity: 1;
-        pointer-events: auto;
-      }
-      .navbar-menu li { border-bottom: 1px solid var(--border); }
-      .navbar-menu li:last-child { border-bottom: none; }
-      .navbar-menu a {
-        padding: 14px 8px; width: 100%; font-size: 15px;
-        display: flex; align-items: center; justify-content: space-between;
-        border-radius: 0;
-      }
-      .navbar-menu a::after { content: none !important; }
-      .navbar-menu a:hover, .navbar-menu a.active {
-        background: var(--green-xlight); border-radius: var(--radius-sm);
-        padding-left: 12px;
-      }
-      /* Hide CTA in navbar-right on mobile — it's in the menu */
-      .navbar-cta { display: none; }
-      /* Full-width CTA at bottom of mobile menu */
-      .navbar-menu-cta {
-        display: block; margin-top: 12px;
-        text-align: center; padding: 13px;
-        background: var(--green); color: var(--white);
-        font-size: 15px; font-weight: 700; border-radius: var(--radius-sm);
-        text-decoration: none; transition: background 0.2s;
-      }
-      .navbar-menu-cta:hover { background: var(--green-dark); }
-    }
-    @media (min-width: 861px) {
-      .navbar-menu-cta,
-      .nav-cta-item { display: none; }
-    }
-
-    /* ===================== WAITLIST HERO ===================== */
-    .waitlist-section {
-      background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('assets/hero-bali-bg.png.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      position: relative; overflow: hidden;
-      padding: 80px 0 72px;
-    }
-    .waitlist-section::before {
-      content: none;
-    }
-    .waitlist-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
-      align-items: center; position: relative; z-index: 1;
-    }
-    .waitlist-copy { color: var(--white); }
-    .waitlist-copy .tag {
-      background: rgba(164,197,56,0.18); color: var(--green);
-      margin-bottom: 20px;
-    }
-    .waitlist-copy h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(32px, 4vw, 48px); font-weight: 700;
-      line-height: 1.15; margin-bottom: 18px;
-      color: var(--white);
-    }
-    .waitlist-copy h1 span { color: var(--green); }
-    .waitlist-copy p {
-      font-size: 17px; color: rgba(255,255,255,0.75);
-      margin-bottom: 28px; max-width: 420px; line-height: 1.7;
-    }
-    .waitlist-badges {
-      display: flex; gap: 10px; flex-wrap: wrap;
-    }
-    .badge {
-      display: flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 100px; padding: 6px 14px;
-      font-size: 13px; color: rgba(255,255,255,0.85); font-weight: 500;
-    }
-    .badge span { font-size: 15px; }
-
-    /* Hero benefits list */
-    .hero-benefits {
-      list-style: none; display: flex; flex-direction: column; gap: 10px;
-      margin-bottom: 28px;
-    }
-    .hero-benefits li {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.9);
-    }
-    .hero-benefits li svg {
-      width: 18px; height: 18px; min-width: 18px;
-      background: var(--green); border-radius: 50%; padding: 3px;
-      stroke: #fff;
-    }
-
-    /* Hero pricing teaser */
-    .hero-price {
-      display: inline-flex; align-items: baseline; gap: 6px;
-      background: rgba(164,197,56,0.15); border: 1px solid rgba(164,197,56,0.35);
-      border-radius: var(--radius-sm); padding: 10px 18px;
-    }
-    .price-label {
-      font-size: 13px; color: rgba(255,255,255,0.65); font-weight: 400;
-    }
-    .price-amount {
-      font-size: 22px; font-weight: 800; color: var(--green); letter-spacing: -0.5px;
-    }
-    .price-unit {
-      font-size: 13px; color: rgba(255,255,255,0.65); font-weight: 400;
-    }
-
-    /* ===================== LEAD FORM CARD ===================== */
-    .form-card {
-      background: var(--white); border-radius: var(--radius-lg);
-      padding: 40px 36px; box-shadow: var(--shadow-lg);
-      position: relative;
-    }
-    .form-card::before {
-      content: ''; position: absolute;
-      top: -3px; left: 24px; right: 24px; height: 3px;
-      background: var(--green); border-radius: 100px;
-    }
-    .form-card-header { margin-bottom: 28px; }
-    .form-card-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 6px;
-    }
-    .form-card-header p { font-size: 14px; color: var(--text-muted); }
-    .form-group { margin-bottom: 18px; }
-    .form-group label {
-      display: block; font-size: 13px; font-weight: 600;
-      color: var(--text); margin-bottom: 6px;
-    }
-    .form-group label .req { color: var(--green); margin-left: 2px; }
-    .form-group input {
-      width: 100%; padding: 13px 16px;
-      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
-      font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text);
-      background: var(--off-white); outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .form-group input:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(164,197,56,0.15);
-      background: var(--white);
-    }
-    .form-group input::placeholder { color: var(--text-light); }
-    .instagram-wrap { position: relative; }
-    .instagram-wrap .at-sign {
-      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-      font-size: 15px; font-weight: 600; color: var(--text-muted);
-      pointer-events: none;
-    }
-    .instagram-wrap input { padding-left: 30px; }
-    .form-submit { width: 100%; padding: 15px; font-size: 16px; border-radius: var(--radius-sm); margin-top: 8px; }
-    .form-note {
-      text-align: center; font-size: 12px; color: var(--text-light);
-      margin-top: 12px; line-height: 1.5;
-    }
-    .form-note a { color: var(--green-dark); text-decoration: none; }
-    .form-count {
-      display: flex; align-items: center; gap: 8px;
-      background: var(--green-xlight); border-radius: var(--radius-sm);
-      padding: 10px 14px; margin-bottom: 20px;
-    }
-    .form-count .avatars { display: flex; }
-    .form-count .avatars span {
-      width: 26px; height: 26px; border-radius: 50%;
-      border: 2px solid var(--white); display: flex; align-items: center;
-      justify-content: center; font-size: 11px; background: var(--green);
-      color: var(--white); font-weight: 700; margin-left: -8px;
-    }
-    .form-count .avatars span:first-child { margin-left: 0; }
-    .form-count p { font-size: 13px; color: var(--green-dark); font-weight: 500; }
-    .form-count p strong { font-weight: 700; }
-
-    /* ===================== TRUST BAR ===================== */
-    .trust-bar {
-      background: var(--green); padding: 18px 0;
-    }
-    .trust-bar .container {
-      display: flex; align-items: center; justify-content: center;
-      gap: 40px; flex-wrap: wrap;
-    }
-    .trust-item {
-      display: flex; align-items: center; gap: 8px;
-      color: var(--white); font-size: 14px; font-weight: 500;
-    }
-    .trust-item svg { width: 18px; height: 18px; opacity: 0.9; }
-
-    /* ===================== SHARED SECTION STYLES ===================== */
-    .section-header { text-align: center; margin-bottom: 56px; }
-    .section-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 3.5vw, 40px); font-weight: 700;
-      color: var(--text); margin-bottom: 14px; line-height: 1.2;
-    }
-    .section-header p { font-size: 17px; color: var(--text-muted); max-width: 520px; margin: 0 auto; }
-
-    /* scroll reveal */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* ===================== S2: WHY WE'RE BUILDING ===================== */
-    .why-build-section { padding: 96px 0; background: var(--off-white); }
-
-    .pain-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-
-    .pain-card {
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: border-color 0.22s, box-shadow 0.22s, transform 0.22s;
-      position: relative;
-    }
-    .pain-card:hover {
-      border-color: var(--green);
-      box-shadow: 0 8px 32px rgba(164,197,56,0.15);
-      transform: translateY(-4px);
-    }
-
-    /* image wrap with gradient overlay */
-    .pain-img-wrap {
-      overflow: hidden;
-      flex-shrink: 0;
-      position: relative;
-    }
-    .pain-img-wrap::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.3) 100%);
-      pointer-events: none;
-    }
-    .pain-card-img {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      transition: transform 0.45s ease;
-    }
-    .pain-card:hover .pain-card-img { transform: scale(1.05); }
-
-    /* text body */
-    .pain-card-body {
-      padding: 20px 22px 22px;
-      flex: 1; display: flex; flex-direction: column; gap: 8px;
-    }
-    .pain-card-body h3 {
-      font-size: 16px; font-weight: 700;
-      color: var(--text); line-height: 1.3; margin: 0;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .pain-card-body h3 .pain-emoji { font-size: 18px; flex-shrink: 0; }
-    .pain-card-body p {
-      font-size: 13px; color: var(--text-muted);
-      line-height: 1.7; margin: 0;
-    }
-
-    /* middle row — single card, centered, same width as one grid column */
-    .pain-card.center-mid {
-      grid-column: 1 / -1;
-      justify-self: center;
-      width: calc(50% - 10px);
-      min-width: 280px;
-    }
-    .pain-card.center-mid .pain-card-img { height: 210px; }
-
-    /* Mobile overrides for S2 */
-    @media (max-width: 768px) {
-      .pain-grid { grid-template-columns: 1fr; gap: 14px; }
-      .pain-card.center-mid { width: 100%; justify-self: stretch; }
-      .pain-card-img { height: 180px; }
-    }
-    @media (max-width: 480px) {
-      .pain-card-img { height: 160px; }
-      .pain-card-body { padding: 16px 18px 18px; }
-      .pain-card-body h3 { font-size: 15px; }
-    }
-
-    /* ===================== S3: HOW IT WORKS ===================== */
-    .how-section { padding: 96px 0; background: var(--off-white); }
-    .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-    .how-step {
-      background: var(--white); border-radius: var(--radius);
-      padding: 36px 28px; box-shadow: var(--shadow-sm);
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .how-step:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
-    .step-num {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 36px; height: 36px; border-radius: 50%;
-      background: var(--green); color: var(--white);
-      font-size: 15px; font-weight: 800; margin-bottom: 20px;
-    }
-    .how-step h3 { font-size: 19px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
-    /* plan cards inside step 1 */
-    .plan-cards { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-    .plan-card {
-      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
-      padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;
-      transition: border-color 0.15s;
-    }
-    .plan-card:hover { border-color: var(--green); }
-    .plan-name { font-size: 13px; font-weight: 700; color: var(--text); }
-    .plan-sub { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
-    .plan-price { font-size: 14px; font-weight: 800; color: var(--green-dark); white-space: nowrap; }
-    /* preference tags inside step 2 */
-    .pref-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-    .pref-tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--green-xlight); color: var(--green-dark);
-      font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 100px;
-    }
-    .pref-tag svg { width: 14px; height: 14px; }
-    /* delivery visual inside step 3 */
-    .delivery-visual {
-      background: var(--green-xlight); border-radius: var(--radius-sm);
-      padding: 20px; text-align: center; margin-top: 4px;
-    }
-    .delivery-visual .d-icon { font-size: 40px; display: block; margin-bottom: 8px; }
-    .delivery-visual p { font-size: 13px; color: var(--green-dark); font-weight: 600; }
-
-    /* ===================== S4: WHAT MAKES US DIFFERENT ===================== */
-    .diff-section { padding: 96px 0; background: var(--white); }
-    .diff-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
-    .diff-card {
-      background: var(--off-white); border: 1.5px solid var(--border);
-      border-radius: var(--radius); padding: 28px 18px; text-align: center;
-      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    }
-    .diff-card:hover { border-color: var(--green); transform: translateY(-3px); box-shadow: var(--shadow-md); }
-    .diff-icon { font-size: 36px; margin-bottom: 14px; display: block; }
-    .diff-card h3 { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.4; }
-
-    /* ===================== S4.5: PRICING ===================== */
-    .pricing-section { padding: 96px 0; background: var(--off-white); }
-    .pricing-section .section-header h2 span { color: var(--green-dark); }
-
-    /* Benefits row above cards */
-    .pricing-benefits-row {
-      display: flex; flex-wrap: wrap; justify-content: center;
-      gap: 10px 20px; margin-bottom: 52px;
-    }
-    .pricing-benefit-pill {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: var(--white); border: 1.5px solid var(--green-light);
-      border-radius: 100px; padding: 7px 16px;
-      font-size: 13px; font-weight: 600; color: var(--green-dark);
-    }
-    .pricing-benefit-pill svg {
-      width: 14px; height: 14px; stroke: var(--green); flex-shrink: 0;
-    }
-
-    /* Value highlight inside card */
-    .pricing-value-highlight {
-      background: var(--green-xlight);
-      border-left: 3px solid var(--green);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      padding: 10px 14px;
-      margin-bottom: 20px;
-      font-size: 13px; font-weight: 700; color: var(--green-dark);
-      font-style: italic; line-height: 1.45;
-    }
-    .pricing-card.popular .pricing-value-highlight {
-      background: rgba(164,197,56,0.12);
-      border-color: var(--green);
-    }
-
-    @media (max-width: 640px) {
-      .pricing-benefits-row { gap: 8px 12px; }
-      .pricing-benefit-pill { font-size: 12px; padding: 6px 12px; }
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.08fr 1fr;
-      gap: 36px;
-      align-items: start;
-    }
-
-    /* Base card */
-    .pricing-card {
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 36px 32px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      transition: box-shadow 0.25s, transform 0.25s;
-    }
-    .pricing-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
-
-    /* Popular (middle) card */
-    .pricing-card.popular {
-      border-color: var(--green);
-      box-shadow: 0 8px 32px rgba(164,197,56,0.22);
-      padding-top: 52px;
-    }
-    .pricing-card.popular:hover { transform: translateY(-6px); }
-    .popular-ribbon {
-      position: absolute;
-      top: -1px; left: 50%; transform: translateX(-50%);
-      background: var(--green);
-      color: var(--white);
-      font-size: 11px; font-weight: 800;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 5px 20px;
-      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-      white-space: nowrap;
-    }
-
-    /* Badge */
-    .pricing-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: var(--green-xlight); color: var(--green-dark);
-      font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; padding: 4px 11px;
-      border-radius: 100px; margin-bottom: 16px;
-      width: fit-content;
-    }
-    .pricing-card.popular .pricing-badge { background: var(--green-light); }
-
-    /* Name & desc */
-    .pricing-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px; font-weight: 700; color: var(--text);
-      margin-bottom: 8px;
-    }
-    .pricing-desc {
-      font-size: 14px; color: var(--text-muted); line-height: 1.6;
-      margin-bottom: 24px; min-height: 42px;
-    }
-
-    /* Prices */
-    .pricing-prices { margin-bottom: 24px; }
-    .pricing-original {
-      font-size: 14px; color: var(--text-light);
-      text-decoration: line-through; margin-bottom: 6px;
-    }
-    .pricing-founding-row {
-      display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap;
-      margin-bottom: 4px;
-    }
-    .pricing-founding-label {
-      font-size: 11px; font-weight: 700; color: var(--green-dark);
-      text-transform: uppercase; letter-spacing: 0.06em;
-    }
-    .pricing-amount {
-      font-size: 32px; font-weight: 800; color: var(--text);
-      letter-spacing: -0.5px; line-height: 1;
-    }
-    .pricing-card.popular .pricing-amount { color: var(--green-dark); }
-    .pricing-period {
-      font-size: 14px; color: var(--text-muted); font-weight: 500;
-    }
-    .pricing-per-meal {
-      font-size: 13px; color: var(--text-muted);
-      background: var(--off-white); border-radius: 6px;
-      padding: 4px 10px; display: inline-block; margin-top: 6px;
-    }
-    .pricing-card.popular .pricing-per-meal {
-      background: var(--green-xlight); color: var(--green-dark); font-weight: 600;
-    }
-
-    /* Divider */
-    .pricing-divider {
-      border: none; border-top: 1px solid var(--border);
-      margin: 24px 0;
-    }
-
-    /* Features list */
-    .pricing-features {
-      list-style: none; display: flex; flex-direction: column;
-      gap: 12px; margin-bottom: 24px; flex: 1;
-    }
-    .pricing-features li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 14px; color: var(--text); line-height: 1.5;
-    }
-    .feat-check {
-      width: 18px; height: 18px; min-width: 18px;
-      background: var(--green); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      margin-top: 1px;
-    }
-    .feat-check svg { width: 10px; height: 10px; stroke: #fff; }
-
-    /* Meal count highlight */
-    .pricing-features li:first-child {
-      font-size: 15px; font-weight: 700; color: var(--text);
-    }
-
-    /* Suitable for */
-    .pricing-suitable {
-      font-size: 12px; color: var(--text-muted);
-      border-top: 1px dashed var(--border);
-      padding-top: 16px; margin-bottom: 20px; line-height: 1.6;
-    }
-    .pricing-suitable strong { color: var(--text); }
-
-    /* CTA */
-    .pricing-cta {
-      display: flex; align-items: center; justify-content: center;
-      gap: 8px; width: 100%;
-      padding: 15px; border-radius: var(--radius-sm);
-      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700;
-      cursor: pointer; transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      text-decoration: none; border: 2px solid var(--green); color: var(--green-dark);
-      background: var(--white);
-    }
-    .pricing-cta:hover { background: var(--green-xlight); transform: translateY(-1px); }
-    .pricing-card.popular .pricing-cta {
-      background: var(--green); color: var(--white); border-color: var(--green);
-      box-shadow: 0 4px 16px rgba(164,197,56,0.35);
-    }
-    .pricing-card.popular .pricing-cta:hover {
-      background: var(--green-dark); border-color: var(--green-dark);
-    }
-    .pricing-note {
-      text-align: center; font-size: 12px; color: var(--text-light);
-      margin-top: 40px;
-    }
-    .pricing-note strong { color: var(--green-dark); }
-
-    /* ===================== COMPARE PLANS TABLE ===================== */
-    .compare-section { padding: 64px 0 96px; background: var(--off-white); }
-    .compare-section .section-header { margin-bottom: 36px; }
-
-    .compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .compare-table {
-      width: 100%; border-collapse: collapse;
-      min-width: 560px;
-    }
-
-    /* Header row */
-    .compare-table thead th {
-      padding: 0 0 20px;
-      text-align: center;
-      font-size: 13px; font-weight: 700; color: var(--text-muted);
-      border-bottom: 2px solid var(--border);
-    }
-    .compare-table thead th:first-child { text-align: left; }
-
-    /* Plan name cells */
-    .compare-plan-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 17px; font-weight: 700; color: var(--text);
-      display: block; margin-bottom: 4px;
-    }
-    .compare-plan-price {
-      font-size: 12px; color: var(--text-muted); font-weight: 500;
-    }
-
-    /* Recommended column highlight */
-    .compare-table thead th.col-recommended {
-      position: relative;
-    }
-    .compare-table thead th.col-recommended .compare-plan-name { color: var(--green-dark); }
-    .compare-rec-badge {
-      display: inline-block;
-      background: var(--green); color: var(--white);
-      font-size: 10px; font-weight: 800; letter-spacing: 0.06em;
-      text-transform: uppercase; padding: 3px 10px;
-      border-radius: 100px; margin-bottom: 8px;
-    }
-
-    /* Body rows */
-    .compare-table tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-    }
-    .compare-table tbody tr:last-child { border-bottom: none; }
-    .compare-table tbody tr:hover { background: var(--green-xlight); }
-
-    .compare-table td {
-      padding: 14px 12px;
-      text-align: center;
-      font-size: 14px; color: var(--text-muted);
-      vertical-align: middle;
-    }
-    .compare-table td:first-child {
-      text-align: left;
-      font-size: 14px; font-weight: 600; color: var(--text);
-      padding-left: 4px;
-    }
-
-    /* Recommended column bg */
-    .compare-table td.col-recommended,
-    .compare-table thead th.col-recommended {
-      background: var(--green-xlight);
-    }
-    .compare-table thead th.col-recommended {
-      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-    }
-    .compare-table tbody tr:last-child td.col-recommended {
-      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-    }
-
-    /* Check / cross / text icons */
-    .chk { color: var(--green-dark); font-size: 16px; font-weight: 800; }
-    .crs { color: var(--text-light); font-size: 16px; }
-    .compare-val { font-size: 13px; font-weight: 700; color: var(--text); }
-    .compare-val.highlight { color: var(--green-dark); }
-
-    /* Mobile scroll hint */
-    .compare-scroll-hint {
-      display: none;
-      font-size: 12px; color: var(--text-light);
-      text-align: center; margin-bottom: 12px;
-    }
-    @media (max-width: 640px) {
-      .compare-scroll-hint { display: block; }
-      .compare-table td, .compare-table thead th { padding: 12px 10px; font-size: 13px; }
-      .compare-plan-name { font-size: 15px; }
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; gap: 28px; }
-      .pricing-card.popular { padding-top: 52px; }
-    }
-
-    /* ===================== S5: SAMPLE MEALS ===================== */
-    .meals-section { padding: 96px 0; background: var(--off-white); }
-    .meals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .meal-card {
-      background: var(--white); border-radius: var(--radius);
-      overflow: hidden; box-shadow: var(--shadow-sm);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .meal-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-    .meal-img {
-      aspect-ratio: 4 / 3;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-    .meal-img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-    .meal-meal-tag {
-      position: absolute; top: 12px; left: 12px;
-      background: var(--white); color: var(--green-dark);
-      font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.06em; padding: 3px 9px; border-radius: 100px;
-      box-shadow: var(--shadow-sm);
-    }
-    .meal-body { padding: 18px 20px 0; }
-    .meal-body h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 6px; line-height: 1.35; }
-    .meal-body p { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin-bottom: 14px; }
-    .meal-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 20px 16px; border-top: 1px solid var(--border); margin-top: 4px;
-    }
-    .meal-macros { display: flex; gap: 12px; }
-    .meal-macro { font-size: 12px; color: var(--text-muted); }
-    .meal-macro strong { color: var(--text); font-weight: 700; }
-    .meal-kcal { font-size: 13px; font-weight: 800; color: var(--green-dark); }
-
-    /* ===================== S6: PERFECT FOR ===================== */
-    .for-section { padding: 96px 0; background: var(--white); }
-    .for-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
-    .for-card {
-      background: linear-gradient(135deg, var(--green-xlight), var(--green-light));
-      border-radius: var(--radius); padding: 30px 18px; text-align: center;
-      border: 1.5px solid var(--green-light);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .for-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-    .for-icon { font-size: 36px; margin-bottom: 12px; display: block; }
-    .for-card h3 { font-size: 14px; font-weight: 700; color: var(--green-dark); }
-
-    /* ===================== S7: EARLY ACCESS + WAITLIST ===================== */
-    .early-access-section {
-      padding: 96px 0;
-      background: linear-gradient(135deg, #1A2E0A 0%, #2D4A12 100%);
-      position: relative; overflow: hidden;
-    }
-    .early-access-section::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 65% 50%, rgba(164,197,56,0.12) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .early-access-section .container { position: relative; z-index: 1; }
-    .early-access-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
-    }
-    /* Left: benefits copy */
-    .ea-copy .section-label { color: var(--green); text-align: left; }
-    .ea-copy h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 3.5vw, 40px); font-weight: 700;
-      color: var(--white); line-height: 1.2; margin-bottom: 14px;
-    }
-    .ea-copy h2 span { color: var(--green); }
-    .ea-copy > p {
-      font-size: 16px; color: rgba(255,255,255,0.65); margin-bottom: 36px; line-height: 1.7;
-    }
-    .ea-benefits { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-    .ea-benefits li {
-      display: flex; align-items: flex-start; gap: 12px;
-      font-size: 15px; color: rgba(255,255,255,0.88); font-weight: 500;
-    }
-    .ea-benefits li .ea-check {
-      width: 22px; height: 22px; min-width: 22px; border-radius: 50%;
-      background: var(--green); display: flex; align-items: center;
-      justify-content: center; margin-top: 1px;
-    }
-    .ea-benefits li .ea-check svg { width: 12px; height: 12px; stroke: #fff; }
-    /* Right: form card (dark variant) */
-    .ea-form-card {
-      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
-      border-radius: var(--radius-lg); padding: 36px 32px;
-      backdrop-filter: blur(8px);
-    }
-    .ea-form-card .form-card-header h2 { color: var(--white); }
-    .ea-form-card .form-card-header p { color: rgba(255,255,255,0.6); }
-    .ea-form-card .form-group label { color: rgba(255,255,255,0.85); }
-    .ea-form-card .form-group input {
-      background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.2);
-      color: var(--white);
-    }
-    .ea-form-card .form-group input::placeholder { color: rgba(255,255,255,0.35); }
-    .ea-form-card .form-group input:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(164,197,56,0.25);
-      background: rgba(255,255,255,0.13);
-    }
-    .ea-form-card .instagram-wrap .at-sign { color: rgba(255,255,255,0.45); }
-    .ea-form-card .form-count {
-      background: rgba(164,197,56,0.12); border: 1px solid rgba(164,197,56,0.25);
-    }
-    .ea-form-card .form-count p { color: var(--green); }
-    .ea-form-card .form-note { color: rgba(255,255,255,0.4); }
-    .ea-form-card .form-note a { color: var(--green); }
-    /* Privacy checkbox */
-    .privacy-check-wrap {
-      display: flex; align-items: flex-start; gap: 10px;
-      margin-top: 14px; margin-bottom: 4px;
-    }
-    .privacy-check-wrap input[type="checkbox"] {
-      width: 16px; height: 16px; min-width: 16px; margin-top: 2px;
-      accent-color: var(--green); cursor: pointer;
-    }
-    .privacy-check-label {
-      font-size: 12px; line-height: 1.55; color: var(--text-muted);
-    }
-    .privacy-check-label a {
-      color: var(--green-dark); font-weight: 600; text-decoration: none;
-      cursor: pointer;
-    }
-    .privacy-check-label a:hover { text-decoration: underline; }
-    /* dark form variant */
-    .ea-form-card .privacy-check-label { color: rgba(255,255,255,0.5); }
-    .ea-form-card .privacy-check-label a { color: var(--green); }
-    /* success state for ea form */
-    .ea-form-card .form-success h3 { color: var(--white); }
-    .ea-form-card .form-success p { color: rgba(255,255,255,0.65); }
-
-    /* ===================== S8: FAQ ===================== */
-    .faq-section { padding: 96px 0; background: var(--off-white); }
-    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-    .faq-item {
-      background: var(--white); border: 1.5px solid var(--border);
-      border-radius: var(--radius); overflow: hidden;
-      transition: border-color 0.2s;
-    }
-    .faq-item.open { border-color: var(--green); }
-    .faq-q {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 24px; background: none; border: none; cursor: pointer;
-      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
-      color: var(--text); text-align: left; gap: 12px;
-    }
-    .faq-q:hover { color: var(--green-dark); }
-    .faq-chevron {
-      width: 20px; height: 20px; min-width: 20px; stroke: var(--green);
-      transition: transform 0.25s;
-    }
-    .faq-item.open .faq-chevron { transform: rotate(180deg); }
-    .faq-a {
-      max-height: 0; overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
-      font-size: 15px; color: var(--text-muted); line-height: 1.7;
-      padding: 0 24px;
-    }
-    .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 20px; }
-
-    /* ===================== FINAL CTA ===================== */
-    .cta-section {
-      padding: 120px 0;
-      background: linear-gradient(135deg, #0D1A05 0%, #1A2E0A 50%, #2D4A12 100%);
-      position: relative; overflow: hidden; text-align: center;
-    }
-    .cta-section::before {
-      content: ''; position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 15% 60%, rgba(164,197,56,0.13) 0%, transparent 50%),
-        radial-gradient(ellipse at 85% 30%, rgba(164,197,56,0.09) 0%, transparent 50%);
-      pointer-events: none;
-    }
-    /* decorative dots */
-    .cta-section::after {
-      content: ''; position: absolute;
-      top: -80px; right: -80px;
-      width: 400px; height: 400px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(164,197,56,0.08) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .cta-inner {
-      position: relative; z-index: 1;
-      max-width: 680px; margin: 0 auto;
-    }
-    .cta-inner .section-label { color: var(--green); margin-bottom: 16px; }
-    .cta-inner h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(34px, 5vw, 56px); font-weight: 700;
-      color: var(--white); line-height: 1.12; margin-bottom: 20px;
-    }
-    .cta-inner h2 span { color: var(--green); }
-    .cta-inner > p {
-      font-size: 18px; color: rgba(255,255,255,0.6);
-      line-height: 1.75; margin-bottom: 48px; max-width: 520px; margin-left: auto; margin-right: auto;
-    }
-    .cta-stats {
-      display: flex; justify-content: center; gap: 48px;
-      flex-wrap: wrap; margin-bottom: 48px;
-    }
-    .cta-stat { text-align: center; }
-    .cta-stat-num {
-      font-size: 32px; font-weight: 800; color: var(--green);
-      letter-spacing: -1px; line-height: 1;
-    }
-    .cta-stat-label {
-      font-size: 12px; color: rgba(255,255,255,0.45);
-      margin-top: 5px; text-transform: uppercase; letter-spacing: 0.05em;
-    }
-    .cta-divider {
-      width: 48px; height: 1px; background: rgba(255,255,255,0.12);
-      margin: 0 auto; display: none;
-    }
-    .cta-btn-wrap {
-      display: flex; flex-direction: column; align-items: center; gap: 14px;
-    }
-    .cta-btn-wrap .btn-primary {
-      font-size: 17px; padding: 18px 52px;
-      box-shadow: 0 6px 28px rgba(164,197,56,0.4);
-    }
-    .cta-btn-wrap .btn-primary:hover {
-      box-shadow: 0 10px 36px rgba(164,197,56,0.5);
-    }
-    .cta-note {
-      font-size: 13px; color: rgba(255,255,255,0.35);
-      display: flex; align-items: center; gap: 6px; justify-content: center;
-    }
-    .cta-note svg { width: 14px; height: 14px; opacity: 0.5; }
-    @media (max-width: 640px) {
-      .cta-section { padding: 80px 0; }
-      .cta-stats { gap: 28px; }
-      .cta-stat-num { font-size: 26px; }
-    }
-
-    /* ===================== FOOTER ===================== */
-    footer { background: #080F03; padding: 0; }
-    .footer-top {
-      padding: 64px 0 48px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .footer-grid {
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
-    }
-    .footer-brand img {
-      height: 38px; width: auto;
-      filter: brightness(0) invert(1);
-      margin-bottom: 16px;
-    }
-    .footer-brand p {
-      font-size: 13px; color: rgba(255,255,255,0.4);
-      line-height: 1.7; max-width: 240px; margin-bottom: 20px;
-    }
-    .footer-social { display: flex; gap: 10px; }
-    .footer-social a {
-      width: 36px; height: 36px; border-radius: 50%;
-      background: rgba(255,255,255,0.07); display: flex; align-items: center;
-      justify-content: center; color: rgba(255,255,255,0.45);
-      text-decoration: none; transition: background 0.2s, color 0.2s;
-    }
-    .footer-social a:hover { background: var(--green); color: var(--white); }
-    .footer-col h4 {
-      font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
-      text-transform: uppercase; color: rgba(255,255,255,0.55);
-      margin-bottom: 16px;
-    }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .footer-col ul li a {
-      font-size: 14px; color: rgba(255,255,255,0.45); text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-col ul li a:hover { color: var(--green); }
-    .footer-bottom {
-      padding: 20px 0; display: flex; align-items: center;
-      justify-content: space-between; flex-wrap: wrap; gap: 12px;
-    }
-    .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.25); }
-    .footer-legal { display: flex; gap: 20px; align-items: center; }
-    .footer-legal a {
-      font-size: 12px; color: rgba(255,255,255,0.35); text-decoration: none;
-      transition: color 0.2s; cursor: pointer;
-    }
-    .footer-legal a:hover { color: var(--green); }
-    @media (max-width: 860px) {
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
-      .footer-brand { grid-column: 1 / -1; }
-    }
-    @media (max-width: 480px) {
-      .footer-grid { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; align-items: flex-start; }
-    }
-
-    /* ===================== SUCCESS THANK YOU MODAL ===================== */
-    #success-modal {
-      display: none; position: fixed; inset: 0; z-index: 9999;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(5px);
-      align-items: center; justify-content: center;
-      padding: 24px;
-    }
-    #success-modal.open { display: flex; }
-    #success-modal .sm-box {
-      background: #ffffff;
-      border-radius: 24px;
-      padding: 2.5rem;
-      max-width: 550px; width: 90%;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-      position: relative;
-      max-height: 90vh; overflow-y: auto;
-    }
-    #success-modal .sm-close {
-      position: absolute; top: 16px; right: 18px;
-      background: #f3f4f6; border: none; border-radius: 50%;
-      width: 30px; height: 30px; font-size: 16px; line-height: 1;
-      cursor: pointer; color: #6B7280;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s;
-    }
-    #success-modal .sm-close:hover { background: #e5e7eb; }
-    #success-modal .sm-emoji { font-size: 40px; margin-bottom: 8px; display: block; }
-    #success-modal .sm-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 26px; font-weight: 700; color: #1C1C1C;
-      margin-bottom: 16px;
-    }
-    #success-modal .sm-check {
-      width: 64px; height: 64px; margin: 0 auto 20px;
-      background: #EAF2C8; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-    }
-    #success-modal .sm-check svg { width: 32px; height: 32px; stroke: #7FA020; }
-    #success-modal .sm-welcome {
-      font-size: 18px; font-weight: 700; color: #1C1C1C;
-      margin-bottom: 12px;
-    }
-    #success-modal .sm-para {
-      font-size: 14px; color: #6B7280; line-height: 1.7;
-      margin-bottom: 16px;
-    }
-    #success-modal .sm-benefit {
-      background: #F5F9E8; border: 1px solid #A4C538;
-      border-radius: 12px; padding: 14px 18px;
-      font-size: 14px; font-weight: 700; color: #7FA020;
-      margin-bottom: 16px; line-height: 1.55;
-    }
-    #success-modal .sm-social {
-      font-size: 13px; color: #9CA3AF; margin-bottom: 24px;
-    }
-    #success-modal .sm-social strong { color: #A4C538; }
-    #success-modal .sm-done {
-      width: 100%; padding: 14px;
-      background: #A4C538; color: #ffffff;
-      font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 700;
-      border: none; border-radius: 12px; cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-      box-shadow: 0 4px 16px rgba(164,197,56,0.35);
-    }
-    #success-modal .sm-done:hover { background: #7FA020; transform: translateY(-1px); }
-
-    /* ===================== PRIVACY MODAL ===================== */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0; z-index: 500;
-      background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
-      align-items: center; justify-content: center; padding: 24px;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal-box {
-      background: var(--white); border-radius: var(--radius-lg);
-      max-width: 560px; width: 100%; max-height: 80vh;
-      overflow-y: auto; padding: 40px; position: relative;
-      box-shadow: var(--shadow-lg);
-    }
-    .modal-close {
-      position: absolute; top: 16px; right: 16px;
-      background: var(--off-white); border: none; border-radius: 50%;
-      width: 32px; height: 32px; cursor: pointer; display: flex;
-      align-items: center; justify-content: center; font-size: 18px;
-      color: var(--text-muted); transition: background 0.2s;
-    }
-    .modal-close:hover { background: var(--border); }
-    .modal-box h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 16px;
-    }
-    .modal-box p, .modal-box li {
-      font-size: 14px; color: var(--text-muted); line-height: 1.75; margin-bottom: 12px;
-    }
-    .modal-box h3 { font-size: 15px; font-weight: 700; color: var(--text); margin: 20px 0 8px; }
-    .modal-box ul { padding-left: 20px; }
-
-    /* ===================== SUCCESS STATE ===================== */
-    .form-success { display: none; text-align: center; padding: 20px 0; }
-    .form-success .success-icon {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: var(--green-light); display: flex; align-items: center;
-      justify-content: center; margin: 0 auto 16px; font-size: 28px;
-    }
-    .form-success h3 { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-    .form-success p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
-
-    /* ===================== RESPONSIVE ===================== */
-
-    /* --- Tablet: 1024px --- */
-    @media (max-width: 1024px) {
-      .diff-grid  { grid-template-columns: repeat(3, 1fr); }
-      .for-grid   { grid-template-columns: repeat(3, 1fr); }
-      .meals-grid { grid-template-columns: repeat(2, 1fr); }
-      .how-steps  { grid-template-columns: repeat(2, 1fr); }
-      .pricing-grid { grid-template-columns: 1fr 1.08fr 1fr; gap: 16px; }
-      .pricing-card { padding: 28px 22px; }
-      .pricing-card.popular { padding-top: 48px; }
-    }
-
-    /* --- Tablet portrait: 900px --- */
-    @media (max-width: 900px) {
-      .waitlist-section { padding: 56px 0 52px; }
-      .waitlist-grid    { grid-template-columns: 1fr; gap: 36px; }
-      .waitlist-copy p  { max-width: 100%; }
-
-      .early-access-grid { grid-template-columns: 1fr; gap: 40px; }
-
-      .how-steps { grid-template-columns: 1fr; gap: 20px; }
-
-      .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; gap: 20px; }
-      .pricing-card.popular { padding-top: 52px; }
-
-      .section-header { margin-bottom: 40px; }
-      .section-header p { font-size: 16px; }
-
-      .cta-stats { gap: 24px; }
-    }
-
-    /* --- Mobile landscape / large phone: 640px --- */
-    @media (max-width: 640px) {
-      /* Global */
-      .container { padding: 0 18px; }
-      .section-header { margin-bottom: 32px; }
-      .section-header h2 { font-size: clamp(24px, 6vw, 32px); }
-      .section-header p { font-size: 15px; }
-
-      /* Sections vertical padding */
-      .why-build-section,
-      .how-section,
-      .diff-section,
-      .pricing-section,
-      .meals-section,
-      .for-section,
-      .early-access-section,
-      .faq-section { padding: 60px 0; }
-
-      /* Hero */
-      .waitlist-section { padding: 44px 0 40px; }
-      .waitlist-copy h1 { font-size: clamp(28px, 7vw, 38px); }
-      .waitlist-copy p { font-size: 15px; }
-      .hero-benefits li { font-size: 14px; }
-      .hero-price { padding: 8px 14px; }
-      .price-amount { font-size: 19px; }
-
-      /* Form card */
-      .form-card { padding: 24px 18px; }
-      .form-card-header h2 { font-size: 18px; line-height: 1.3; }
-      .form-card-header p { font-size: 13px; }
-      .form-group input { font-size: 16px; } /* prevents iOS zoom */
-      .ea-form-card { padding: 24px 18px; }
-
-      /* Trust bar */
-      .trust-bar .container { gap: 14px; flex-direction: column; align-items: flex-start; padding: 0 18px; }
-      .trust-item { font-size: 13px; }
-
-      /* Pain grid handled by its own S2 breakpoints */
-
-      /* Diff + For */
-      .diff-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-      .diff-card { padding: 22px 14px; }
-      .for-grid  { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-      .for-card  { padding: 24px 14px; }
-
-      /* How it works */
-      .how-step { padding: 28px 22px; }
-
-      /* Pricing */
-      .pricing-grid { max-width: 100%; }
-      .pricing-card { padding: 24px 20px; }
-      .pricing-card.popular { padding-top: 48px; }
-      .pricing-amount { font-size: 26px; }
-      .pricing-desc { min-height: unset; }
-
-      /* Meals */
-      .meals-grid { grid-template-columns: 1fr; gap: 18px; }
-
-      /* Early access */
-      .ea-copy h2 { font-size: clamp(24px, 6vw, 32px); }
-      .ea-benefits li { font-size: 14px; }
-
-      /* FAQ */
-      .faq-q { font-size: 14px; padding: 16px 18px; }
-      .faq-a { font-size: 14px; padding: 0 18px; }
-      .faq-item.open .faq-a { padding: 0 18px 16px; }
-
-      /* Final CTA */
-      .cta-section { padding: 64px 0; }
-      .cta-inner h2 { font-size: clamp(26px, 7vw, 38px); }
-      .cta-inner > p { font-size: 15px; }
-      .cta-stats { gap: 20px; flex-wrap: wrap; justify-content: center; }
-      .cta-stat-num { font-size: 24px; }
-      .cta-btn-wrap .btn-primary { font-size: 15px; padding: 15px 32px; width: 100%; }
-
-      /* Footer */
-      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
-    }
-
-    /* --- Small mobile: 480px --- */
-    @media (max-width: 480px) {
-      .container { padding: 0 16px; }
-
-      /* Navbar */
-      .navbar-logo img { height: 42px; }
-      .navbar-cta { font-size: 12px; padding: 8px 14px; }
-
-      /* Hero */
-      .waitlist-section { padding: 36px 0 32px; }
-      .waitlist-copy h1 { font-size: clamp(26px, 8vw, 34px); }
-      .hero-benefits { gap: 8px; }
-      .form-card-header h2 { font-size: 17px; }
-
-      /* Grids collapse to 1 col */
-      .diff-grid { grid-template-columns: repeat(2, 1fr); }
-      .for-grid  { grid-template-columns: repeat(2, 1fr); }
-
-      /* Pricing */
-      .pricing-card { padding: 20px 16px; }
-      .pricing-amount { font-size: 24px; }
-
-      /* Footer */
-      .footer-grid { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; align-items: flex-start; }
-
-      /* Modals */
-      .ty-box { padding: 36px 20px 28px; }
-      .ty-box h2 { font-size: 20px; }
-      .modal-box { padding: 32px 20px; }
-    }
-
-    /* --- Extra small: 375px --- */
-    @media (max-width: 375px) {
-      .container { padding: 0 14px; }
-      .waitlist-copy h1 { font-size: 24px; }
-      .cta-stats { gap: 16px; }
-      .cta-stat-num { font-size: 22px; }
-      .diff-grid { grid-template-columns: 1fr; }
-      .for-grid  { grid-template-columns: 1fr; }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nusa Meals — Healthy Indonesian Meals Delivered Fresh Across Bali</title>
+  <meta name="description" content="Nusa Meals delivers fresh, healthy Indonesian meals across Bali. Nutritionist-designed, locally sourced, hygiene-certified.">
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --primary: #243d0e;
+    --primary-dark: #1a2e0a;
+    --primary-light: #a4c538;
+    --accent: #faa719;
+    --accent-light: #fef3dc;
+    --bg-white: #ffffff;
+    --bg-alt: #f7faf2;
+    --text-dark: #1a1a1a;
+    --text-muted: #555;
+    --text-light: #777;
+    --border: #e5e7eb;
+    --radius: 16px;
+    --radius-sm: 12px;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+    --transition: 0.3s ease;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    background: var(--bg-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* NAVBAR */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(229,231,235,0.7);
+    padding: 12px 0;
+    transition: box-shadow 0.3s;
+  }
+
+  .navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .nav-logo img {
+    height: 72px;
+    transition: transform 0.2s;
+  }
+
+  .nav-logo:hover img { transform: scale(1.02); }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+    padding: 4px 0;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--primary);
+  }
+
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--primary-light);
+    border-radius: 2px;
+  }
+
+  .nav-cta {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    box-shadow: 0 2px 8px rgba(36,61,14,0.15);
+  }
+
+  .nav-cta:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(36,61,14,0.2); }
+
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  /* LANGUAGE SWITCHER — pill toggle */
+  .lang-switcher {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--bg-alt);
+  }
+  .lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .lang-btn:hover { color: var(--text-dark); }
+  .lang-btn.active {
+    background: var(--primary);
+    color: #fff;
+    border-radius: 24px;
+  }
+
+  .nav-hamburger span {
+    width: 24px;
+    height: 2px;
+    background: var(--text-dark);
+    border-radius: 2px;
+    transition: var(--transition);
+  }
+
+  .mobile-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 998;
+  }
+
+  .mobile-backdrop.active { display: block; }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: -280px;
+    width: 280px;
+    height: 100vh;
+    background: #fff;
+    z-index: 999;
+    padding: 80px 32px 32px;
+    transition: right var(--transition);
+    box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+  }
+
+  .mobile-menu.active { right: 0; }
+
+  .mobile-menu a {
+    display: block;
+    padding: 14px 0;
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mobile-menu .nav-cta {
+    display: block;
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 72px 0 88px;
+    background: linear-gradient(165deg, #f4f9ec 0%, #fefefe 40%, #fffcf7 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .container {
+    position: relative;
+    z-index: 2;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #edf5e0;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+  }
+  .hero-left h1 {
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.18;
+    margin-bottom: 18px;
+    color: var(--text-dark);
+    letter-spacing: -0.02em;
+  }
+  .hero-subtitle {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    line-height: 1.75;
+    max-width: 460px;
+  }
+  .hero-price {
+    font-size: 14px;
+    color: var(--primary);
+    font-weight: 700;
+    background: #edf5e0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(164,197,56,0.3);
+  }
+
+  /* Food images — removed */
+
+  .hero-checks {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+
+  .hero-checks li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+  }
+
+  .hero-checks li::before {
+    content: '✓';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #edf5e0;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .hero-price {
+    font-size: 14px;
+    color: var(--primary);
+    font-weight: 600;
+    background: #edf5e0;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+  }
+
+  /* FORM CARD */
+  .form-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(36,61,14,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .form-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  }
+
+  .form-social-proof {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .form-social-proof .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .form-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--text-dark);
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color var(--transition);
+    outline: none;
+  }
+
+  .form-group input:focus {
+    border-color: var(--primary);
+  }
+
+  .form-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .form-checkbox input[type="checkbox"] {
+    margin-top: 2px;
+    accent-color: var(--primary);
+  }
+
+  .form-checkbox a {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--primary), #2f5a12);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 4px 16px rgba(36,61,14,0.2);
+  }
+
+  .btn-submit:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(36,61,14,0.25); }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 24px 0;
+  }
+
+  .form-success.show { display: block; }
+  .form-content.hide { display: none; }
+
+  /* TRUST BAR */
+  .trust-bar {
+    padding: 36px 0;
+    background: var(--bg-alt);
+    border-top: 1px solid rgba(164,197,56,0.12);
+    border-bottom: 1px solid rgba(164,197,56,0.12);
+  }
+
+  .trust-badges {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-white);
+    color: var(--primary);
+    padding: 12px 20px;
+    border-radius: 28px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    border: 1px solid rgba(164,197,56,0.2);
+    transition: all 0.25s;
+    box-shadow: 0 2px 8px rgba(36,61,14,0.04);
+  }
+  .trust-badge:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(36,61,14,0.08); border-color: rgba(164,197,56,0.4); }
+
+  /* SECTION DIVIDERS */
+  .section-divider {
+    height: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-divider--wave svg {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 48px;
+  }
+
+  .section-divider--alt {
+    background: var(--bg-alt);
+  }
+
+  .section-divider--white {
+    background: var(--bg-white);
+  }
+
+  /* WHY NUSA MEALS */
+  .section-why {
+    padding: 88px 0 96px;
+    background: var(--bg-white);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 52px;
+  }
+
+  .section-header h2 {
+    font-size: clamp(26px, 3.5vw, 34px);
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+    color: var(--text-dark);
+  }
+
+  .section-header h2::before {
+    content: '🌿';
+    display: block;
+    font-size: 24px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+  .section-header p {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+
+  .why-card {
+    text-align: center;
+    padding: 32px 18px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--bg-white);
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--primary-light);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .why-card:hover {
+    box-shadow: 0 8px 28px rgba(36,61,14,0.08);
+    transform: translateY(-4px);
+    border-color: rgba(164,197,56,0.3);
+  }
+
+  .why-card:hover::after { transform: scaleX(1); }
+
+  .why-card .icon {
+    font-size: 40px;
+    margin-bottom: 14px;
+    display: block;
+    transition: transform 0.3s;
+  }
+
+  .why-card:hover .icon { transform: scale(1.15) rotate(-5deg); }
+
+  .why-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+  }
+
+  .why-card p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* PRICING */
+  .section-pricing {
+    padding: 88px 0 96px;
+    background: var(--bg-alt);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .pricing-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 28px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s;
+  }
+
+  .pricing-card:hover {
+    box-shadow: 0 12px 36px rgba(36,61,14,0.08);
+    transform: translateY(-4px);
+  }
+
+  .pricing-card.recommended {
+    border: 2px solid var(--primary);
+    box-shadow: 0 8px 28px rgba(36,61,14,0.1);
+    transform: scale(1.02);
+  }
+
+  .pricing-card.recommended:hover {
+    transform: scale(1.02) translateY(-4px);
+  }
+
+  .pricing-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+
+  .pricing-card.recommended .pricing-badge {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .pricing-card:not(.recommended) .pricing-badge {
+    background: #edf5e0;
+    color: var(--primary);
+  }
+
+  .pricing-card h4 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .pricing-price {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary-light);
+    margin-bottom: 4px;
+  }
+
+  .pricing-per {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .pricing-features {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+
+  .pricing-features li {
+    font-size: 13px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 0;
+  }
+
+  .pricing-features li::before {
+    content: '✓';
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .btn-pricing {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: background var(--transition), color var(--transition);
+  }
+
+  .pricing-card.recommended .btn-pricing {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(36,61,14,0.2);
+  }
+
+  .pricing-card.recommended .btn-pricing:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(36,61,14,0.25);
+  }
+
+  .pricing-card:not(.recommended) .btn-pricing {
+    background: #edf5e0;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+  }
+
+  .pricing-card:not(.recommended) .btn-pricing:hover {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  /* SAMPLE MEALS */
+  .section-meals {
+    padding: 88px 0 96px;
+    background: var(--bg-white);
+  }
+
+  .meals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .meal-card {
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--bg-white);
+    transition: all 0.3s;
+  }
+
+  .meal-card:hover {
+    box-shadow: 0 16px 48px rgba(36,61,14,0.12);
+    transform: translateY(-6px);
+  }
+
+  .meal-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .meal-card:hover img { transform: scale(1.08); }
+
+  .meal-card-body {
+    padding: 20px 22px;
+  }
+
+  .meal-card h4 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text-dark);
+  }
+
+  .meal-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  .meal-macros {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .meal-macros span {
+    font-size: 11px;
+    background: linear-gradient(135deg, #edf5e0, #f7faf2);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    color: var(--primary);
+    border: 1px solid rgba(164,197,56,0.2);
+  }
+
+  /* FAQ */
+  .section-faq {
+    padding: 88px 0 96px;
+    background: var(--bg-alt);
+  }
+
+  .faq-list {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 12px;
+    background: var(--bg-white);
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .faq-item.active {
+    border-color: rgba(164,197,56,0.4);
+    box-shadow: 0 4px 16px rgba(36,61,14,0.05);
+  }
+
+  .faq-question {
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    user-select: none;
+  }
+
+  .faq-question:hover { color: var(--primary); }
+
+  .faq-icon {
+    font-size: 18px;
+    transition: transform var(--transition);
+    color: var(--text-muted);
+  }
+
+  .faq-item.active .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 200px;
+    padding: 0 24px 18px;
+  }
+
+  .faq-answer p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* FINAL CTA */
+  .section-cta {
+    padding: 72px 0;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(164,197,56,0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .section-cta h2 {
+    color: #fff;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 800;
+    margin-bottom: 24px;
+    position: relative;
+    letter-spacing: -0.02em;
+  }
+
+  .btn-cta-final {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--primary-dark);
+    padding: 16px 36px;
+    border-radius: 28px;
+    font-size: 15px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.25s;
+    box-shadow: 0 4px 20px rgba(250,167,25,0.3);
+    position: relative;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-cta-final:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(250,167,25,0.4);
+  }
+
+  /* FOOTER */
+  .footer {
+    background: #0f0f0f;
+    color: #ccc;
+    padding: 64px 0 32px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 36px;
+    margin-bottom: 40px;
+  }
+
+  .footer-brand img {
+    height: 40px;
+    margin-bottom: 14px;
+  }
+
+  .footer-brand p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #777;
+    margin-bottom: 18px;
+    max-width: 240px;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 8px;
+  }
+
+  .footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    color: #999;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .footer-social a:hover {
+    background: var(--primary-light);
+    color: #fff;
+  }
+
+  .footer-col h5 {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .footer-col a {
+    display: block;
+    font-size: 13px;
+    color: #999;
+    text-decoration: none;
+    margin-bottom: 9px;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--primary-light); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: #555;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .footer-bottom-links {
+    display: flex;
+    gap: 16px;
+  }
+
+  .footer-bottom-links a {
+    color: #777;
+    text-decoration: none;
+    font-size: 11px;
+    transition: color 0.2s;
+  }
+
+  .footer-bottom-links a:hover { color: var(--primary-light); }
+
+  /* MODALS */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal-content {
+    background: #fff;
+    border-radius: var(--radius);
+    max-width: 480px;
+    width: 100%;
+    padding: 40px 32px;
+    text-align: center;
+    position: relative;
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+
+  .modal-content h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .modal-content p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+
+  .modal-content .btn-submit {
+    margin-top: 16px;
+    width: auto;
+    padding: 12px 24px;
+    display: inline-block;
+  }
+
+  /* PRIVACY MODAL */
+  .privacy-modal .modal-content {
+    text-align: left;
+    max-width: 560px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .privacy-modal .modal-content h3 {
+    text-align: center;
+  }
+
+  .privacy-modal .modal-content h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 16px 0 8px;
+  }
+
+  .privacy-modal .modal-content p,
+  .privacy-modal .modal-content li {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Staggered reveal for grid children */
+  .why-grid .reveal:nth-child(2) { transition-delay: 0.1s; }
+  .why-grid .reveal:nth-child(3) { transition-delay: 0.2s; }
+  .why-grid .reveal:nth-child(4) { transition-delay: 0.3s; }
+  .why-grid .reveal:nth-child(5) { transition-delay: 0.4s; }
+  .pricing-grid .reveal:nth-child(2) { transition-delay: 0.1s; }
+  .pricing-grid .reveal:nth-child(3) { transition-delay: 0.2s; }
+  .meals-grid .reveal:nth-child(2) { transition-delay: 0.1s; }
+  .meals-grid .reveal:nth-child(3) { transition-delay: 0.2s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .why-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links, .nav-cta-desktop { display: none; }
+    .nav-hamburger { display: flex; }
+
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .hero-left h1 { font-size: 32px; }
+
+    .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+    .meals-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .trust-badges { gap: 10px; }
+    .trust-badge { font-size: 12px; padding: 8px 14px; }
+  }
+
+  @media (max-width: 480px) {
+    .why-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+    .footer-bottom-links { flex-direction: column; gap: 8px; }
+  }
+</style>
 <body>
 
-  <!-- ===================== NAVBAR ===================== -->
-  <nav class="navbar" role="navigation" aria-label="Main navigation">
+  <!-- NAVBAR -->
+  <nav class="navbar">
     <div class="container">
-      <a href="#waitlist" class="navbar-logo" aria-label="Nusa Meals home">
-        <img src="assets/logo.png" alt="Nusa Meals" />
+      <a href="#" class="nav-logo">
+        <img src="assets/logo.png" alt="Nusa Meals">
       </a>
-
-      <ul class="navbar-menu" id="navMenu" role="list">
-        <li><a href="#how">How It Works</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#meals">Menu</a></li>
-        <li><a href="#different">Why Us</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li class="nav-cta-item"><a href="#waitlist" class="navbar-menu-cta">Join the Waitlist</a></li>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#waitlist" data-lang-en="Home" data-lang-id="Beranda">Home</a></li>
+        <li><a href="#how-it-works" data-lang-en="Why Us" data-lang-id="Mengapa Kami">Why Us</a></li>
+        <li><a href="#pricing" data-lang-en="Pricing" data-lang-id="Harga">Pricing</a></li>
+        <li><a href="#how-to-subscribe" data-lang-en="How It Works" data-lang-id="Cara Kerja">How It Works</a></li>
+        <li><a href="#menu" data-lang-en="Menu" data-lang-id="Menu">Menu</a></li>
+        <li><a href="#faq" data-lang-en="FAQ" data-lang-id="FAQ">FAQ</a></li>
       </ul>
-
-      <div class="navbar-right">
-        <a href="#waitlist" class="navbar-cta">Join the Waitlist</a>
-        <button class="navbar-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">
-          <span></span><span></span><span></span>
-        </button>
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-btn active" data-lang="en">🇬🇧 EN</button>
+        <button class="lang-btn" data-lang="id">🇮🇩 ID</button>
+      </div>
+      <a href="#waitlist" class="nav-cta nav-cta-desktop" data-lang-en="Join Now — Get $6 Off" data-lang-id="Gabung Sekarang — Diskon Rp100K">Join Now — Get $6 Off</a>
+      <div class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
       </div>
     </div>
   </nav>
 
-  <!-- Mobile nav backdrop -->
-  <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
-
-  <!-- ===================== WAITLIST HERO (TOP) ===================== -->
-  <section class="waitlist-section" id="waitlist" aria-labelledby="waitlist-heading">
-    <div class="container">
-      <div class="waitlist-grid">
-
-        <!-- Left: copy -->
-        <div class="waitlist-copy">
-          <span class="tag">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-            Launching Soon — Bali
-          </span>
-          <h1 id="waitlist-heading">
-            Healthy Indonesian Meals,<br /><span>Delivered Fresh</span> Across Bali.
-          </h1>
-          <p>
-            Discover authentic Indonesian meals made healthier, prepared with transparent ingredients and delivered fresh every week.
-          </p>
-
-          <!-- Benefits list -->
-          <ul class="hero-benefits" aria-label="What you get">
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Designed to Help Reduce Bali Belly Risks
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Know Every Ingredient You Eat
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Calories &amp; Macros on Every Meal
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Flexible Spice Levels
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Weekly Meal Delivery
-            </li>
-          </ul>
-
-          <!-- Pricing teaser -->
-          <div class="hero-price" aria-label="Pricing">
-            <span class="price-label">Starting from</span>
-            <span class="price-amount">Rp 60K</span>
-            <span class="price-unit">/ meal</span>
-          </div>
-        </div>
-
-        <!-- Right: lead form -->
-        <div class="form-card" role="main">
-          <div class="form-count" aria-live="polite">
-            <div class="avatars" aria-hidden="true">
-              <span>A</span><span>K</span><span>S</span><span>+</span>
-            </div>
-            <p><strong>Join 240+ people</strong> already waiting for healthier Indonesian meals in Bali.</p>
-          </div>
-          <div class="form-card-header">
-            <h2>🎉 First 100 Founding Members Get Rp100,000 Off</h2>
-            <p>Join the waitlist today and be one of the first 100 people to receive Rp100,000 off your first Nusa Meals subscription when we launch.</p>
-          </div>
-
-          <form id="waitlistForm" novalidate aria-label="Waitlist sign-up form">
-            <div class="form-group">
-              <label for="fullName">Your Name <span class="req" aria-hidden="true">*</span></label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                placeholder="e.g. Sarah Mitchell"
-                autocomplete="name"
-                required
-                aria-required="true"
-              />
-            </div>
-            <div class="form-group">
-              <label for="instagram">Instagram Username <span class="req" aria-hidden="true">*</span></label>
-              <div class="instagram-wrap">
-                <span class="at-sign" aria-hidden="true">@</span>
-                <input
-                  type="text"
-                  id="instagram"
-                  name="instagram"
-                  placeholder="yourusername"
-                  autocomplete="username"
-                  required
-                  aria-required="true"
-                  aria-describedby="ig-hint"
-                />
-              </div>
-              <span id="ig-hint" style="font-size:12px;color:var(--text-light);margin-top:4px;display:block;">We'll reach out here when we launch</span>
-            </div>
-            <!-- Privacy checkbox -->
-            <div class="privacy-check-wrap" style="margin-top:14px;">
-              <input type="checkbox" id="privacyConsent1" name="privacyConsent1"
-                required aria-required="true" aria-describedby="privacy-err1" />
-              <label class="privacy-check-label" for="privacyConsent1">
-                I agree to the <a href="#" class="open-privacy-modal" aria-haspopup="dialog">Privacy Policy</a> and consent to being contacted via Instagram about my waitlist spot. <span class="req" aria-hidden="true">*</span>
-              </label>
-            </div>
-            <span id="privacy-err1" style="display:none;font-size:12px;color:#EF4444;margin-top:4px;display:block;">Please accept the Privacy Policy to continue.</span>
-
-            <button type="submit" class="btn-primary form-submit" style="margin-top:14px;" aria-label="Join the waitlist">
-              Reserve My Spot ✅
-            </button>
-
-            <p class="form-note" style="margin-top:10px;">
-              No spam, ever. We'll only contact you about your spot.
-            </p>
-          </form>
-
-          <!-- Success state -->
-          <div class="form-success" id="formSuccess" role="alert" aria-live="assertive">
-            <div class="success-icon" aria-hidden="true">🎉</div>
-            <h3>You're on the list!</h3>
-            <p>We'll DM you on Instagram the moment we launch. Keep an eye on <strong>@nusameals.bali</strong> for behind-the-scenes updates.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== TRUST BAR ===================== -->
-  <div class="trust-bar" role="complementary" aria-label="Trust indicators">
-    <div class="container">
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        Fresh Daily Prep
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V10"/></svg>
-        Local Balinese Farms
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-        Nutritionist Designed
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        Bali-Wide Delivery
-      </div>
-    </div>
+  <!-- MOBILE MENU -->
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#waitlist" data-lang-en="Home" data-lang-id="Beranda">Home</a>
+    <a href="#how-it-works" data-lang-en="Why Us" data-lang-id="Mengapa Kami">Why Us</a>
+    <a href="#pricing" data-lang-en="Pricing" data-lang-id="Harga">Pricing</a>
+    <a href="#how-to-subscribe" data-lang-en="How It Works" data-lang-id="Cara Kerja">How It Works</a>
+    <a href="#menu" data-lang-en="Menu" data-lang-id="Menu">Menu</a>
+    <a href="#faq" data-lang-en="FAQ" data-lang-id="FAQ">FAQ</a>
+    <a href="#waitlist" class="nav-cta" data-lang-en="Join Now — Get $6 Off" data-lang-id="Gabung Sekarang — Diskon Rp100K">Join Now — Get $6 Off</a>
   </div>
 
-  <!-- ===================== S2: WHY WE'RE BUILDING NUSA MEALS ===================== -->
-  <section class="why-build-section" id="why" aria-labelledby="why-heading">
+  <!-- HERO -->
+  <section class="hero" id="waitlist">
     <div class="container">
-      <div class="section-header reveal">
-        <p class="section-label">Why We're Building Nusa Meals</p>
-        <h2 id="why-heading">We've Felt These Struggles Too</h2>
-        <p>Living in Bali is incredible — but eating healthy and safely shouldn't be this hard.</p>
-      </div>
-      <div class="pain-grid">
-
-        <!-- Row 1: 2 cards -->
-        <div class="pain-card reveal">
-          <div class="pain-img-wrap">
-            <img class="pain-card-img" src="assets/Section 2_Decision Fatigue.png" alt="Decision Fatigue" loading="lazy" />
-          </div>
-          <div class="pain-card-body">
-            <h3><span class="pain-emoji" aria-hidden="true">😵</span>Decision Fatigue</h3>
-            <p>Spending your precious island time staring at endless warung menus, struggling to decide what is safe and healthy to eat.</p>
-          </div>
+      <div class="hero-grid">
+        <div class="hero-left">
+          <span class="hero-tag">🌴 Launching Soon — Bali</span>
+          <h1>Healthy Indonesian Meals, Delivered Fresh Across Bali.</h1>
+          <p class="hero-subtitle">Enjoy healthy Indonesian food with transparent ingredients, balanced nutrition information, and Bali Belly-friendly recipes designed for modern lifestyles in Bali.</p>
+          <div class="hero-price">Starting from Rp 60K/meal</div>
         </div>
-
-        <div class="pain-card reveal">
-          <div class="pain-img-wrap">
-            <img class="pain-card-img" src="assets/Section 2_Unknown Ingredients.png" alt="Mystery Ingredients" loading="lazy" />
-          </div>
-          <div class="pain-card-body">
-            <h3><span class="pain-emoji" aria-hidden="true">🔍</span>Mystery Ingredients</h3>
-            <p>Hidden allergens, MSG, and low-quality seed oils. Eating out makes it nearly impossible to track what actually goes into your body.</p>
-          </div>
-        </div>
-
-        <!-- Row 2: 2 cards -->
-        <div class="pain-card reveal">
-          <div class="pain-img-wrap">
-            <img class="pain-card-img" src="assets/Section 2_no time to cook.png" alt="No Time to Prep & Clean" loading="lazy" />
-          </div>
-          <div class="pain-card-body">
-            <h3><span class="pain-emoji" aria-hidden="true">⏰</span>No Time to Prep &amp; Clean</h3>
-            <p>Caught between surfing sessions, temple exploring, and remote work? No one wants to spend their Bali getaway grocery shopping and cooking.</p>
-          </div>
-        </div>
-
-        <div class="pain-card reveal">
-          <div class="pain-img-wrap">
-            <img class="pain-card-img" src="assets/Section 2_Hygine concern.jpeg" alt="Hygiene Standards" loading="lazy" />
-          </div>
-          <div class="pain-card-body">
-            <h3><span class="pain-emoji" aria-hidden="true">🧼</span>Hygiene Standards</h3>
-            <p>Worrying about the cleanliness of food preparation areas, raw ingredient handling, and the safety of the water used in daily cooking.</p>
-          </div>
-        </div>
-
-        <!-- Row 3: 1 card centered -->
-        <div class="pain-card center-mid reveal">
-          <div class="pain-img-wrap">
-            <img class="pain-card-img" src="assets/Section 2_Bali Belly Concerns.png" alt="The Dreaded Bali Belly" loading="lazy" />
-          </div>
-          <div class="pain-card-body">
-            <h3><span class="pain-emoji" aria-hidden="true">🤢</span>The Dreaded "Bali Belly"</h3>
-            <p>The constant underlying fear of food poisoning ruining your dream vacation or putting your active, healthy lifestyle on an abrupt halt.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ===================== S3: HOW IT WORKS ===================== -->
-  <section class="how-section" id="how" aria-labelledby="how-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <p class="section-label">How It Works</p>
-        <h2 id="how-heading">Three Simple Steps to Healthy Eating</h2>
-        <p>From subscription to scheduled delivery — effortless from start to finish.</p>
-      </div>
-      <div class="how-steps">
-
-        <div class="how-step reveal">
-          <div class="step-num" aria-hidden="true">1</div>
-          <h3>Choose Your Subscription</h3>
-          <div class="plan-cards" role="list">
-            <div class="plan-card" role="listitem">
-              <div>
-                <p class="plan-name">Explorer Plan</p>
-                <p class="plan-sub">14 Meals / Week</p>
-              </div>
-              <span class="plan-price">Rp 980K</span>
+        <div class="hero-right">
+          <div class="form-card">
+            <div class="form-content" id="formContent">
+              <h3>🎉 First 50 Members Get Rp100,000 Off</h3>
+              <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.65;">Join the waitlist today and be one of the first 50 people to receive Rp100,000 off your first Nusa Meals subscription when we launch.</p>
+              <form id="waitlistForm">
+                <div class="form-group">
+                  <label for="userName">Name</label>
+                  <input type="text" id="userName" name="name" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                  <label for="userIG">Instagram @username</label>
+                  <input type="text" id="userIG" name="instagram" placeholder="@yourusername" required>
+                </div>
+                <div class="form-checkbox">
+                  <input type="checkbox" id="privacyCheck" required>
+                  <label for="privacyCheck">I agree to the <a href="#" id="openPrivacy">Privacy Policy</a> and consent to receive updates.</label>
+                </div>
+                <button type="submit" class="btn-submit">Reserve My Spot ✅</button>
+              </form>
             </div>
-            <div class="plan-card" role="listitem">
-              <div>
-                <p class="plan-name">Lifestyle Plan</p>
-                <p class="plan-sub">30 Meals / Month</p>
-              </div>
-              <span class="plan-price">Rp 1.95M</span>
-            </div>
-            <div class="plan-card" role="listitem">
-              <div>
-                <p class="plan-name">Performance Plan</p>
-                <p class="plan-sub">60 Meals / Month</p>
-              </div>
-              <span class="plan-price">Rp 3.6M</span>
+            <div class="form-success" id="formSuccess">
+              <p style="font-size:40px; margin-bottom:12px;">🎉</p>
+              <h3>You're on the list!</h3>
+              <p>We'll notify you when we launch.</p>
             </div>
           </div>
-        </div>
-
-        <div class="how-step reveal">
-          <div class="step-num" aria-hidden="true">2</div>
-          <h3>Customize Preferences</h3>
-          <p style="font-size:14px;color:var(--text-muted);margin-bottom:16px;line-height:1.65;">Tell us how you like your food — we'll handle the rest.</p>
-          <div class="pref-tags" role="list">
-            <span class="pref-tag" role="listitem">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
-              Spice Level
-            </span>
-            <span class="pref-tag" role="listitem">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
-              Allergies
-            </span>
-            <span class="pref-tag" role="listitem">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
-              Dietary Preferences
-            </span>
-          </div>
-        </div>
-
-        <div class="how-step reveal">
-          <div class="step-num" aria-hidden="true">3</div>
-          <h3>Receive Scheduled Deliveries</h3>
-          <p style="font-size:14px;color:var(--text-muted);margin-bottom:16px;line-height:1.65;">Your meals arrive on your schedule, fresh from our kitchen — wherever you are in Bali.</p>
-          <div class="delivery-visual" aria-hidden="true">
-            <span class="d-icon">🛵</span>
-            <p>Fresh to your door, on time, every time.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== S4: WHAT MAKES NUSA MEALS DIFFERENT ===================== -->
-  <section class="diff-section" id="different" aria-labelledby="diff-heading">
-    <div class="container">
-      <div class="section-header reveal">
-        <p class="section-label">Why Choose Nusa Meals?</p>
-        <h2 id="diff-heading">Every Meal Is Designed Around Your Health, Convenience, and Peace of Mind</h2>
-        <p>Every decision we make starts with one question: is this better for our customers?</p>
-      </div>
-      <div class="diff-grid">
-        <div class="diff-card reveal">
-          <span class="diff-icon" aria-hidden="true">💚</span>
-          <h3>Bali Belly Friendly</h3>
-        </div>
-        <div class="diff-card reveal">
-          <span class="diff-icon" aria-hidden="true">🔬</span>
-          <h3>Trusted Ingredients</h3>
-        </div>
-        <div class="diff-card reveal">
-          <span class="diff-icon" aria-hidden="true">🧼</span>
-          <h3>Hygiene-Made Food</h3>
-        </div>
-        <div class="diff-card reveal">
-          <span class="diff-icon" aria-hidden="true">🏝️</span>
-          <h3>One Stop Local Food</h3>
-        </div>
-        <div class="diff-card reveal">
-          <span class="diff-icon" aria-hidden="true">📊</span>
-          <h3>Nutrition Information</h3>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== S4.5: PRICING ===================== -->
-  <section class="pricing-section" id="pricing" aria-labelledby="pricing-heading">
+  <!-- DIVIDER: Hero to Trust -->
+  <div class="section-divider section-divider--wave">
+    <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 48h1440V24C1200 48 960 0 720 24S240 0 0 24v24z" fill="#f7f9f5"/>
+    </svg>
+  </div>
+
+  <!-- TRUST BAR -->
+  <section class="trust-bar">
     <div class="container">
-
-      <div class="section-header reveal">
-        <p class="section-label">Founding Member Plans</p>
-        <h2 id="pricing-heading">Choose Your <span>Founding Member Plan</span></h2>
-        <p>Launching Soon in Bali. Healthy Indonesian meal subscriptions designed for expats, digital nomads, travelers, and active lifestyles.</p>
+      <div class="trust-badges">
+        <div class="trust-badge">🌿 Fresh Daily Prep</div>
+        <div class="trust-badge">🌾 Local Balinese Farms</div>
+        <div class="trust-badge">🥗 Nutritionist Designed</div>
+        <div class="trust-badge">🛵 Bali-Wide Delivery</div>
       </div>
+    </div>
+  </section>
 
+  <!-- DIVIDER: Trust to Why -->
+  <div class="section-divider section-divider--wave">
+    <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 0h1440v24C1200 0 960 48 720 24S240 48 0 24V0z" fill="#f7f9f5"/>
+    </svg>
+  </div>
 
+  <!-- WHY NUSA MEALS -->
+  <section class="section-why" id="how-it-works">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Why Nusa Meals?</h2>
+        <p>We solve the biggest food challenges expats and health-conscious locals face in Bali.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <div class="icon">🛡️</div>
+          <h4>Bali Belly Friendly</h4>
+          <p>Prepared in certified hygienic kitchens with strict food safety standards.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="icon">🌿</div>
+          <h4>Trusted Ingredients</h4>
+          <p>Locally sourced from verified Balinese farms. No mystery additives.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="icon">✨</div>
+          <h4>Hygiene-Made Food</h4>
+          <p>HACCP-level kitchen protocols. Clean, safe, and audited regularly.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="icon">🍱</div>
+          <h4>One Stop Local Food</h4>
+          <p>Authentic Indonesian flavors without the hassle of sourcing and cooking.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="icon">📊</div>
+          <h4>Nutrition Information</h4>
+          <p>Every meal comes with full macro and calorie breakdowns.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER: Why to Pricing -->
+  <div class="section-divider section-divider--wave">
+    <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 48h1440V24C1200 48 960 0 720 24S240 0 0 24v24z" fill="#f7f9f5"/>
+    </svg>
+  </div>
+
+  <!-- PRICING -->
+  <section class="section-pricing" id="pricing">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Choose Your Plan</h2>
+        <p>Flexible meal plans designed to fit your lifestyle. All plans include delivery across Bali.</p>
+      </div>
       <div class="pricing-grid">
-
-        <!-- CARD 1: Explorer -->
-        <article class="pricing-card reveal" aria-label="Explorer Plan">
-          <span class="pricing-badge">🏷 Best For Beginner</span>
-          <h3 class="pricing-name">Explorer Plan</h3>
-          <p class="pricing-desc">Perfect for people who want to try healthy Indonesian meal subscriptions.</p>
-          <p class="pricing-value-highlight">"Discover Indonesian food safely and confidently."</p>
-          <div class="pricing-prices">
-            <p class="pricing-original">Rp 1.050.000</p>
-            <div class="pricing-founding-row"><span class="pricing-founding-label">Founding Price</span></div>
-            <div class="pricing-founding-row">
-              <span class="pricing-amount">Rp 980K</span>
-              <span class="pricing-period">/ week</span>
-            </div>
-            <span class="pricing-per-meal">≈ Rp 70.000 per meal</span>
-          </div>
-          <hr class="pricing-divider" />
-          <ul class="pricing-features" aria-label="Explorer Plan features">
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>14 meals per week</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>2 meals per day</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Bali Belly Friendly preparation</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Transparent ingredients</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Nutrition information per meal</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Customizable spice levels</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Weekly menu rotation</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Scheduled delivery included</li>
+        <!-- Explorer -->
+        <div class="pricing-card reveal">
+          <span class="pricing-badge">Starter</span>
+          <h4>Explorer</h4>
+          <div class="pricing-price">Rp 980K</div>
+          <div class="pricing-per">/week • 14 meals • ~Rp 70K/meal</div>
+          <ul class="pricing-features">
+            <li>14 meals per week (lunch + dinner)</li>
+            <li>Weekly rotating menu</li>
+            <li>Free delivery across Bali</li>
+            <li>Pause or cancel anytime</li>
           </ul>
-          <p class="pricing-suitable"><strong>Suitable for:</strong> Travelers, new expats, first-time customers</p>
-          <a href="#waitlist" class="pricing-cta" aria-label="Join waitlist for Explorer Plan">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            Join Waitlist
-          </a>
-        </article>
-
-        <!-- CARD 2: Lifestyle -->
-        <article class="pricing-card popular reveal" aria-label="Lifestyle Plan — Recommended by Nusa Meals">
-          <span class="popular-ribbon" aria-label="Recommended by Nusa Meals">⭐ Recommended by Nusa Meals</span>
-          <span class="pricing-badge">⭐ Best For Everyday Living</span>
-          <h3 class="pricing-name">Lifestyle Plan</h3>
-          <p class="pricing-desc">The easiest way to enjoy healthy Indonesian meals every day.</p>
-          <p class="pricing-value-highlight">"Never worry about what to eat again."</p>
-          <div class="pricing-prices">
-            <p class="pricing-original">Rp 2.250.000</p>
-            <div class="pricing-founding-row"><span class="pricing-founding-label">Founding Price</span></div>
-            <div class="pricing-founding-row">
-              <span class="pricing-amount">Rp 1.95M</span>
-              <span class="pricing-period">/ month</span>
-            </div>
-            <span class="pricing-per-meal">≈ Rp 65.000 per meal</span>
-          </div>
-          <hr class="pricing-divider" />
-          <ul class="pricing-features" aria-label="Lifestyle Plan features">
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>30 meals per month</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Daily meal coverage</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Bali Belly Friendly preparation</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Transparent ingredients</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Nutrition information per meal</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Customizable spice levels</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Priority delivery scheduling</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Weekly menu rotation</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Scheduled delivery included</li>
+          <a href="#waitlist" class="btn-pricing">Join Waitlist</a>
+        </div>
+        <!-- Lifestyle -->
+        <div class="pricing-card recommended reveal">
+          <span class="pricing-badge">Recommended</span>
+          <h4>Lifestyle</h4>
+          <div class="pricing-price">Rp 1.95M</div>
+          <div class="pricing-per">/month • 30 meals • ~Rp 65K/meal</div>
+          <ul class="pricing-features">
+            <li>30 meals per month</li>
+            <li>Priority menu selection</li>
+            <li>Nutritionist meal notes</li>
+            <li>Free delivery across Bali</li>
+            <li>Exclusive early member pricing</li>
           </ul>
-          <p class="pricing-suitable"><strong>Suitable for:</strong> Expats, digital nomads, busy professionals</p>
-          <a href="#waitlist" class="pricing-cta" aria-label="Join waitlist for Lifestyle Plan">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            Join Waitlist
-          </a>
-        </article>
-
-        <!-- CARD 3: Performance -->
-        <article class="pricing-card reveal" aria-label="Performance Plan">
-          <span class="pricing-badge">💪 Best Value</span>
-          <h3 class="pricing-name">Performance Plan</h3>
-          <p class="pricing-desc">Designed for active lifestyles and higher meal consumption.</p>
-          <p class="pricing-value-highlight">"Full monthly meal coverage with the best value per meal."</p>
-          <div class="pricing-prices">
-            <p class="pricing-original">Rp 4.200.000</p>
-            <div class="pricing-founding-row"><span class="pricing-founding-label">Founding Price</span></div>
-            <div class="pricing-founding-row">
-              <span class="pricing-amount">Rp 3.6M</span>
-              <span class="pricing-period">/ month</span>
-            </div>
-            <span class="pricing-per-meal">≈ Rp 60.000 per meal</span>
-          </div>
-          <hr class="pricing-divider" />
-          <ul class="pricing-features" aria-label="Performance Plan features">
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>60 meals per month</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>2 meals per day</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>High-protein &amp; balanced options</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Transparent ingredients</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Nutrition information per meal</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Customizable spice levels</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Priority support</li>
-            <li><span class="feat-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Scheduled delivery included</li>
+          <a href="#waitlist" class="btn-pricing">Join Waitlist</a>
+        </div>
+        <!-- Performance -->
+        <div class="pricing-card reveal">
+          <span class="pricing-badge">Best Value</span>
+          <h4>Performance</h4>
+          <div class="pricing-price">Rp 3.6M</div>
+          <div class="pricing-per">/month • 60 meals • ~Rp 60K/meal</div>
+          <ul class="pricing-features">
+            <li>60 meals per month (all daily meals)</li>
+            <li>Custom macro targets</li>
+            <li>Dedicated nutrition support</li>
+            <li>Free priority delivery</li>
+            <li>First access to new dishes</li>
           </ul>
-          <p class="pricing-suitable"><strong>Suitable for:</strong> Fitness enthusiasts, couples, long-term Bali residents</p>
-          <a href="#waitlist" class="pricing-cta" aria-label="Join waitlist for Performance Plan">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            Join Waitlist
-          </a>
-        </article>
-
+          <a href="#waitlist" class="btn-pricing">Join Waitlist</a>
+        </div>
       </div>
-
-      <p class="pricing-note">
-        🔒 <strong>Founding member pricing</strong> is locked in for the lifetime of your subscription. Prices will increase after official launch.
-      </p>
     </div>
   </section>
 
-  <!-- ===================== COMPARE PLANS ===================== -->
-  <section class="compare-section" id="compare" aria-labelledby="compare-heading">
+  <!-- DIVIDER: Pricing to How to Subscribe -->
+  <div class="section-divider section-divider--wave">
+    <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 0h1440v24C1200 0 960 48 720 24S240 48 0 24V0z" fill="#f7f9f5"/>
+    </svg>
+  </div>
+
+  <!-- HOW TO SUBSCRIBE (PRE-LAUNCH) -->
+  <section class="section-how-subscribe" id="how-to-subscribe" style="padding:80px 0 96px;background:var(--bg-white);">
     <div class="container">
       <div class="section-header reveal">
-        <p class="section-label">Compare Plans</p>
-        <h2 id="compare-heading">Find the Right Plan for You</h2>
-        <p>See exactly what's included in each plan before you join the waitlist.</p>
+        <h2>How to Subscribe</h2>
+        <p>We're currently in pre-launch phase. Here's how you can secure your spot before we go live.</p>
       </div>
-
-      <p class="compare-scroll-hint" aria-hidden="true">← Scroll to compare →</p>
-
-      <div class="compare-wrap reveal">
-        <table class="compare-table" role="table" aria-label="Plan comparison table">
-          <thead>
-            <tr>
-              <th scope="col" style="width:30%"></th>
-              <th scope="col" style="width:23.3%">
-                <span class="compare-plan-name">Explorer</span>
-                <span class="compare-plan-price">Rp 980K / week</span>
-              </th>
-              <th scope="col" class="col-recommended" style="width:23.3%">
-                <span class="compare-rec-badge">⭐ Recommended</span>
-                <span class="compare-plan-name">Lifestyle</span>
-                <span class="compare-plan-price">Rp 1.95M / month</span>
-              </th>
-              <th scope="col" style="width:23.3%">
-                <span class="compare-plan-name">Performance</span>
-                <span class="compare-plan-price">Rp 3.6M / month</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-
-            <tr>
-              <td>Meals Included</td>
-              <td><span class="compare-val">14 / week</span></td>
-              <td class="col-recommended"><span class="compare-val highlight">30 / month</span></td>
-              <td><span class="compare-val">60 / month</span></td>
-            </tr>
-
-            <tr>
-              <td>Best For</td>
-              <td><span class="compare-val">Travelers &amp; first-timers</span></td>
-              <td class="col-recommended"><span class="compare-val highlight">Expats &amp; nomads</span></td>
-              <td><span class="compare-val">Fitness &amp; couples</span></td>
-            </tr>
-
-            <tr>
-              <td>Bali Belly Friendly</td>
-              <td><span class="chk" aria-label="Included">✓</span></td>
-              <td class="col-recommended"><span class="chk" aria-label="Included">✓</span></td>
-              <td><span class="chk" aria-label="Included">✓</span></td>
-            </tr>
-
-            <tr>
-              <td>Transparent Ingredients</td>
-              <td><span class="chk" aria-label="Included">✓</span></td>
-              <td class="col-recommended"><span class="chk" aria-label="Included">✓</span></td>
-              <td><span class="chk" aria-label="Included">✓</span></td>
-            </tr>
-
-            <tr>
-              <td>Nutrition Information</td>
-              <td><span class="chk" aria-label="Included">✓</span></td>
-              <td class="col-recommended"><span class="chk" aria-label="Included">✓</span></td>
-              <td><span class="chk" aria-label="Included">✓</span></td>
-            </tr>
-
-            <tr>
-              <td>Scheduled Delivery</td>
-              <td><span class="chk" aria-label="Included">✓</span></td>
-              <td class="col-recommended"><span class="chk" aria-label="Included">✓</span></td>
-              <td><span class="chk" aria-label="Included">✓</span></td>
-            </tr>
-
-            <tr>
-              <td>Priority Delivery</td>
-              <td><span class="crs" aria-label="Not included">—</span></td>
-              <td class="col-recommended"><span class="chk" aria-label="Included">✓</span></td>
-              <td><span class="chk" aria-label="Included">✓</span></td>
-            </tr>
-
-            <tr>
-              <td>High Protein Options</td>
-              <td><span class="crs" aria-label="Not included">—</span></td>
-              <td class="col-recommended"><span class="crs" aria-label="Not included">—</span></td>
-              <td><span class="chk" aria-label="Included">✓</span></td>
-            </tr>
-
-            <tr>
-              <td>Priority Support</td>
-              <td><span class="crs" aria-label="Not included">—</span></td>
-              <td class="col-recommended"><span class="crs" aria-label="Not included">—</span></td>
-              <td><span class="chk" aria-label="Included">✓</span></td>
-            </tr>
-
-            <tr>
-              <td>Cost Per Meal</td>
-              <td><span class="compare-val">≈ Rp 70K</span></td>
-              <td class="col-recommended"><span class="compare-val highlight">≈ Rp 65K</span></td>
-              <td><span class="compare-val">≈ Rp 60K</span></td>
-            </tr>
-
-          </tbody>
-        </table>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;" class="reveal">
+        <div style="text-align:center;padding:28px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-white);">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;margin-bottom:14px;">1</div>
+          <h4 style="font-size:14px;font-weight:700;margin-bottom:6px;">Join the Waitlist</h4>
+          <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">Fill in your name and Instagram above to reserve your spot.</p>
+        </div>
+        <div style="text-align:center;padding:28px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-white);">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;margin-bottom:14px;">2</div>
+          <h4 style="font-size:14px;font-weight:700;margin-bottom:6px;">Get Notified at Launch</h4>
+          <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">We'll DM you on Instagram when Nusa Meals officially launches in Bali.</p>
+        </div>
+        <div style="text-align:center;padding:28px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-white);">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;margin-bottom:14px;">3</div>
+          <h4 style="font-size:14px;font-weight:700;margin-bottom:6px;">Choose Your Plan</h4>
+          <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">Pick Explorer, Lifestyle, or Performance — with exclusive early member pricing locked in.</p>
+        </div>
+        <div style="text-align:center;padding:28px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-white);">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;margin-bottom:14px;">4</div>
+          <h4 style="font-size:14px;font-weight:700;margin-bottom:6px;">Enjoy Fresh Meals</h4>
+          <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">Receive healthy Indonesian meals delivered on your schedule across Bali.</p>
+        </div>
       </div>
-
-      <p style="text-align:center;font-size:13px;color:var(--text-muted);margin-top:28px;">
-        All plans include customizable spice levels and weekly menu rotation.
-        <a href="#waitlist" style="color:var(--green-dark);font-weight:700;text-decoration:none;margin-left:6px;">Join the waitlist →</a>
-      </p>
+      <p class="reveal" style="text-align:center;margin-top:32px;font-size:13px;color:var(--text-muted);">🚀 We're currently in pre-launch. Join the waitlist now to lock in your <strong style="color:var(--primary);">Rp100,000 early member discount</strong> before we go live.</p>
     </div>
   </section>
 
-  <!-- ===================== S5: SAMPLE MEALS ===================== -->
-  <section class="meals-section" id="meals" aria-labelledby="meals-heading">
+  <!-- DIVIDER: How to Subscribe to Meals -->
+  <div class="section-divider section-divider--wave">
+    <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 48h1440V24C1200 48 960 0 720 24S240 0 0 24v24z" fill="#f7f9f5"/>
+    </svg>
+  </div>
+
+  <!-- SAMPLE MEALS -->
+  <section class="section-meals" id="menu">
     <div class="container">
       <div class="section-header reveal">
-        <p class="section-label">Sample Meals</p>
-        <h2 id="meals-heading">Indonesian Classics, Made Healthier</h2>
-        <p>Bold authentic flavors — prepared with clean ingredients and full nutrition transparency.</p>
+        <h2>Sample Meals</h2>
+        <p>A taste of what's coming — authentic Indonesian dishes, reimagined for your health.</p>
       </div>
       <div class="meals-grid">
-
-        <article class="meal-card reveal">
-          <div class="meal-img" role="img" aria-label="Organic Chicken Sate Lilit">
-            <img src="assets/Section 6_Sate Lilit Ayam Organik.png" alt="Organic Chicken Sate Lilit" />
-            <span class="meal-meal-tag">Lunch / Dinner</span>
-          </div>
-          <div class="meal-body">
-            <h3>Organic Chicken Sate Lilit</h3>
-            <p>Traditional Balinese minced organic chicken skewers infused with aromatic lemongrass, grated coconut, and local herbs, grilled to smoky perfection.</p>
-          </div>
-          <div class="meal-footer">
-            <div class="meal-macros" aria-label="Nutrition info">
-              <span class="meal-macro"><strong>30g</strong> Protein</span>
-              <span class="meal-macro"><strong>9g</strong> Fat</span>
-              <span class="meal-macro"><strong>12g</strong> Carbs</span>
+        <div class="meal-card reveal">
+          <img src="assets/Section 6_Sate Lilit Ayam Organik.png" alt="Sate Lilit Ayam Organik">
+          <div class="meal-card-body">
+            <h4>Sate Lilit Ayam Organik</h4>
+            <p>Balinese-style minced chicken satay with lemongrass and coconut, grilled to perfection.</p>
+            <div class="meal-macros">
+              <span>380 kcal</span>
+              <span>32g protein</span>
+              <span>18g fat</span>
             </div>
-            <span class="meal-kcal">250 kcal</span>
           </div>
-        </article>
-
-        <article class="meal-card reveal">
-          <div class="meal-img" role="img" aria-label="Singkarak Grilled Fish">
-            <img src="assets/Section 6_Singkarak Grilled.png" alt="Singkarak Grilled Fish" />
-            <span class="meal-meal-tag">Dinner</span>
-          </div>
-          <div class="meal-body">
-            <h3>Singkarak Grilled Fish</h3>
-            <p>Fresh lake-caught fish grilled with a rich Sumatran spiced chili glaze, served with a side of crisp cucumbers and authentic green sambal.</p>
-          </div>
-          <div class="meal-footer">
-            <div class="meal-macros" aria-label="Nutrition info">
-              <span class="meal-macro"><strong>38g</strong> Protein</span>
-              <span class="meal-macro"><strong>7g</strong> Fat</span>
-              <span class="meal-macro"><strong>22g</strong> Carbs</span>
+        </div>
+        <div class="meal-card reveal">
+          <img src="assets/Section 6_Singkarak Grilled.png" alt="Singkarak Grilled Fish">
+          <div class="meal-card-body">
+            <h4>Singkarak Grilled Fish</h4>
+            <p>West Sumatran grilled fish with andaliman pepper, fresh herbs, and sambal hijau.</p>
+            <div class="meal-macros">
+              <span>320 kcal</span>
+              <span>36g protein</span>
+              <span>12g fat</span>
             </div>
-            <span class="meal-kcal">300 kcal</span>
           </div>
-        </article>
-
-        <article class="meal-card reveal">
-          <div class="meal-img" role="img" aria-label="Ubud Red Rice Mixed Bowl">
-            <img src="assets/Section 6_Nasi Campur Ubud.png" alt="Ubud Red Rice Mixed Bowl" />
-            <span class="meal-meal-tag">Lunch</span>
-          </div>
-          <div class="meal-body">
-            <h3>Ubud Red Rice Mixed Bowl</h3>
-            <p>A nutrient-dense Balinese platter featuring organic red rice, chicken sate, fresh vegetable "urab", and our signature spicy sambal matah.</p>
-          </div>
-          <div class="meal-footer">
-            <div class="meal-macros" aria-label="Nutrition info">
-              <span class="meal-macro"><strong>32g</strong> Protein</span>
-              <span class="meal-macro"><strong>10g</strong> Fat</span>
-              <span class="meal-macro"><strong>45g</strong> Carbs</span>
+        </div>
+        <div class="meal-card reveal">
+          <img src="assets/Section 6_Nasi Campur Ubud.png" alt="Nasi Campur Ubud">
+          <div class="meal-card-body">
+            <h4>Nasi Campur Ubud</h4>
+            <p>Ubud-style mixed rice with organic tempeh, lawar, sambal matah, and fresh veggies.</p>
+            <div class="meal-macros">
+              <span>450 kcal</span>
+              <span>22g protein</span>
+              <span>15g fat</span>
             </div>
-            <span class="meal-kcal">400 kcal</span>
           </div>
-        </article>
-
-        <article class="meal-card reveal">
-          <div class="meal-img" role="img" aria-label="Traditional Soto Kudus">
-            <img src="assets/Section 6_Soto Kudus.png" alt="Traditional Soto Kudus" />
-            <span class="meal-meal-tag">Breakfast / Lunch</span>
-          </div>
-          <div class="meal-body">
-            <h3>Traditional Soto Kudus</h3>
-            <p>A comforting, aromatic chicken broth infused with turmeric and local spices, filled with shredded chicken and bean sprouts, served with a side of quail egg skewers.</p>
-          </div>
-          <div class="meal-footer">
-            <div class="meal-macros" aria-label="Nutrition info">
-              <span class="meal-macro"><strong>26g</strong> Protein</span>
-              <span class="meal-macro"><strong>8g</strong> Fat</span>
-              <span class="meal-macro"><strong>28g</strong> Carbs</span>
-            </div>
-            <span class="meal-kcal">290 kcal</span>
-          </div>
-        </article>
-
-        <article class="meal-card reveal">
-          <div class="meal-img" role="img" aria-label="Madiun Pecel Quinoa Bowl">
-            <img src="assets/Section 6_Pecel Madiun.png" alt="Madiun Pecel Quinoa Bowl" />
-            <span class="meal-meal-tag">Lunch / Snack</span>
-          </div>
-          <div class="meal-body">
-            <h3>Madiun Pecel Quinoa Bowl</h3>
-            <p>A vibrant plant-based bowl of steamed local greens over high-fiber quinoa, drizzled with savory peanut-chili sauce and topped with baked tempeh.</p>
-          </div>
-          <div class="meal-footer">
-            <div class="meal-macros" aria-label="Nutrition info">
-              <span class="meal-macro"><strong>16g</strong> Protein</span>
-              <span class="meal-macro"><strong>14g</strong> Fat</span>
-              <span class="meal-macro"><strong>38g</strong> Carbs</span>
-            </div>
-            <span class="meal-kcal">340 kcal</span>
-          </div>
-        </article>
-
-        <article class="meal-card reveal">
-          <div class="meal-img" role="img" aria-label="Mushroom & Tempeh Rendang">
-            <img src="assets/Section 6_Rendang Jamur.png" alt="Mushroom & Tempeh Rendang" />
-            <span class="meal-meal-tag">Dinner</span>
-          </div>
-          <div class="meal-body">
-            <h3>Mushroom &amp; Tempeh Rendang</h3>
-            <p>A rich, plant-based twist on the classic Rendang, featuring tender mushrooms and local organic tempeh slow-simmered in caramelized coconut milk.</p>
-          </div>
-          <div class="meal-footer">
-            <div class="meal-macros" aria-label="Nutrition info">
-              <span class="meal-macro"><strong>14g</strong> Protein</span>
-              <span class="meal-macro"><strong>12g</strong> Fat</span>
-              <span class="meal-macro"><strong>26g</strong> Carbs</span>
-            </div>
-            <span class="meal-kcal">270 kcal</span>
-          </div>
-        </article>
-
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== S6: PERFECT FOR ===================== -->
-  <section class="for-section" id="for-who" aria-labelledby="for-heading">
+  <!-- DIVIDER: Meals to FAQ -->
+  <div class="section-divider section-divider--wave">
+    <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 48h1440V24C1200 48 960 0 720 24S240 0 0 24v24z" fill="#f7f9f5"/>
+    </svg>
+  </div>
+
+  <!-- FAQ -->
+  <section class="section-faq" id="faq">
     <div class="container">
       <div class="section-header reveal">
-        <p class="section-label">Perfect For</p>
-        <h2 id="for-heading">Healthy Meals for Every Lifestyle in Bali</h2>
-        <p>Whether you're here for a week or a year, Nusa Meals fits your lifestyle.</p>
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about Nusa Meals.</p>
       </div>
-      <div class="for-grid">
-        <div class="for-card reveal">
-          <span class="for-icon" aria-hidden="true">🏡</span>
-          <h3>Expats</h3>
-        </div>
-        <div class="for-card reveal">
-          <span class="for-icon" aria-hidden="true">💻</span>
-          <h3>Digital Nomads</h3>
-        </div>
-        <div class="for-card reveal">
-          <span class="for-icon" aria-hidden="true">🏋️</span>
-          <h3>Fitness Enthusiasts</h3>
-        </div>
-        <div class="for-card reveal">
-          <span class="for-icon" aria-hidden="true">🧳</span>
-          <h3>Long-Term Travelers</h3>
-        </div>
-        <div class="for-card reveal">
-          <span class="for-icon" aria-hidden="true">⚡</span>
-          <h3>Busy Professionals</h3>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== S7: EARLY ACCESS + WAITLIST FORM ===================== -->
-  <section class="early-access-section" id="early-access" aria-labelledby="ea-heading">
-    <div class="container">
-      <div class="early-access-grid">
-
-        <!-- Left: benefits copy -->
-        <div class="ea-copy reveal">
-          <p class="section-label">Join Before Launch</p>
-          <h2 id="ea-heading">Become a <span>Founding Member</span> Before We Launch.</h2>
-          <p>Join today to lock in lifetime founding pricing and priority delivery before we officially launch.</p>
-          <ul class="ea-benefits" aria-label="Founding member benefits">
-            <li>
-              <span class="ea-check" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              Early Access — be first in line when we go live
-            </li>
-            <li>
-              <span class="ea-check" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              Special Launch Pricing — locked-in rates exclusive to waitlist members
-            </li>
-            <li>
-              <span class="ea-check" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              Priority Delivery Slots — choose your preferred schedule before the public
-            </li>
-            <li>
-              <span class="ea-check" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              Exclusive Menu Previews — sneak peek at upcoming dishes before anyone else
-            </li>
-            <li>
-              <span class="ea-check" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              Future Loyalty Rewards — founding members earn double reward points forever
-            </li>
-          </ul>
-        </div>
-
-        <!-- Right: waitlist form card -->
-        <div class="ea-form-card reveal" role="complementary" aria-label="Secondary waitlist form">
-          <div class="form-count" aria-live="polite">
-            <div class="avatars" aria-hidden="true">
-              <span>A</span><span>K</span><span>S</span><span>+</span>
-            </div>
-            <p><strong>240+ people</strong> already on the list</p>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <span>Is this a meal subscription?</span>
+            <span class="faq-icon">+</span>
           </div>
-          <div class="form-card-header">
-            <h2>Secure Your Founding Spot</h2>
-            <p>Takes 30 seconds. No credit card required.</p>
-          </div>
-
-          <form id="waitlistForm2" novalidate aria-label="Early access waitlist form">
-            <div class="form-group">
-              <label for="fullName2">Your Name <span class="req" aria-hidden="true">*</span></label>
-              <input type="text" id="fullName2" name="fullName2"
-                placeholder="e.g. Sarah Mitchell" autocomplete="name"
-                required aria-required="true" />
-            </div>
-            <div class="form-group">
-              <label for="instagram2">Instagram Username <span class="req" aria-hidden="true">*</span></label>
-              <div class="instagram-wrap">
-                <span class="at-sign" aria-hidden="true">@</span>
-                <input type="text" id="instagram2" name="instagram2"
-                  placeholder="yourusername" autocomplete="username"
-                  required aria-required="true" aria-describedby="ig-hint2" />
-              </div>
-              <span id="ig-hint2" style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;display:block;">We'll reach out here when we launch</span>
-            </div>
-
-            <!-- Privacy checkbox -->
-            <div class="privacy-check-wrap">
-              <input type="checkbox" id="privacyConsent2" name="privacyConsent2"
-                required aria-required="true" aria-describedby="privacy-err2" />
-              <label class="privacy-check-label" for="privacyConsent2">
-                I agree to the <a href="#" class="open-privacy-modal" aria-haspopup="dialog">Privacy Policy</a> and consent to Nusa Meals contacting me via Instagram about my waitlist spot. <span class="req" aria-hidden="true">*</span>
-              </label>
-            </div>
-            <span id="privacy-err2" style="display:none;font-size:12px;color:#F87171;margin-top:4px;">Please accept the Privacy Policy to continue.</span>
-
-            <button type="submit" class="btn-primary form-submit" style="margin-top:16px;" aria-label="Reserve founding spot">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              Reserve My Spot
-            </button>
-          </form>
-
-          <!-- Success state -->
-          <div class="form-success" id="formSuccess2" role="alert" aria-live="assertive">
-            <div class="success-icon" aria-hidden="true">🎉</div>
-            <h3>You're on the list!</h3>
-            <p>We'll DM you on Instagram the moment we launch. Follow <strong>@nusameals.bali</strong> for updates.</p>
+          <div class="faq-answer">
+            <p>Yes! Nusa Meals is a weekly/monthly meal subscription. You choose your plan, and we deliver fresh meals to your door on your preferred schedule. No contracts — pause or cancel anytime.</p>
           </div>
         </div>
-
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <span>Is it suitable for foreigners living in Bali?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Absolutely! Our meals are designed for both expats and locals. We use familiar Indonesian flavors with strict hygiene standards, so you get authentic taste without worrying about food safety.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <span>Can I see the ingredients before ordering?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes! Every meal on our menu includes a full ingredient list. We're transparent about sourcing — all ingredients come from verified local farms and suppliers.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <span>Is nutrition information included?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Every meal comes with detailed macro breakdowns (calories, protein, carbs, fat). Our nutritionist designs each meal to be balanced and aligned with common dietary goals.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <span>Where do you deliver in Bali?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>We deliver across Bali including Canggu, Seminyak, Ubud, Denpasar, Sanur, Kuta, and surrounding areas. Delivery is included free with all plans.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== S8: FAQ ===================== -->
-  <section class="faq-section" id="faq" aria-labelledby="faq-heading">
+  <!-- FINAL CTA -->
+  <section class="section-cta">
     <div class="container">
-      <div class="section-header reveal">
-        <p class="section-label">FAQ</p>
-        <h2 id="faq-heading">Got Questions? We've Got Answers.</h2>
-        <p>Everything you need to know before joining the waitlist.</p>
-      </div>
-      <div class="faq-list reveal" role="list">
-
-        <div class="faq-item" role="listitem">
-          <button class="faq-q" aria-expanded="false" aria-controls="faq-a1">
-            Is this a meal subscription?
-            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="faq-a" id="faq-a1" role="region">
-            Yes. Nusa Meals operates on a subscription model with scheduled meal deliveries.
-          </div>
-        </div>
-
-        <div class="faq-item" role="listitem">
-          <button class="faq-q" aria-expanded="false" aria-controls="faq-a2">
-            Is it suitable for foreigners?
-            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="faq-a" id="faq-a2" role="region">
-            Yes. Meals can be customized to your spice preference, and our service is fully available in English.
-          </div>
-        </div>
-
-        <div class="faq-item" role="listitem">
-          <button class="faq-q" aria-expanded="false" aria-controls="faq-a3">
-            Can I see the ingredients?
-            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="faq-a" id="faq-a3" role="region">
-            Absolutely. Ingredient transparency is one of our core principles — every meal comes with a full ingredient list.
-          </div>
-        </div>
-
-        <div class="faq-item" role="listitem">
-          <button class="faq-q" aria-expanded="false" aria-controls="faq-a4">
-            Is nutrition information included?
-            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="faq-a" id="faq-a4" role="region">
-            Yes. Every meal includes detailed nutrition information — calories, protein, carbs, and fats.
-          </div>
-        </div>
-
-        <div class="faq-item" role="listitem">
-          <button class="faq-q" aria-expanded="false" aria-controls="faq-a5">
-            Where do you deliver?
-            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="faq-a" id="faq-a5" role="region">
-            We deliver to selected areas across Bali. Exact coverage zones will be confirmed at launch — join the waitlist to get notified.
-          </div>
-        </div>
-
-      </div>
+      <h2>Ready to Enjoy Healthy Indonesian Meals Every Day?</h2>
+      <p style="color:rgba(255,255,255,0.7);font-size:15px;max-width:480px;margin:0 auto 28px;line-height:1.7;">Join the waitlist now and secure your early member discount — exclusive pricing locked in before we officially launch in Bali.</p>
+      <a href="#waitlist" class="btn-cta-final">JOIN NOW TO GET VOUCHER 100K</a>
     </div>
   </section>
 
-  <!-- ===================== FINAL CTA ===================== -->
-  <section class="cta-section" id="join" aria-labelledby="cta-heading">
+  <!-- FOOTER -->
+  <footer class="footer">
     <div class="container">
-      <div class="cta-inner reveal">
-
-        <p class="section-label">Limited Founding Member Spots</p>
-        <h2 id="cta-heading">Ready to Enjoy <span>Healthy Indonesian Meals</span><br />Every Day?</h2>
-        <p>Join the waitlist now and secure your founding member rate — exclusive pricing, priority delivery, and early access, locked in for life.</p>
-
-        <div class="cta-stats" aria-label="Key numbers">
-          <div class="cta-stat">
-            <div class="cta-stat-num">240+</div>
-            <div class="cta-stat-label">On the waitlist</div>
-          </div>
-          <div class="cta-stat">
-            <div class="cta-stat-num">Rp 60K</div>
-            <div class="cta-stat-label">Starting per meal</div>
-          </div>
-          <div class="cta-stat">
-            <div class="cta-stat-num">3 Plans</div>
-            <div class="cta-stat-label">To choose from</div>
-          </div>
-          <div class="cta-stat">
-            <div class="cta-stat-num">100%</div>
-            <div class="cta-stat-label">Bali Belly Friendly</div>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="Nusa Meals">
+          <p>Healthy Indonesian meals delivered fresh across Bali. Nutritionist-designed, locally sourced, Bali Belly-friendly.</p>
+          <div class="footer-social">
+            <a href="https://instagram.com/nusameals.bali" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
           </div>
         </div>
-
-        <div class="cta-btn-wrap">
-          <a href="#waitlist" class="btn-primary" aria-label="Go to waitlist form">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Join the Waitlist
-          </a>
-          <p class="cta-note">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            No credit card required &nbsp;·&nbsp; No spam, ever
-          </p>
+        <div class="footer-col">
+          <h5>Navigation</h5>
+          <a href="#waitlist">Home</a>
+          <a href="#how-it-works">Why Us</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#how-to-subscribe">How It Works</a>
+          <a href="#menu">Menu</a>
+          <a href="#faq">FAQ</a>
         </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== FOOTER ===================== -->
-  <footer role="contentinfo">
-    <div class="footer-top">
-      <div class="container">
-        <div class="footer-grid">
-
-          <!-- Brand -->
-          <div class="footer-brand">
-            <img src="assets/logo.png" alt="Nusa Meals" />
-            <p>Healthy Indonesian meal subscription for expats, digital nomads, and health-conscious travelers in Bali. Launching soon.</p>
-            <div class="footer-social" aria-label="Social media">
-              <a href="https://instagram.com/nusameals.bali" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-              </a>
-            </div>
-          </div>
-
-          <!-- Nav links -->
-          <div class="footer-col">
-            <h4>Navigation</h4>
-            <ul>
-              <li><a href="#waitlist">Home</a></li>
-              <li><a href="#how">How It Works</a></li>
-              <li><a href="#pricing">Pricing</a></li>
-              <li><a href="#meals">Menu</a></li>
-              <li><a href="#faq">FAQ</a></li>
-            </ul>
-          </div>
-
-          <!-- Plans -->
-          <div class="footer-col">
-            <h4>Plans</h4>
-            <ul>
-              <li><a href="#pricing">Explorer Plan</a></li>
-              <li><a href="#pricing">Lifestyle Plan</a></li>
-              <li><a href="#pricing">Performance Plan</a></li>
-              <li><a href="#early-access">Founding Member</a></li>
-            </ul>
-          </div>
-
-          <!-- Company -->
-          <div class="footer-col">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="#why">Why Nusa Meals</a></li>
-              <li><a href="#different">What Makes Us Different</a></li>
-              <li><a href="#for-who">Who It's For</a></li>
-              <li><a href="#" class="open-privacy-modal">Privacy Policy</a></li>
-            </ul>
-          </div>
-
+        <div class="footer-col">
+          <h5>Plans</h5>
+          <a href="#pricing">Explorer</a>
+          <a href="#pricing">Lifestyle</a>
+          <a href="#pricing">Performance</a>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <a href="https://instagram.com/nusameals.bali" target="_blank" rel="noopener">@nusameals.bali</a>
+          <a href="mailto:nusamealsofficial@gmail.com">nusamealsofficial@gmail.com</a>
+          <a href="#" id="footerPrivacy">Privacy Policy</a>
         </div>
       </div>
-    </div>
-
-    <div class="container">
       <div class="footer-bottom">
-        <p>&copy; 2026 Nusa Meals. All rights reserved. Made with 🌿 in Bali.</p>
-        <div class="footer-legal">
-          <a href="#" id="privacy-link" class="open-privacy-modal" role="button" aria-haspopup="dialog">Privacy Policy</a>
+        <span>&copy; 2026 Nusa Meals. All rights reserved. Made with 🌿 in Bali.</span>
+        <div class="footer-bottom-links">
+          <a href="#" id="footerPrivacy2">Privacy Policy</a>
           <a href="#waitlist">Join Waitlist</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- ===================== SUCCESS THANK YOU MODAL ===================== -->
-  <div id="success-modal" role="dialog" aria-modal="true" aria-labelledby="sm-title-text" onclick="closeSuccessModal(event)">
-    <div class="sm-box">
-      <button class="sm-close" onclick="closeSuccessModal()" aria-label="Close">&#x2715;</button>
-      <span class="sm-emoji">🎉</span>
-      <h2 class="sm-title" id="sm-title-text">Waitlist Confirmed!</h2>
-      <div class="sm-check" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 13l4 4L19 7"/>
-        </svg>
-      </div>
-      <p class="sm-welcome" id="sm-welcome-text">Welcome! Your reservation is secured.</p>
-      <p class="sm-para">Thank you for joining the future of healthier Indonesian nourishment in Bali. We are thrilled to have you as part of our waitlist.</p>
-      <div class="sm-benefit">🎉 Founding Member Offer Confirmed!<br/>You are on track to receive <strong>Rp100,000 OFF</strong> your first Nusa Meals subscription.</div>
-      <p class="sm-para">We will reach out to you via Instagram DM as we prepare for our launch with next steps and sneak peeks.</p>
-      <p class="sm-social">For updates and an early look, follow us: <strong>@nusameals.bali</strong></p>
-      <button class="sm-done" onclick="closeSuccessModal()">Done</button>
+  <!-- SUCCESS MODAL -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeSuccess">&times;</button>
+      <p style="font-size:48px; margin-bottom:16px;">🎉🎊</p>
+      <h3>Welcome to Nusa Meals!</h3>
+      <p id="successName">You're officially on the early members list.</p>
+      <p><strong>Rp100,000 off</strong> is reserved for you when we launch.</p>
+      <p>Follow us for updates:</p>
+      <a href="https://instagram.com/nusameals.bali" target="_blank" rel="noopener" class="btn-submit" style="text-decoration:none;">Follow @nusameals.bali</a>
     </div>
   </div>
 
-  <!-- ===================== PRIVACY POLICY MODAL ===================== -->
-  <div class="modal-overlay" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-box">
-      <button class="modal-close" id="modalClose" aria-label="Close privacy policy">&times;</button>
-      <h2 id="modal-title">Privacy Policy</h2>
-      <p>Last updated: July 2026</p>
-      <h3>1. Information We Collect</h3>
-      <p>When you join our waitlist, we collect your full name and Instagram username. This information is used solely to notify you when Nusa Meals launches.</p>
-      <h3>2. How We Use Your Information</h3>
-      <ul>
-        <li>To contact you via Instagram DM about your waitlist spot and our launch.</li>
-        <li>To send you exclusive founding member offers.</li>
-        <li>We will never sell or share your data with third parties.</li>
-      </ul>
-      <h3>3. Data Storage</h3>
-      <p>Waitlist entries are stored securely and are only accessible to the Nusa Meals team. You may request deletion of your data at any time by contacting us via Instagram at @nusameals.bali.</p>
-      <h3>4. Cookies</h3>
-      <p>This website does not use tracking cookies. We use browser localStorage only to prevent duplicate form submissions during your session.</p>
-      <h3>5. Contact</h3>
-      <p>For any privacy-related questions, reach us at <strong>@nusameals.bali</strong> on Instagram.</p>
+  <!-- PRIVACY MODAL -->
+  <div class="modal-overlay privacy-modal" id="privacyModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closePrivacy">&times;</button>
+      <h3>Privacy Policy</h3>
+      <h4>Data Collection</h4>
+      <p>We collect your name and Instagram handle when you join our waitlist. This information is used solely to contact you about Nusa Meals launch updates and promotions.</p>
+      <h4>Data Usage</h4>
+      <p>Your personal data will only be used to: send you launch notifications, provide your early member discount, and share relevant updates about Nusa Meals services.</p>
+      <h4>Data Storage</h4>
+      <p>Your information is stored securely and will never be sold to third parties. We use industry-standard encryption to protect your data.</p>
+      <h4>Your Rights</h4>
+      <p>You may request deletion of your data at any time by contacting us at hello@nusameals.com. You can also unsubscribe from communications at any point.</p>
+      <h4>Contact</h4>
+      <p>For questions about this privacy policy, please reach out to hello@nusameals.com.</p>
     </div>
   </div>
 
-  <!-- ===================== JAVASCRIPT ===================== -->
   <script>
-    /* ---------- Thank You / Success Modal ---------- */
-    function openSuccessModal(fullName) {
-      var firstName = fullName.trim().split(/\s+/)[0];
-      firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-      document.getElementById('sm-welcome-text').textContent = 'Welcome, ' + firstName + '! Your reservation is secured.';
-      var modal = document.getElementById('success-modal');
-      modal.classList.add('open');
+    // ===== MOBILE NAV =====
+    const hamburger = document.getElementById('navHamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileBackdrop = document.getElementById('mobileBackdrop');
+
+    function openMobile() {
+      mobileMenu.classList.add('active');
+      mobileBackdrop.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
-    function closeSuccessModal(e) {
-      var modal = document.getElementById('success-modal');
-      if (!e || e.target === modal || e.currentTarget.tagName === 'BUTTON') {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-      }
+
+    function closeMobile() {
+      mobileMenu.classList.remove('active');
+      mobileBackdrop.classList.remove('active');
+      document.body.style.overflow = '';
     }
 
-    /* ---------- Helper: field error ---------- */
-    function showFieldError(el) {
-      el.focus();
-      el.style.borderColor = '#EF4444';
-      el.style.boxShadow   = '0 0 0 3px rgba(239,68,68,0.15)';
-      setTimeout(function () { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
-    }
+    hamburger.addEventListener('click', openMobile);
+    mobileBackdrop.addEventListener('click', closeMobile);
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMobile);
+    });
 
-    /* ---------- Google Sheets endpoint ---------- */
-    var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyE_OJzhPnpi-BcdDCnJrCrI6jPk4FZc7rjBezl4WhDYGsa46QHH5ivKTMh8z8va2kF/exec';
-
-    /* ---------- Generic form handler ---------- */
-    function initWaitlistForm(formId, nameId, igId, consentId, errId, successId) {
-      var form    = document.getElementById(formId);
-      var success = document.getElementById(successId);
-      if (!form) return;
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var name    = document.getElementById(nameId).value.trim();
-        var ig      = document.getElementById(igId).value.trim();
-        var consent = document.getElementById(consentId).checked;
-
-        if (!name) { showFieldError(document.getElementById(nameId)); return; }
-        if (!ig)   { showFieldError(document.getElementById(igId)); return; }
-        if (!consent) {
-          var err = document.getElementById(errId);
-          err.style.display = 'block';
-          document.getElementById(consentId).focus();
-          setTimeout(function () { err.style.display = 'none'; }, 3000);
-          return;
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const offset = 80;
+          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
         }
+      });
+    });
 
-        /* Save locally first (instant feedback) */
-        var existing = JSON.parse(localStorage.getItem('nm_waitlist') || '[]');
-        existing.push({ name: name, instagram: ig, joinedAt: new Date().toISOString() });
-        localStorage.setItem('nm_waitlist', JSON.stringify(existing));
+    // ===== ACTIVE NAV HIGHLIGHTING =====
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
 
-        /* Show success immediately — don't make user wait for network */
-        form.style.display    = 'none';
-        success.style.display = 'block';
-        success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        openSuccessModal(name);
-
-        /* Send to Google Sheets in background */
-        if (SHEETS_URL && SHEETS_URL !== 'PASTE_YOUR_WEB_APP_URL_HERE') {
-          fetch(SHEETS_URL, {
-            method: 'POST',
-            mode: 'no-cors',   /* Apps Script requires no-cors */
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: name, instagram: ig })
-          }).catch(function () {
-            /* Silent fail — data already saved to localStorage */
+    function highlightNav() {
+      const scrollY = window.scrollY + 120;
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        const id = section.getAttribute('id');
+        if (scrollY >= top && scrollY < top + height) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
           });
         }
       });
+    }
 
-      [nameId, igId].forEach(function (id) {
-        document.getElementById(id).addEventListener('input', function () {
-          this.style.borderColor = ''; this.style.boxShadow = '';
+    window.addEventListener('scroll', highlightNav);
+
+    // ===== FAQ ACCORDION =====
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isActive = item.classList.contains('active');
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        // Toggle current
+        if (!isActive) item.classList.add('active');
+      });
+    });
+
+    // ===== FORM HANDLER =====
+    const form = document.getElementById('waitlistForm');
+    const formContent = document.getElementById('formContent');
+    const formSuccess = document.getElementById('formSuccess');
+    const successModal = document.getElementById('success-modal');
+    const successName = document.getElementById('successName');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('userName').value.trim();
+      const instagram = document.getElementById('userIG').value.trim();
+      const privacy = document.getElementById('privacyCheck').checked;
+
+      if (!name || !instagram || !privacy) {
+        alert('Please fill in all fields and accept the privacy policy.');
+        return;
+      }
+
+      const btn = form.querySelector('.btn-submit');
+      btn.textContent = 'Submitting...';
+      btn.disabled = true;
+
+      // Save to localStorage
+      const entry = { name, instagram, timestamp: new Date().toISOString() };
+      const existing = JSON.parse(localStorage.getItem('nusameals_waitlist') || '[]');
+      existing.push(entry);
+      localStorage.setItem('nusameals_waitlist', JSON.stringify(existing));
+
+      // Send to Google Sheets
+      try {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('instagram', instagram);
+
+        await fetch('https://script.google.com/macros/s/AKfycbyE_OJzhPnpi-BcdDCnJrCrI6jPk4FZc7rjBezl4WhDYGsa46QHH5ivKTMh8z8va2kF/exec', {
+          method: 'POST',
+          body: formData
         });
-      });
+      } catch (err) {
+        // Silent fail — data is saved locally
+        console.log('Sheet submission error:', err);
+      }
+
+      // Show success
+      formContent.classList.add('hide');
+      formSuccess.classList.add('show');
+
+      // Show modal
+      successName.textContent = `Welcome, ${name}! You're officially on the early members list.`;
+      successModal.classList.add('active');
+
+      btn.textContent = 'Reserve My Spot ✅';
+      btn.disabled = false;
+    });
+
+    // ===== MODALS =====
+    const closeSuccessBtn = document.getElementById('closeSuccess');
+    closeSuccessBtn.addEventListener('click', () => {
+      successModal.classList.remove('active');
+    });
+
+    successModal.addEventListener('click', (e) => {
+      if (e.target === successModal) successModal.classList.remove('active');
+    });
+
+    // Privacy Modal
+    const privacyModal = document.getElementById('privacyModal');
+    const openPrivacyBtn = document.getElementById('openPrivacy');
+    const closePrivacyBtn = document.getElementById('closePrivacy');
+    const footerPrivacy = document.getElementById('footerPrivacy');
+    const footerPrivacy2 = document.getElementById('footerPrivacy2');
+
+    function openPrivacyModal(e) {
+      e.preventDefault();
+      privacyModal.classList.add('active');
     }
 
-    initWaitlistForm('waitlistForm',  'fullName',  'instagram',  'privacyConsent1', 'privacy-err1', 'formSuccess');
-    initWaitlistForm('waitlistForm2', 'fullName2', 'instagram2', 'privacyConsent2', 'privacy-err2', 'formSuccess2');
-
-    /* ---------- Navbar Mobile Toggle ---------- */
-    var navToggle   = document.getElementById('navToggle');
-    var navMenu     = document.getElementById('navMenu');
-    var navBackdrop = document.getElementById('navBackdrop');
-
-    function openNav() {
-      navMenu.classList.add('open');
-      navToggle.classList.add('open');
-      navBackdrop.classList.add('open');
-      navToggle.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeNav() {
-      navMenu.classList.remove('open');
-      navToggle.classList.remove('open');
-      navBackdrop.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
+    function closePrivacyModal() {
+      privacyModal.classList.remove('active');
     }
 
-    navToggle.addEventListener('click', function () {
-      navMenu.classList.contains('open') ? closeNav() : openNav();
+    openPrivacyBtn.addEventListener('click', openPrivacyModal);
+    footerPrivacy.addEventListener('click', openPrivacyModal);
+    footerPrivacy2.addEventListener('click', openPrivacyModal);
+    closePrivacyBtn.addEventListener('click', closePrivacyModal);
+
+    privacyModal.addEventListener('click', (e) => {
+      if (e.target === privacyModal) closePrivacyModal();
     });
 
-    /* Close when backdrop clicked */
-    navBackdrop.addEventListener('click', closeNav);
+    // ===== INTERSECTION OBSERVER - SCROLL REVEAL =====
+    const revealElements = document.querySelectorAll('.reveal');
 
-    /* Close when a nav link is tapped */
-    navMenu.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        if (window.innerWidth <= 860) closeNav();
-      });
-    });
-
-    /* Close on Escape key */
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && navMenu.classList.contains('open')) closeNav();
-    });
-
-    /* ---------- Smooth Scroll ---------- */
-    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-      anchor.addEventListener('click', function (e) {
-        var href   = this.getAttribute('href');
-        var target = href && href.length > 1 ? document.querySelector(href) : null;
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
-      });
-    });
-
-    /* ---------- FAQ Accordion ---------- */
-    document.querySelectorAll('.faq-q').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var item   = this.closest('.faq-item');
-        var isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item.open').forEach(function (el) {
-          el.classList.remove('open');
-          el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
-        });
-        if (!isOpen) { item.classList.add('open'); this.setAttribute('aria-expanded', 'true'); }
-      });
-    });
-
-    /* ---------- Privacy Modal ---------- */
-    var modal    = document.getElementById('privacyModal');
-    var closeBtn = document.getElementById('modalClose');
-    var lastFocus;
-
-    function openModal(trigger) {
-      lastFocus = trigger || document.getElementById('privacy-link');
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      closeBtn.focus();
-    }
-    function closeModal() {
-      modal.classList.remove('open');
-      document.body.style.overflow = '';
-      if (lastFocus) lastFocus.focus();
-    }
-
-    // Footer link
-    document.getElementById('privacy-link').addEventListener('click', function (e) {
-      e.preventDefault(); openModal(this);
-    });
-    // All inline "Privacy Policy" links in forms
-    document.querySelectorAll('.open-privacy-modal').forEach(function (link) {
-      link.addEventListener('click', function (e) { e.preventDefault(); openModal(this); });
-    });
-
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-    });
-
-    /* ---------- Scroll Reveal ---------- */
-    var revealObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.reveal').forEach(function (el) {
-      revealObserver.observe(el);
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
     });
 
-    /* ---------- Active Nav Link ---------- */
-    var navSections = ['waitlist','why','how','pricing','compare','meals','for-who','early-access','faq','join'];
-    var navLinks    = document.querySelectorAll('.navbar-menu a:not(.navbar-menu-cta)');
+    revealElements.forEach(el => revealObserver.observe(el));
 
-    var sectionObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var id = entry.target.getAttribute('id');
-          navLinks.forEach(function (link) {
-            var href = link.getAttribute('href').replace('#','');
-            link.classList.toggle('active', href === id);
-          });
+    // ===== ESC KEY CLOSES MODALS =====
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        successModal.classList.remove('active');
+        privacyModal.classList.remove('active');
+      }
+    });
+
+    // ===== LANGUAGE SWITCHER =====
+    const translations = {
+      en: {
+        heroTag: '🌴 Launching Soon — Bali',
+        heroH1: 'Healthy Indonesian Meals, Delivered Fresh Across Bali.',
+        heroSub: 'Enjoy healthy Indonesian food with transparent ingredients, balanced nutrition information, and Bali Belly-friendly recipes designed for modern lifestyles in Bali.',
+        heroPrice: 'Starting from $4/meal',
+        formH3: '🎉 First 50 Members Get $6 Off',
+        formDesc: 'Join the waitlist today and be one of the first 50 people to receive $6 off your first Nusa Meals subscription when we launch.',
+        formName: 'Name',
+        formNamePh: 'Your full name',
+        formIG: 'Instagram @username',
+        formIGPh: '@yourusername',
+        formPrivacy: 'I agree to the <a href="#" id="openPrivacy">Privacy Policy</a> and consent to receive updates.',
+        formBtn: 'Reserve My Spot ✅',
+        trustBadges: ['🌿 Fresh Daily Prep', '🌾 Local Balinese Farms', '🥗 Nutritionist Designed', '🛵 Bali-Wide Delivery'],
+        whyH2: 'Why Nusa Meals?',
+        whyP: 'We solve the biggest food challenges expats and health-conscious locals face in Bali.',
+        whyCards: [
+          { title: 'Bali Belly Friendly', desc: 'Prepared in certified hygienic kitchens with strict food safety standards.' },
+          { title: 'Trusted Ingredients', desc: 'Locally sourced from verified Balinese farms. No mystery additives.' },
+          { title: 'Hygiene-Made Food', desc: 'HACCP-level kitchen protocols. Clean, safe, and audited regularly.' },
+          { title: 'One Stop Local Food', desc: 'Authentic Indonesian flavors without the hassle of sourcing and cooking.' },
+          { title: 'Nutrition Information', desc: 'Every meal comes with full macro and calorie breakdowns.' }
+        ],
+        pricingH2: 'Choose Your Plan',
+        pricingP: 'Flexible meal plans designed to fit your lifestyle. All plans include delivery across Bali.',
+        plans: [
+          { badge: 'Starter', name: 'Explorer', price: '$62', per: '/week • 14 meals • ~$4.4/meal', features: ['14 meals per week (lunch + dinner)', 'Weekly rotating menu', 'Free delivery across Bali', 'Pause or cancel anytime'] },
+          { badge: 'Recommended', name: 'Lifestyle', price: '$123', per: '/month • 30 meals • ~$4.1/meal', features: ['30 meals per month', 'Priority menu selection', 'Nutritionist meal notes', 'Free delivery across Bali', 'Exclusive early member pricing'] },
+          { badge: 'Best Value', name: 'Performance', price: '$227', per: '/month • 60 meals • ~$3.8/meal', features: ['60 meals per month (all daily meals)', 'Custom macro targets', 'Dedicated nutrition support', 'Free priority delivery', 'First access to new dishes'] }
+        ],
+        howH2: 'How to Subscribe',
+        howP: "We're currently in pre-launch phase. Here's how you can secure your spot before we go live.",
+        howSteps: [
+          { title: 'Join the Waitlist', desc: 'Fill in your name and Instagram above to reserve your spot.' },
+          { title: 'Get Notified at Launch', desc: "We'll DM you on Instagram when Nusa Meals officially launches in Bali." },
+          { title: 'Choose Your Plan', desc: 'Pick Explorer, Lifestyle, or Performance — with exclusive early member pricing locked in.' },
+          { title: 'Enjoy Fresh Meals', desc: 'Receive healthy Indonesian meals delivered on your schedule across Bali.' }
+        ],
+        howNote: '🚀 We\'re currently in pre-launch. Join the waitlist now to lock in your <strong style="color:var(--primary);">$6 early member discount</strong> before we go live.',
+        mealsH2: 'Sample Meals',
+        mealsP: "A taste of what's coming — authentic Indonesian dishes, reimagined for your health.",
+        faqH2: 'Frequently Asked Questions',
+        faqP: 'Everything you need to know about Nusa Meals.',
+        ctaH2: 'Ready to Enjoy Healthy Indonesian Meals Every Day?',
+        ctaSub: 'Join the waitlist now and secure your early member discount — exclusive pricing locked in before we officially launch in Bali.',
+        ctaBtn: 'JOIN NOW TO GET VOUCHER $6',
+        navCta: 'Join Now — Get $6 Off'
+      },
+      id: {
+        heroTag: '🌴 Segera Hadir — Bali',
+        heroH1: 'Makanan Indonesia Sehat, Diantar Segar ke Seluruh Bali.',
+        heroSub: 'Nikmati makanan Indonesia sehat dengan bahan transparan, informasi nutrisi seimbang, dan resep ramah Bali Belly yang dirancang untuk gaya hidup modern di Bali.',
+        heroPrice: 'Mulai dari Rp 60K/porsi',
+        formH3: '🎉 50 Member Pertama Dapat Diskon Rp100.000',
+        formDesc: 'Gabung waitlist sekarang dan jadilah salah satu dari 50 orang pertama yang mendapat potongan Rp100.000 untuk langganan pertama Nusa Meals.',
+        formName: 'Nama',
+        formNamePh: 'Nama lengkap kamu',
+        formIG: 'Username Instagram',
+        formIGPh: '@usernamekamu',
+        formPrivacy: 'Saya setuju dengan <a href="#" id="openPrivacy">Kebijakan Privasi</a> dan bersedia menerima informasi terbaru.',
+        formBtn: 'Daftar Sekarang ✅',
+        trustBadges: ['🌿 Masak Segar Harian', '🌾 Bahan Lokal Bali', '🥗 Dirancang Ahli Gizi', '🛵 Pengiriman Seluruh Bali'],
+        whyH2: 'Mengapa Nusa Meals?',
+        whyP: 'Kami menyelesaikan tantangan terbesar dalam makan sehat dan aman di Bali.',
+        whyCards: [
+          { title: 'Ramah Bali Belly', desc: 'Dimasak di dapur bersertifikat dengan standar keamanan pangan ketat.' },
+          { title: 'Bahan Terpercaya', desc: 'Bersumber lokal dari pertanian Bali terverifikasi. Tanpa bahan tambahan mencurigakan.' },
+          { title: 'Makanan Higienis', desc: 'Protokol dapur setara HACCP. Bersih, aman, dan diaudit secara berkala.' },
+          { title: 'Satu Tempat untuk Semua', desc: 'Cita rasa Indonesia otentik tanpa repot mencari dan memasak sendiri.' },
+          { title: 'Informasi Nutrisi', desc: 'Setiap porsi dilengkapi informasi kalori dan makro lengkap.' }
+        ],
+        pricingH2: 'Pilih Paket Kamu',
+        pricingP: 'Paket makan fleksibel sesuai gaya hidupmu. Semua paket termasuk pengiriman ke seluruh Bali.',
+        plans: [
+          { badge: 'Pemula', name: 'Explorer', price: 'Rp 980K', per: '/minggu • 14 porsi • ~Rp 70K/porsi', features: ['14 porsi per minggu (makan siang + malam)', 'Menu rotasi mingguan', 'Pengiriman gratis seluruh Bali', 'Bisa pause atau batal kapan saja'] },
+          { badge: 'Rekomendasi', name: 'Lifestyle', price: 'Rp 1.95M', per: '/bulan • 30 porsi • ~Rp 65K/porsi', features: ['30 porsi per bulan', 'Prioritas pilihan menu', 'Catatan nutrisi dari ahli gizi', 'Pengiriman gratis seluruh Bali', 'Harga member awal eksklusif'] },
+          { badge: 'Terbaik', name: 'Performance', price: 'Rp 3.6M', per: '/bulan • 60 porsi • ~Rp 60K/porsi', features: ['60 porsi per bulan (semua makan harian)', 'Target makro kustom', 'Dukungan nutrisi khusus', 'Pengiriman prioritas gratis', 'Akses pertama menu baru'] }
+        ],
+        howH2: 'Cara Berlangganan',
+        howP: 'Kami saat ini dalam tahap pre-launch. Berikut cara mengamankan tempatmu sebelum kami resmi beroperasi.',
+        howSteps: [
+          { title: 'Gabung Waitlist', desc: 'Isi nama dan Instagram di atas untuk mengamankan tempatmu.' },
+          { title: 'Dapat Notifikasi Saat Launch', desc: 'Kami akan DM kamu di Instagram saat Nusa Meals resmi diluncurkan di Bali.' },
+          { title: 'Pilih Paket Kamu', desc: 'Pilih Explorer, Lifestyle, atau Performance — dengan harga member awal terkunci.' },
+          { title: 'Nikmati Makanan Segar', desc: 'Terima makanan Indonesia sehat yang diantar sesuai jadwalmu ke seluruh Bali.' }
+        ],
+        howNote: '🚀 Kami sedang dalam tahap pre-launch. Gabung waitlist sekarang untuk mengunci <strong style="color:var(--primary);">diskon Rp100.000 member awal</strong> sebelum kami live.',
+        mealsH2: 'Contoh Menu',
+        mealsP: 'Sekilas hidangan yang akan hadir — masakan Indonesia otentik, dikreasikan lebih sehat untukmu.',
+        faqH2: 'Pertanyaan Umum',
+        faqP: 'Semua yang perlu kamu ketahui tentang Nusa Meals.',
+        ctaH2: 'Siap Menikmati Makanan Indonesia Sehat Setiap Hari?',
+        ctaSub: 'Gabung waitlist sekarang dan amankan diskon founding member — harga eksklusif terkunci sebelum kami resmi beroperasi di Bali.',
+        ctaBtn: 'GABUNG SEKARANG — DISKON Rp100K',
+        navCta: 'Gabung Sekarang — Diskon Rp100K'
+      }
+    };
+
+    let currentLang = localStorage.getItem('nusameals_lang') || 'en';
+    const langBtns = document.querySelectorAll('.lang-btn');
+
+    function switchLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('nusameals_lang', lang);
+      const t = translations[lang];
+
+      // Update toggle active state
+      langBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      // Nav links (desktop + mobile)
+      document.querySelectorAll('#navLinks a[data-lang-en], #mobileMenu a[data-lang-en]').forEach(a => {
+        a.textContent = a.getAttribute('data-lang-' + lang);
+      });
+
+      // Hero
+      document.querySelector('.hero-tag').textContent = t.heroTag;
+      document.querySelector('.hero-left h1').innerHTML = t.heroH1;
+      document.querySelector('.hero-subtitle').textContent = t.heroSub;
+      document.querySelector('.hero-price').textContent = t.heroPrice;
+
+      // Form
+      document.querySelector('.form-card h3').innerHTML = t.formH3;
+      document.querySelector('.form-card h3 + p').innerHTML = t.formDesc;
+      const labels = document.querySelectorAll('.form-group label');
+      labels[0].textContent = t.formName;
+      labels[1].textContent = t.formIG;
+      document.getElementById('userName').placeholder = t.formNamePh;
+      document.getElementById('userIG').placeholder = t.formIGPh;
+      document.querySelector('.form-checkbox label').innerHTML = t.formPrivacy;
+      document.querySelector('.btn-submit').textContent = t.formBtn;
+
+      // Re-bind privacy link
+      const newPrivLink = document.getElementById('openPrivacy');
+      if (newPrivLink) newPrivLink.addEventListener('click', openPrivacyModal);
+
+      // Trust badges
+      const badges = document.querySelectorAll('.trust-badge');
+      t.trustBadges.forEach((text, i) => { if (badges[i]) badges[i].textContent = text; });
+
+      // Why section
+      document.querySelector('.section-why .section-header h2').textContent = t.whyH2;
+      document.querySelector('.section-why .section-header p').textContent = t.whyP;
+      const whyCards = document.querySelectorAll('.why-card');
+      t.whyCards.forEach((card, i) => {
+        if (whyCards[i]) {
+          whyCards[i].querySelector('h4').textContent = card.title;
+          whyCards[i].querySelector('p').textContent = card.desc;
         }
       });
-    }, { threshold: 0.35 });
 
-    navSections.forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) sectionObserver.observe(el);
+      // Pricing
+      document.querySelector('.section-pricing .section-header h2').textContent = t.pricingH2;
+      document.querySelector('.section-pricing .section-header p').textContent = t.pricingP;
+      const pricingCards = document.querySelectorAll('.pricing-card');
+      t.plans.forEach((plan, i) => {
+        if (pricingCards[i]) {
+          pricingCards[i].querySelector('.pricing-badge').textContent = plan.badge;
+          pricingCards[i].querySelector('h4').textContent = plan.name;
+          pricingCards[i].querySelector('.pricing-price').textContent = plan.price;
+          pricingCards[i].querySelector('.pricing-per').textContent = plan.per;
+          const lis = pricingCards[i].querySelectorAll('.pricing-features li');
+          plan.features.forEach((f, j) => { if (lis[j]) lis[j].textContent = f; });
+        }
+      });
+
+      // How to subscribe
+      const howSection = document.getElementById('how-to-subscribe');
+      if (howSection) {
+        howSection.querySelector('.section-header h2').textContent = t.howH2;
+        howSection.querySelector('.section-header p').textContent = t.howP;
+        const steps = howSection.querySelectorAll('h4');
+        const stepDescs = howSection.querySelectorAll('[style*="12px"][style*="color:var(--text-muted)"]');
+        t.howSteps.forEach((step, i) => {
+          if (steps[i]) steps[i].textContent = step.title;
+          if (stepDescs[i]) stepDescs[i].textContent = step.desc;
+        });
+        const noteEl = howSection.querySelector('p[style*="text-align:center"][style*="margin-top"]');
+        if (noteEl) noteEl.innerHTML = t.howNote;
+      }
+
+      // Meals
+      document.querySelector('.section-meals .section-header h2').textContent = t.mealsH2;
+      document.querySelector('.section-meals .section-header p').textContent = t.mealsP;
+
+      // FAQ
+      document.querySelector('.section-faq .section-header h2').textContent = t.faqH2;
+      document.querySelector('.section-faq .section-header p').textContent = t.faqP;
+
+      // CTA
+      document.querySelector('.section-cta h2').textContent = t.ctaH2;
+      const ctaSubEl = document.querySelector('.section-cta p');
+      if (ctaSubEl) ctaSubEl.textContent = t.ctaSub;
+      document.querySelector('.btn-cta-final').textContent = t.ctaBtn;
+
+      // Nav CTA
+      const navCtaDesktop = document.querySelector('.nav-cta-desktop');
+      if (navCtaDesktop) navCtaDesktop.textContent = t.navCta;
+    }
+
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => switchLang(btn.dataset.lang));
     });
-  </script>
 
+    // Apply saved language on page load
+    switchLang(currentLang);
+  </script>
 </body>
 </html>
