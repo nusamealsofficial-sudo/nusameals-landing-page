@@ -18,7 +18,23 @@
 </head>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+ html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
 
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    background: var(--bg-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    width: 100%;
+  }
+
+  img, video { max-width: 100%; height: auto; }
+  
   :root {
     --primary: #243d0e;
     --primary-dark: #1a2e0a;
@@ -1262,7 +1278,15 @@
     .container { padding: 0 16px; }
     .nav-logo img { height: 56px; }
   }
+/* Prevent horizontal overflow */
+    .trust-bar .container { flex-wrap: wrap; }
+    .steps-grid { gap: 12px; }
+    .hero-grid { overflow: hidden; }
+    .navbar .container { flex-wrap: nowrap; gap: 8px; }
+    .lang-switcher { display: none; }
+  }
 
+  @media (max-width: 480px) {
   @media (max-width: 480px) {
     .why-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
     .footer-grid { grid-template-columns: 1fr; gap: 24px; }
